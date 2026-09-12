@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { AttendancePage } from './pages/AttendancePage.jsx';
+import { BudgetPage } from './pages/BudgetPage.jsx';
 
 const App = () => {
-  return (
-    <div>
-      this is a app 
-    </div>
-  )
-}
+  const [currentPage, setCurrentPage] = useState('attendance');
 
-export default App
+  return (
+    <>
+      {currentPage === 'attendance' && (
+        <AttendancePage onNavigate={(page) => setCurrentPage(page)} />
+      )}
+      {currentPage === 'budget' && (
+        <BudgetPage onNavigate={(page) => setCurrentPage(page)} />
+      )}
+    </>
+  );
+};
+
+export default App;

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Wallet } from 'lucide-react';
+import { backdropVariants, modalVariants } from '../../animations/modalVariants.js';
 
 export const SetBudgetModal = ({
   isOpen,
@@ -19,8 +21,6 @@ export const SetBudgetModal = ({
       setError('');
     }
   }, [isOpen, currentBudget]);
-
-  if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,67 +43,87 @@ export const SetBudgetModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="w-full max-w-[340px] bg-[#1C1C1C] border border-white/10 rounded-2xl p-5 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="text-[16px] font-semibold text-[#EDEDED]">
-              Set Monthly Budget
-            </h3>
-            <p className="text-[12px] text-[#9A9A9A]">
-              For Month {month}/{year}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[#888888] hover:text-white p-1 transition-colors cursor-pointer"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={backdropVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md"
+        >
+          <motion.div
+            variants={modalVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full max-w-[360px] bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
           >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+            <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+                  <Wallet className="w-4.5 h-4.5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">
+                    Set Monthly Budget
+                  </h3>
+                  <p className="text-[11px] text-[#8A92A0]">
+                    Month {month}/{year}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#8A92A0] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              >
+                <X className="w-4.5 h-4.5" />
+              </button>
+            </div>
 
-        {error && (
-          <div className="bg-[#B90F14]/20 border border-[#B90F14]/40 text-[#ff7875] text-[12.5px] rounded-lg p-2.5 mb-3">
-            {error}
-          </div>
-        )}
+            {error && (
+              <div className="bg-[#EF4444]/15 border border-[#EF4444]/30 text-[#FCA5A5] text-xs rounded-xl p-2.5 my-3">
+                {error}
+              </div>
+            )}
 
-        <form onSubmit={handleSubmit} className="space-y-3.5">
-          <div>
-            <label className="block text-[12px] font-medium text-[#9A9A9A] mb-1">
-              Monthly Budget Limit (₹)
-            </label>
-            <input
-              type="number"
-              min="0"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="e.g. 15000"
-              required
-              className="w-full bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13.5px] text-[#EDEDED] focus:outline-none focus:border-[#FF6B2C] transition-colors"
-            />
-          </div>
+            <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#8A92A0] mb-1.5">
+                  Monthly Budget Limit (₹)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="e.g. 15000"
+                  required
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                />
+              </div>
 
-          <div className="flex gap-2 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 bg-[#282828] hover:bg-[#323232] text-[#9A9A9A] text-[13px] font-medium py-2.5 rounded-xl transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="flex-1 bg-[#FF6B2C] hover:bg-[#ff550f] disabled:opacity-50 text-white text-[13px] font-medium py-2.5 rounded-xl transition-colors shadow-sm cursor-pointer"
-            >
-              {submitting ? 'Saving...' : 'Set Budget'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+              <div className="flex gap-2.5 pt-2">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="flex-1 bg-[#1A1F29] hover:bg-[#222834] text-[#8A92A0] text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="flex-1 bg-[#FF6D1F] hover:bg-[#E85C0D] disabled:opacity-50 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#FF6D1F]/20 cursor-pointer"
+                >
+                  {submitting ? 'Saving...' : 'Set Budget'}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
-

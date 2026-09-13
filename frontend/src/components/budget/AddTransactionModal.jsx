@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
 export const AddTransactionModal = ({
   isOpen,
@@ -80,29 +80,42 @@ export const AddTransactionModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="w-full max-w-[340px] bg-[#1C1C1C] border border-white/10 rounded-2xl p-5 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-[16px] font-semibold text-[#EDEDED]">
-            Add {type === 'income' ? 'Income' : 'Expense'}
-          </h3>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md">
+      <div className="w-full max-w-[360px] bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+        <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+          <div className="flex items-center gap-2.5">
+            <div
+              className={`w-8 h-8 rounded-xl flex items-center justify-center ${
+                type === 'expense' ? 'bg-[#EF4444]/15 text-[#EF4444]' : 'bg-[#10B981]/15 text-[#10B981]'
+              }`}
+            >
+              {type === 'expense' ? (
+                <ArrowDownRight className="w-4.5 h-4.5" />
+              ) : (
+                <ArrowUpRight className="w-4.5 h-4.5" />
+              )}
+            </div>
+            <h3 className="text-base font-bold text-white">
+              Add {type === 'income' ? 'Income' : 'Expense'}
+            </h3>
+          </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-[#888888] hover:text-white p-1 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#8A92A0] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4.5 h-4.5" />
           </button>
         </div>
 
-        <div className="flex rounded-xl bg-[#242424] p-1 mb-4">
+        <div className="flex rounded-2xl bg-[#1A1F29] p-1.5 my-3.5 border border-white/[0.06]">
           <button
             type="button"
             onClick={() => setType('expense')}
-            className={`flex-1 py-1.5 text-[12.5px] font-medium rounded-lg transition-colors cursor-pointer ${
+            className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               type === 'expense'
-                ? 'bg-[#FF6B2C] text-white shadow-sm'
-                : 'text-[#9A9A9A] hover:text-white'
+                ? 'bg-[#EF4444] text-white shadow-md'
+                : 'text-[#8A92A0] hover:text-white'
             }`}
           >
             Expense
@@ -110,10 +123,10 @@ export const AddTransactionModal = ({
           <button
             type="button"
             onClick={() => setType('income')}
-            className={`flex-1 py-1.5 text-[12.5px] font-medium rounded-lg transition-colors cursor-pointer ${
+            className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               type === 'income'
-                ? 'bg-[#277A10] text-white shadow-sm'
-                : 'text-[#9A9A9A] hover:text-white'
+                ? 'bg-[#10B981] text-[#090A0F] shadow-md'
+                : 'text-[#8A92A0] hover:text-white'
             }`}
           >
             Income
@@ -121,14 +134,14 @@ export const AddTransactionModal = ({
         </div>
 
         {error && (
-          <div className="bg-[#B90F14]/20 border border-[#B90F14]/40 text-[#ff7875] text-[12.5px] rounded-lg p-2.5 mb-3">
+          <div className="bg-[#EF4444]/15 border border-[#EF4444]/30 text-[#FCA5A5] text-xs rounded-xl p-2.5 mb-3">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-3.5">
           <div>
-            <label className="block text-[12px] font-medium text-[#9A9A9A] mb-1">
+            <label className="block text-xs font-semibold text-[#8A92A0] mb-1.5">
               Title
             </label>
             <input
@@ -137,12 +150,12 @@ export const AddTransactionModal = ({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Lunch, Freelance"
               required
-              className="w-full bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13.5px] text-[#EDEDED] placeholder-[#666666] focus:outline-none focus:border-[#FF6B2C] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F] transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-[12px] font-medium text-[#9A9A9A] mb-1">
+            <label className="block text-xs font-semibold text-[#8A92A0] mb-1.5">
               Amount (₹)
             </label>
             <input
@@ -153,18 +166,18 @@ export const AddTransactionModal = ({
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               required
-              className="w-full bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13.5px] text-[#EDEDED] focus:outline-none focus:border-[#FF6B2C] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-[12px] font-medium text-[#9A9A9A] mb-1">
+            <label className="block text-xs font-semibold text-[#8A92A0] mb-1.5">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13.5px] text-[#EDEDED] focus:outline-none focus:border-[#FF6B2C] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
             >
               {filteredCategories.length === 0 ? (
                 <option value="">No {type} categories found</option>
@@ -179,7 +192,7 @@ export const AddTransactionModal = ({
           </div>
 
           <div>
-            <label className="block text-[12px] font-medium text-[#9A9A9A] mb-1">
+            <label className="block text-xs font-semibold text-[#8A92A0] mb-1.5">
               Date
             </label>
             <input
@@ -187,25 +200,25 @@ export const AddTransactionModal = ({
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13.5px] text-[#EDEDED] focus:outline-none focus:border-[#FF6B2C] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
             />
           </div>
 
-          <div className="flex gap-2 pt-2">
+          <div className="flex gap-2.5 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-[#282828] hover:bg-[#323232] text-[#9A9A9A] text-[13px] font-medium py-2.5 rounded-xl transition-colors cursor-pointer"
+              className="flex-1 bg-[#1A1F29] hover:bg-[#222834] text-[#8A92A0] text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting || !category}
-              className={`flex-1 text-white text-[13px] font-medium py-2.5 rounded-xl transition-colors shadow-sm cursor-pointer disabled:opacity-50 ${
+              className={`flex-1 text-xs font-bold py-2.5 rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50 ${
                 type === 'income'
-                  ? 'bg-[#277A10] hover:bg-[#20660c]'
-                  : 'bg-[#FF6B2C] hover:bg-[#ff550f]'
+                  ? 'bg-[#10B981] hover:bg-[#059669] text-white'
+                  : 'bg-[#FF6D1F] hover:bg-[#E85C0D] text-white shadow-[#FF6D1F]/20'
               }`}
             >
               {submitting ? 'Adding...' : 'Add'}
@@ -216,4 +229,3 @@ export const AddTransactionModal = ({
     </div>
   );
 };
-

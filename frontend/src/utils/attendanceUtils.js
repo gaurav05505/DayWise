@@ -1,8 +1,9 @@
 export const formatTodayDate = () => {
   const date = new Date();
   const day = date.getDate();
-  const month = date.toLocaleString('en-US', { month: 'short' }).toLowerCase();
-  return `${day} ${month}`;
+  const month = date.toLocaleString('en-US', { month: 'short' });
+  const weekday = date.toLocaleString('en-US', { weekday: 'short' });
+  return `${weekday}, ${day} ${month}`;
 };
 
 export const calculatePercentage = (attended, total) => {
@@ -10,7 +11,6 @@ export const calculatePercentage = (attended, total) => {
   return Math.round((attended / total) * 100);
 };
 
-export const getAttendanceStatus = (percentage) => {
-  return percentage >= 75 ? 'On Track' : 'Below Target';
+export const getAttendanceStatus = (percentage, target = 75) => {
+  return percentage >= target ? 'On Track' : 'Below Target';
 };
-

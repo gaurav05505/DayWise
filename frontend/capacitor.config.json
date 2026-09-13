@@ -1,0 +1,10 @@
+{
+  "appId": "com.daywise.app",
+  "appName": "DayWise",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
+

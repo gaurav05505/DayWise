@@ -1,57 +1,72 @@
 import React from 'react';
-import { Wallet, Timer, User } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { CalendarCheck, Wallet, PiggyBank, Settings } from 'lucide-react';
 
 export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
+  const tabs = [
+    {
+      id: 'attendance',
+      label: 'Attendance',
+      icon: CalendarCheck,
+    },
+    {
+      id: 'budget',
+      label: 'Budget',
+      icon: Wallet,
+    },
+    {
+      id: 'custom-budgets',
+      label: 'Custom',
+      icon: PiggyBank,
+    },
+    {
+      id: 'more',
+      label: 'More',
+      icon: Settings,
+    },
+  ];
+
   return (
     <div className="fixed bottom-4 left-4 right-4 max-w-[360px] mx-auto z-40">
-      <nav className="w-full bg-[#181818]/95 backdrop-blur-md border border-white/5 rounded-full h-[62px] px-3 flex items-center justify-around shadow-2xl">
-        <button
-          type="button"
-          aria-label="Attendance"
-          onClick={() => onTabChange?.('attendance')}
-          className={`transition-all active:scale-95 cursor-pointer ${
-            activeTab === 'attendance'
-              ? 'w-[42px] h-[42px] rounded-full bg-[#FF6B2C] text-white flex flex-col items-center justify-center shadow-lg'
-              : 'w-10 h-10 flex items-center justify-center text-[#7E7E7E] hover:text-[#EDEDED]'
-          }`}
-        >
-          <div className="w-[18px] h-[18px] border-[1.75px] border-current rounded-[4px] relative flex flex-col items-center justify-center pt-0.5">
-            <div className="absolute -top-[3px] left-1 w-0.5 h-1 bg-current rounded-sm" />
-            <div className="absolute -top-[3px] right-1 w-0.5 h-1 bg-current rounded-sm" />
-            <span className="text-[8px] font-bold leading-none">18</span>
-          </div>
-        </button>
+      <nav className="w-full bg-[#14171E]/95 backdrop-blur-xl border border-white/[0.08] rounded-full h-[64px] px-3 flex items-center justify-around shadow-2xl shadow-black/80 relative">
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.id;
+          const Icon = tab.icon;
 
-        <button
-          type="button"
-          aria-label="Budget"
-          onClick={() => onTabChange?.('budget')}
-          className={`transition-all active:scale-95 cursor-pointer ${
-            activeTab === 'budget'
-              ? 'w-[42px] h-[42px] rounded-full bg-[#FF6B2C] text-white flex items-center justify-center shadow-lg'
-              : 'w-10 h-10 flex items-center justify-center text-[#7E7E7E] hover:text-[#EDEDED]'
-          }`}
-        >
-          <Wallet className="w-[21px] h-[21px]" />
-        </button>
+          return (
+            <motion.button
+              key={tab.id}
+              type="button"
+              aria-label={tab.label}
+              onClick={() => onTabChange?.(tab.id)}
+              whileTap={{ scale: 0.9 }}
+              className="relative w-12 h-12 flex flex-col items-center justify-center cursor-pointer select-none rounded-full"
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="activeNavIndicator"
+                  className="absolute inset-1 rounded-full bg-[#FF6D1F] shadow-lg shadow-[#FF6D1F]/30"
+                  transition={{
+                    type: 'spring',
+                    stiffness: 450,
+                    damping: 32,
+                  }}
+                />
+              )}
 
-        <button
-          type="button"
-          aria-label="Timer"
-          onClick={() => onTabChange?.('timer')}
-          className="w-10 h-10 flex items-center justify-center text-[#7E7E7E] hover:text-[#EDEDED] transition-colors active:scale-95 cursor-pointer"
-        >
-          <Timer className="w-[21px] h-[21px]" />
-        </button>
-
-        <button
-          type="button"
-          aria-label="Profile"
-          onClick={() => onTabChange?.('profile')}
-          className="w-10 h-10 flex items-center justify-center text-[#7E7E7E] hover:text-[#EDEDED] transition-colors active:scale-95 cursor-pointer"
-        >
-          <User className="w-[21px] h-[21px]" />
-        </button>
+              <motion.div
+                animate={{
+                  scale: isActive ? 1.05 : 1,
+                  color: isActive ? '#FFFFFF' : '#8A92A0',
+                }}
+                transition={{ duration: 0.15 }}
+                className="relative z-10 flex flex-col items-center justify-center"
+              >
+                <Icon className="w-5 h-5 stroke-[2.3]" />
+              </motion.div>
+            </motion.button>
+          );
+        })}
       </nav>
     </div>
   );

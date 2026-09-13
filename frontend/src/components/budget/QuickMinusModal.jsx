@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Minus, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Minus, Plus, ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { backdropVariants, modalVariants } from '../../animations/modalVariants.js';
 
 export const QuickMinusModal = ({
   isOpen,
@@ -23,8 +25,6 @@ export const QuickMinusModal = ({
       setError('');
     }
   }, [isOpen, initialType]);
-
-  if (!isOpen) return null;
 
   const handlePreset = (val) => {
     setAmount((prev) => {
@@ -59,127 +59,156 @@ export const QuickMinusModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="w-full max-w-[340px] bg-[#1C1C1C] border border-white/10 rounded-2xl p-5 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-[16px] font-semibold text-[#EDEDED]">
-            {type === 'expense' ? 'Minus Money' : 'Add Money'}
-          </h3>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[#888888] hover:text-white p-1 transition-colors cursor-pointer"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={backdropVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md"
+        >
+          <motion.div
+            variants={modalVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full max-w-[360px] bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
           >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="flex rounded-xl bg-[#242424] p-1 mb-4">
-          <button
-            type="button"
-            onClick={() => setType('expense')}
-            className={`flex-1 py-1.5 text-[12.5px] font-medium rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1 ${
-              type === 'expense'
-                ? 'bg-[#FF6B2C] text-white shadow-sm'
-                : 'text-[#9A9A9A] hover:text-white'
-            }`}
-          >
-            <Minus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Minus Money</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType('income')}
-            className={`flex-1 py-1.5 text-[12.5px] font-medium rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1 ${
-              type === 'income'
-                ? 'bg-[#277A10] text-white shadow-sm'
-                : 'text-[#9A9A9A] hover:text-white'
-            }`}
-          >
-            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Add Money</span>
-          </button>
-        </div>
-
-        {error && (
-          <div className="bg-[#B90F14]/20 border border-[#B90F14]/40 text-[#ff7875] text-[12.5px] rounded-lg p-2.5 mb-3">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="bg-[#242424] border border-white/10 rounded-2xl p-4 flex flex-col items-center">
-            <span className="text-[12px] text-[#9A9A9A] mb-1">Enter Amount</span>
-            <div className="flex items-center justify-center gap-1">
-              <span className="text-[22px] font-semibold text-[#9A9A9A]">₹</span>
-              <input
-                type="number"
-                step="any"
-                min="1"
-                autoFocus
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="0"
-                required
-                className="w-36 bg-transparent text-[28px] font-bold text-center text-[#EDEDED] focus:outline-none placeholder-[#444444]"
-              />
-            </div>
-          </div>
-
-          <div>
-            <span className="block text-[11px] text-[#888888] mb-1.5 font-medium">
-              Quick Presets
-            </span>
-            <div className="grid grid-cols-3 gap-2">
-              {presets.map((val) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => handlePreset(val)}
-                  className="bg-[#262626] hover:bg-[#333333] active:scale-95 text-[#EDEDED] text-[12.5px] font-medium py-1.5 rounded-xl border border-white/5 transition-all cursor-pointer"
+            <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+              <div className="flex items-center gap-2.5">
+                <div
+                  className={`w-8 h-8 rounded-xl flex items-center justify-center ${
+                    type === 'expense' ? 'bg-[#EF4444]/15 text-[#EF4444]' : 'bg-[#10B981]/15 text-[#10B981]'
+                  }`}
                 >
-                  +₹{val}
-                </button>
-              ))}
+                  {type === 'expense' ? (
+                    <ArrowDownRight className="w-4.5 h-4.5" />
+                  ) : (
+                    <ArrowUpRight className="w-4.5 h-4.5" />
+                  )}
+                </div>
+                <h3 className="text-base font-bold text-white">
+                  {type === 'expense' ? 'Minus Money' : 'Add Money'}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#8A92A0] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              >
+                <X className="w-4.5 h-4.5" />
+              </button>
             </div>
-          </div>
 
-          <div>
-            <input
-              type="text"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Note (optional e.g. Snacks, Chai, Auto)"
-              className="w-full bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13px] text-[#EDEDED] placeholder-[#666666] focus:outline-none focus:border-[#FF6B2C]"
-            />
-          </div>
+            <div className="flex rounded-2xl bg-[#1A1F29] p-1.5 my-3.5 border border-white/[0.06]">
+              <button
+                type="button"
+                onClick={() => setType('expense')}
+                className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                  type === 'expense'
+                    ? 'bg-[#EF4444] text-white shadow-md'
+                    : 'text-[#8A92A0] hover:text-white'
+                }`}
+              >
+                <Minus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>Minus Money</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setType('income')}
+                className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                  type === 'income'
+                    ? 'bg-[#10B981] text-white shadow-md'
+                    : 'text-[#8A92A0] hover:text-white'
+                }`}
+              >
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>Add Money</span>
+              </button>
+            </div>
 
-          <div className="flex gap-2 pt-1">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 bg-[#282828] hover:bg-[#323232] text-[#9A9A9A] text-[13px] font-medium py-2.5 rounded-xl transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={submitting || !amount || Number(amount) <= 0}
-              className={`flex-1 text-white text-[13.5px] font-semibold py-2.5 rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50 active:scale-98 ${
-                type === 'income'
-                  ? 'bg-[#277A10] hover:bg-[#20660c]'
-                  : 'bg-[#FF6B2C] hover:bg-[#ff550f]'
-              }`}
-            >
-              {submitting
-                ? 'Processing...'
-                : type === 'income'
-                ? `Add ₹${amount || 0}`
-                : `Minus ₹${amount || 0}`}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            {error && (
+              <div className="bg-[#EF4444]/15 border border-[#EF4444]/30 text-[#FCA5A5] text-xs rounded-xl p-2.5 mb-3">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-3.5">
+              <div className="bg-[#1A1F29] border border-white/[0.06] rounded-2xl p-4 flex flex-col items-center">
+                <span className="text-xs font-semibold text-[#8A92A0] mb-1">Enter Amount</span>
+                <div className="flex items-center justify-center gap-1">
+                  <span className="text-2xl font-bold text-[#8A92A0]">₹</span>
+                  <input
+                    type="number"
+                    step="any"
+                    min="1"
+                    autoFocus
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="0"
+                    required
+                    className="w-36 bg-transparent text-3xl font-black text-center text-white focus:outline-none placeholder-[#525B6D]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <span className="block text-[11px] text-[#8A92A0] mb-1.5 font-bold uppercase tracking-wider">
+                  Quick Presets
+                </span>
+                <div className="grid grid-cols-3 gap-2">
+                  {presets.map((val) => (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => handlePreset(val)}
+                      className="bg-[#1A1F29] hover:bg-[#222834] active:scale-95 text-white text-xs font-semibold py-2 rounded-xl border border-white/[0.06] transition-all cursor-pointer"
+                    >
+                      +₹{val}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  placeholder="Note (optional e.g. Snacks, Chai, Auto)"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+                />
+              </div>
+
+              <div className="flex gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="flex-1 bg-[#1A1F29] hover:bg-[#222834] text-[#8A92A0] text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting || !amount || Number(amount) <= 0}
+                  className={`flex-1 text-xs font-black py-2.5 rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50 active:scale-98 ${
+                    type === 'income'
+                      ? 'bg-[#10B981] hover:bg-[#059669] text-white'
+                      : 'bg-[#EF4444] hover:bg-[#DC2626] text-white'
+                  }`}
+                >
+                  {submitting
+                    ? 'Processing...'
+                    : type === 'income'
+                    ? `Add ₹${amount || 0}`
+                    : `Minus ₹${amount || 0}`}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

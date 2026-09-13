@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { useBudget } from '../hooks/useBudget.js';
+import { useSettings } from '../hooks/useSettings.js';
 import { BudgetHeader } from '../components/budget/BudgetHeader.jsx';
 import { BudgetOverview } from '../components/budget/BudgetOverview.jsx';
 import { TransactionCard } from '../components/budget/TransactionCard.jsx';
@@ -9,6 +11,9 @@ import { SetBudgetModal } from '../components/budget/SetBudgetModal.jsx';
 import { EditTransactionModal } from '../components/budget/EditTransactionModal.jsx';
 import { AddCustomShortcutModal } from '../components/budget/AddCustomShortcutModal.jsx';
 import { MonthlyPlanningModal } from '../components/budget/MonthlyPlanningModal.jsx';
+import { PageTransition } from '../components/animations/PageTransition.jsx';
+import { SkeletonCard } from '../components/common/SkeletonCard.jsx';
+import { Wallet } from 'lucide-react';
 
 export const BudgetPage = ({ onNavigate }) => {
   const {
@@ -23,8 +28,8 @@ export const BudgetPage = ({ onNavigate }) => {
     updateTransaction,
     deleteTransaction,
     setMonthlyBudget,
-    refreshData,
   } = useBudget();
+  const { settings } = useSettings();
 
   const [isQuickModalOpen, setIsQuickModalOpen] = useState(false);
   const [quickType, setQuickType] = useState('expense');
@@ -32,6 +37,16 @@ export const BudgetPage = ({ onNavigate }) => {
   const [isShortcutModalOpen, setIsShortcutModalOpen] = useState(false);
   const [isPlanningModalOpen, setIsPlanningModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const [filterType, setFilterType] = useState('all');
+
+  const expenseTransactions = transactions.filter((t) => t.type === 'expense');
+  const incomeTransactions = transactions.filter((t) => t.type === 'income');
+  const filteredTransactions =
+    filterType === 'expense'
+      ? expenseTransactions
+      : filterType === 'income'
+      ? incomeTransactions
+      : transactions;
 
   const defaultShortcuts = [
     { id: '1', label: 'Chai', amount: 10 },
@@ -74,27 +89,23 @@ export const BudgetPage = ({ onNavigate }) => {
   useEffect(() => {
     try {
       localStorage.setItem('daywise_custom_shortcuts', JSON.stringify(shortcuts));
-    } catch {
-      // ignore
-    }
+    } catch {}
   }, [shortcuts]);
 
   useEffect(() => {
     try {
       localStorage.setItem('daywise_fixed_expenses', JSON.stringify(fixedExpenses));
+    } catch {}
+  }, [fixedExpenses]);
+
+  useEffect(() => {
+    try {
       localStorage.setItem('daywise_target_savings', String(targetSavings));
-    } catch {
-      // ignore
-    }
-  }, [fixedExpenses, targetSavings]);
+    } catch {}
+  }, [targetSavings]);
 
-  const handleSavePlanning = ({ targetSavings: newSavings, fixedExpenses: newFixed }) => {
-    setTargetSavings(newSavings);
-    setFixedExpenses(newFixed);
-  };
-
-  const handleAddShortcut = (newBtn) => {
-    setShortcuts((prev) => [...prev, newBtn]);
+  const handleAddShortcut = (item) => {
+    setShortcuts((prev) => [...prev, { ...item, id: Date.now().toString() }]);
   };
 
   const handleDeleteShortcut = (id) => {
@@ -137,79 +148,132 @@ export const BudgetPage = ({ onNavigate }) => {
     }
   };
 
+  const handleSavePlanning = ({ fixedExpenses: newFixed, targetSavings: newSavings }) => {
+    setFixedExpenses(newFixed);
+    setTargetSavings(newSavings);
+  };
+
   return (
-    <div className="w-full min-h-screen bg-[#121212] flex justify-center">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-28 px-1">
-        <BudgetHeader month={month} year={year} />
+    <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-28 px-4">
+        <PageTransition className="flex-1 flex flex-col">
+          <BudgetHeader month={month} year={year} />
 
-        <main className="flex-1">
-          <BudgetOverview
-            summary={summary}
-            month={month}
-            year={year}
-            shortcuts={shortcuts}
-            fixedExpenses={fixedExpenses}
-            targetSavings={targetSavings}
-            onOpenQuickMinus={openMinusMoney}
-            onOpenQuickAdd={openAddMoney}
-            onOpenSetBudget={() => setIsBudgetModalOpen(true)}
-            onOpenCustomShortcuts={() => setIsShortcutModalOpen(true)}
-            onOpenPlanning={() => setIsPlanningModalOpen(true)}
-            onDirectMinus={handleDirectMinus}
-            onDeductOne={handleDeductOne}
-            onDeductAll={handleDeductAll}
-          />
+          <main className="flex-1 space-y-4">
+            <BudgetOverview
+              summary={summary}
+              month={month}
+              year={year}
+              shortcuts={shortcuts}
+              fixedExpenses={fixedExpenses}
+              targetSavings={targetSavings}
+              progressCardColor={settings.progressCardColor || '#FF6D1F'}
+              showRecommendations={settings.showRecommendations !== false}
+              onOpenQuickMinus={openMinusMoney}
+              onOpenQuickAdd={openAddMoney}
+              onOpenSetBudget={() => setIsBudgetModalOpen(true)}
+              onOpenCustomShortcuts={() => setIsShortcutModalOpen(true)}
+              onOpenPlanning={() => setIsPlanningModalOpen(true)}
+              onDirectMinus={handleDirectMinus}
+              onDeductOne={handleDeductOne}
+              onDeductAll={handleDeductAll}
+            />
 
-          {error && (
-            <div className="mt-4 bg-[#B90F14]/20 border border-[#B90F14]/40 text-[#ff7875] text-[12.5px] rounded-xl p-3 text-center">
-              {error}
-            </div>
-          )}
+            {error && (
+              <div className="bg-[#EF4444]/15 border border-[#EF4444]/30 text-[#FCA5A5] text-xs rounded-2xl p-3 text-center">
+                {error}
+              </div>
+            )}
 
-          <div className="mt-4">
-            <div className="flex items-center justify-between mb-3 px-1">
-              <h3 className="text-[14.5px] font-medium text-[#EDEDED]">
-                Recent Transactions
-              </h3>
-              <span className="text-[12px] text-[#9A9A9A]">
-                {transactions.length} items
-              </span>
-            </div>
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center justify-between px-1">
+                <h3 className="text-xs font-bold text-[#8A92A0] uppercase tracking-wider">
+                  Transactions
+                </h3>
 
-            <div className="space-y-3">
-              {loading ? (
-                <div className="py-12 flex flex-col items-center justify-center gap-3">
-                  <div className="w-6 h-6 border-2 border-[#8CFF57] border-t-transparent rounded-full animate-spin" />
-                  <span className="text-[12.5px] text-[#888888]">
-                    Loading transactions...
-                  </span>
-                </div>
-              ) : transactions.length === 0 ? (
-                <div className="w-full bg-[#181818] border border-white/5 rounded-2xl p-6 text-center">
-                  <p className="text-[13.5px] text-[#9A9A9A] mb-3">
-                    No transactions recorded for this month
-                  </p>
+                <div className="flex items-center gap-1 bg-[#14171E] border border-white/[0.06] p-0.5 rounded-xl">
                   <button
                     type="button"
-                    onClick={openMinusMoney}
-                    className="bg-[#FF6B2C] hover:bg-[#ff5814] text-white text-[13px] font-semibold py-2 px-4 rounded-xl transition-all cursor-pointer inline-flex items-center gap-1.5"
+                    onClick={() => setFilterType('all')}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                      filterType === 'all'
+                        ? 'bg-[#FF6D1F] text-white shadow-sm'
+                        : 'text-[#8A92A0] hover:text-white'
+                    }`}
                   >
-                    − Minus First Money
+                    All ({transactions.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFilterType('expense')}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                      filterType === 'expense'
+                        ? 'bg-[#EF4444] text-white shadow-sm'
+                        : 'text-[#8A92A0] hover:text-[#EF4444]'
+                    }`}
+                  >
+                    Spends ({expenseTransactions.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFilterType('income')}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                      filterType === 'income'
+                        ? 'bg-[#10B981] text-white shadow-sm'
+                        : 'text-[#8A92A0] hover:text-[#10B981]'
+                    }`}
+                  >
+                    Income ({incomeTransactions.length})
                   </button>
                 </div>
-              ) : (
-                transactions.map((tx) => (
-                  <TransactionCard
-                    key={tx._id}
-                    transaction={tx}
-                    onEditTransaction={(item) => setEditingTransaction(item)}
-                    onDeleteTransaction={deleteTransaction}
-                  />
-                ))
-              )}
+              </div>
+
+              <div className="space-y-3">
+                {loading && transactions.length === 0 ? (
+                  <SkeletonCard count={3} />
+                ) : filteredTransactions.length === 0 ? (
+                  <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[28px] p-8 text-center shadow-xl">
+                    <div className="w-14 h-14 rounded-2xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center mx-auto mb-3 shadow-inner">
+                      <Wallet className="w-7 h-7" />
+                    </div>
+                    <h4 className="text-base font-bold text-white mb-1">
+                      {filterType === 'expense'
+                        ? 'No Spends Recorded'
+                        : filterType === 'income'
+                        ? 'No Income Added'
+                        : 'No Transactions Yet'}
+                    </h4>
+                    <p className="text-xs text-[#8A92A0] max-w-[240px] mx-auto mb-4 leading-relaxed">
+                      {filterType === 'expense'
+                        ? 'Log your daily spending or use Quick Deduct above.'
+                        : filterType === 'income'
+                        ? 'Add pocket money, allowance, or salary deposits.'
+                        : 'Start recording your daily expenses and income for this month.'}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={filterType === 'income' ? openAddMoney : openMinusMoney}
+                      className="bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#FF6D1F]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
+                    >
+                      {filterType === 'income' ? '+ Add First Income' : '− Minus First Money'}
+                    </button>
+                  </div>
+                ) : (
+                  <AnimatePresence mode="popLayout">
+                    {filteredTransactions.map((tx) => (
+                      <TransactionCard
+                        key={tx._id}
+                        transaction={tx}
+                        onEditTransaction={(item) => setEditingTransaction(item)}
+                        onDeleteTransaction={deleteTransaction}
+                      />
+                    ))}
+                  </AnimatePresence>
+                )}
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </PageTransition>
 
         <BottomNavigation
           activeTab="budget"

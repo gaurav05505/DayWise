@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Plus, Trash2 } from 'lucide-react';
+import { X, Plus, Trash2, Tag } from 'lucide-react';
 
 export const ManageCategoriesModal = ({
   isOpen,
@@ -38,35 +38,40 @@ export const ManageCategoriesModal = ({
   const currentCategories = categories.filter((c) => c.type === type);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="w-full max-w-[340px] max-h-[85vh] flex flex-col bg-[#1C1C1C] border border-white/10 rounded-2xl p-5 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
-        <div className="flex items-center justify-between mb-3 shrink-0">
-          <h3 className="text-[16px] font-semibold text-[#EDEDED]">
-            Manage Categories
-          </h3>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md">
+      <div className="w-full max-w-[360px] max-h-[85vh] flex flex-col bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+        <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+              <Tag className="w-4.5 h-4.5" />
+            </div>
+            <h3 className="text-base font-bold text-white">
+              Manage Categories
+            </h3>
+          </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-[#888888] hover:text-white p-1 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#8A92A0] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4.5 h-4.5" />
           </button>
         </div>
 
         {error && (
-          <div className="bg-[#B90F14]/20 border border-[#B90F14]/40 text-[#ff7875] text-[12.5px] rounded-lg p-2.5 mb-3 shrink-0">
+          <div className="bg-[#EF4444]/15 border border-[#EF4444]/30 text-[#FCA5A5] text-xs rounded-xl p-2.5 my-2 shrink-0">
             {error}
           </div>
         )}
 
-        <div className="flex rounded-xl bg-[#242424] p-1 mb-3 shrink-0">
+        <div className="flex rounded-2xl bg-[#1A1F29] p-1.5 my-3 shrink-0 border border-white/[0.06]">
           <button
             type="button"
             onClick={() => setType('expense')}
-            className={`flex-1 py-1.5 text-[12px] font-medium rounded-lg transition-colors cursor-pointer ${
+            className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               type === 'expense'
-                ? 'bg-[#FF6B2C] text-white shadow-sm'
-                : 'text-[#9A9A9A] hover:text-white'
+                ? 'bg-[#EF4444] text-white shadow-md'
+                : 'text-[#8A92A0] hover:text-white'
             }`}
           >
             Expense
@@ -74,17 +79,17 @@ export const ManageCategoriesModal = ({
           <button
             type="button"
             onClick={() => setType('income')}
-            className={`flex-1 py-1.5 text-[12px] font-medium rounded-lg transition-colors cursor-pointer ${
+            className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               type === 'income'
-                ? 'bg-[#277A10] text-white shadow-sm'
-                : 'text-[#9A9A9A] hover:text-white'
+                ? 'bg-[#10B981] text-[#090A0F] shadow-md'
+                : 'text-[#8A92A0] hover:text-white'
             }`}
           >
             Income
           </button>
         </div>
 
-        <form onSubmit={handleAdd} className="mb-4 shrink-0">
+        <form onSubmit={handleAdd} className="mb-3 shrink-0">
           <div className="flex gap-2">
             <input
               type="text"
@@ -92,44 +97,40 @@ export const ManageCategoriesModal = ({
               onChange={(e) => setName(e.target.value)}
               placeholder={`New ${type} category...`}
               required
-              className="flex-1 min-w-0 bg-[#242424] border border-white/10 rounded-xl px-3 py-2 text-[13px] text-[#EDEDED] placeholder-[#666666] focus:outline-none focus:border-[#FF6B2C]"
+              className="flex-1 min-w-0 bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
             />
 
             <button
               type="submit"
               disabled={submitting}
-              className={`px-3 py-2 text-white text-[12.5px] font-medium rounded-xl flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50 shrink-0 transition-colors shadow-sm ${
-                type === 'income'
-                  ? 'bg-[#277A10] hover:bg-[#20660c]'
-                  : 'bg-[#FF6B2C] hover:bg-[#ff550f]'
-              }`}
+              className="px-3.5 py-2 bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50 shrink-0 transition-all shadow-md shadow-[#FF6D1F]/20"
             >
-              <Plus className="w-4 h-4 stroke-[2.5]" />
+              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Add</span>
             </button>
           </div>
         </form>
 
-        <div className="flex-1 overflow-y-auto space-y-1.5 pr-1">
-          <h4 className="text-[12px] font-medium text-[#9A9A9A] uppercase tracking-wider mb-2">
+        <div className="flex-1 overflow-y-auto space-y-2 pr-1 border-t border-white/[0.06] pt-2">
+          <h4 className="text-[11px] font-bold text-[#8A92A0] uppercase tracking-wider mb-2">
             {type} Categories ({currentCategories.length})
           </h4>
 
           {currentCategories.length === 0 ? (
-            <p className="text-[12.5px] text-[#666666] py-3 text-center">
+            <p className="text-xs text-[#525B6D] py-3 text-center">
               No {type} categories added yet.
             </p>
           ) : (
             currentCategories.map((c) => (
               <div
                 key={c._id}
-                className="flex items-center justify-between bg-[#222222] border border-white/5 rounded-xl px-3 py-2 text-[13px]"
+                className="flex items-center justify-between bg-[#1A1F29] border border-white/[0.06] rounded-2xl px-3.5 py-2.5 text-xs"
               >
-                <span className="text-[#EDEDED] truncate max-w-[200px]">{c.name}</span>
+                <span className="text-white font-medium truncate max-w-[200px]">{c.name}</span>
                 <button
                   type="button"
                   onClick={() => onDeleteCategory(c._id)}
-                  className="text-[#888888] hover:text-[#ff4d4f] p-1 transition-colors cursor-pointer shrink-0"
+                  className="text-[#8A92A0] hover:text-[#EF4444] p-1 transition-colors cursor-pointer shrink-0"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>

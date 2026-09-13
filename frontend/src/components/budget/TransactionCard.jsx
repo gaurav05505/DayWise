@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { MoreVertical, Trash2, Pencil } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MoreVertical, Trash2, Pencil, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
 export const TransactionCard = ({
   transaction,
@@ -10,33 +11,47 @@ export const TransactionCard = ({
 
   const isIncome = transaction.type === 'income';
   const dateObj = new Date(transaction.date);
-  const formattedDate = `${dateObj.getDate()} ${dateObj
-    .toLocaleString('en-US', { month: 'short' })
-    .toLowerCase()}`;
+  const formattedDate = dateObj.toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+  });
 
   return (
-    <div className="w-full bg-[#1A1A1A] border border-white/5 rounded-2xl p-4 flex items-center justify-between relative">
-      <div className="flex-1 min-w-0 pr-2">
-        <div className="flex items-center gap-2 mb-1">
-          <span
-            className={`w-[2.5px] h-3.5 rounded-full inline-block shrink-0 ${
-              isIncome ? 'bg-[#8CFF57]' : 'bg-[#FF6B2C]'
-            }`}
-          />
-          <h4 className="text-[14.5px] font-medium text-[#EDEDED] truncate">
-            {transaction.title || (isIncome ? 'Received Money' : 'Spent Money')}
-          </h4>
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] p-4 flex items-center justify-between relative shadow-lg"
+    >
+      <div className="flex items-center gap-3.5 min-w-0 pr-2">
+        <div
+          className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${
+            isIncome ? 'bg-[#10B981]/15 text-[#10B981]' : 'bg-[#EF4444]/15 text-[#EF4444]'
+          }`}
+        >
+          {isIncome ? (
+            <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+          ) : (
+            <ArrowDownRight className="w-5 h-5 stroke-[2.5]" />
+          )}
         </div>
 
-        <div className="text-[12px] text-[#9A9A9A]">
-          <span>{formattedDate}</span>
+        <div className="min-w-0">
+          <h4 className="text-[14.5px] font-bold text-white truncate tracking-tight">
+            {transaction.title || (isIncome ? 'Received Money' : 'Spent Money')}
+          </h4>
+          <span className="text-[11.5px] text-[#8A92A0]">
+            {formattedDate}
+          </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-2.5 shrink-0">
         <span
-          className={`text-[15px] font-bold tracking-tight ${
-            isIncome ? 'text-[#8CFF57]' : 'text-[#EDEDED]'
+          className={`text-[15px] font-black tracking-tight ${
+            isIncome ? 'text-[#10B981]' : 'text-white'
           }`}
         >
           {isIncome ? '+' : '-'}₹{transaction.amount.toLocaleString()}
@@ -47,40 +62,48 @@ export const TransactionCard = ({
             type="button"
             aria-label="More options"
             onClick={() => setShowMenu((prev) => !prev)}
-            className="text-[#888888] hover:text-white p-1 transition-colors cursor-pointer"
+            className="text-[#64748B] hover:text-white p-1 transition-colors cursor-pointer"
           >
             <MoreVertical className="w-4 h-4" />
           </button>
 
-          {showMenu && (
-            <div className="absolute right-0 top-8 z-30 bg-[#242424] border border-white/10 rounded-xl py-1 px-1 shadow-xl min-w-[120px]">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowMenu(false);
-                  onEditTransaction(transaction);
-                }}
-                className="w-full text-left px-3 py-1.5 text-[12.5px] text-[#EDEDED] hover:bg-white/5 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
+          <AnimatePresence>
+            {showMenu && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: -4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -4 }}
+                transition={{ duration: 0.15 }}
+                className="absolute right-0 top-8 z-30 bg-[#1A1F29] border border-white/10 rounded-2xl py-1.5 px-1 shadow-2xl min-w-[125px]"
               >
-                <Pencil className="w-3.5 h-3.5 text-[#9A9A9A]" />
-                <span>Edit</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowMenu(false);
+                    onEditTransaction(transaction);
+                  }}
+                  className="w-full text-left px-3 py-2 text-[12.5px] text-[#F3F4F6] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Pencil className="w-3.5 h-3.5 text-[#FF6D1F]" />
+                  <span>Edit</span>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setShowMenu(false);
-                  onDeleteTransaction(transaction._id);
-                }}
-                className="w-full text-left px-3 py-1.5 text-[12.5px] text-[#ff4d4f] hover:bg-white/5 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span>Delete</span>
-              </button>
-            </div>
-          )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowMenu(false);
+                    onDeleteTransaction(transaction._id);
+                  }}
+                  className="w-full text-left px-3 py-2 text-[12.5px] text-[#EF4444] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete</span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

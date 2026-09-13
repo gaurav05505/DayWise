@@ -1,103 +1,49 @@
-const API_BASE = '/api';
-
-const handleResponse = async (res) => {
-  const text = await res.text();
-  let data;
-  try {
-    data = text ? JSON.parse(text) : {};
-  } catch {
-    data = { message: text || `HTTP error ${res.status}` };
-  }
-
-  if (!res.ok) {
-    throw new Error(data.message || `Request failed with status ${res.status}`);
-  }
-
-  return data;
-};
+import { budgetRepository } from '../db/budgetRepository.js';
+import { transactionRepository } from '../db/transactionRepository.js';
+import { categoryRepository } from '../db/categoryRepository.js';
 
 export const budgetService = {
   async getCategories(type) {
-    const query = type ? `?type=${type}` : '';
-    const res = await fetch(`${API_BASE}/categories${query}`);
-    return handleResponse(res);
+    return categoryRepository.getAll(type);
   },
 
   async createCategory(data) {
-    const res = await fetch(`${API_BASE}/categories`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return handleResponse(res);
+    return categoryRepository.create(data);
   },
 
   async deleteCategory(id) {
-    const res = await fetch(`${API_BASE}/categories/${id}`, {
-      method: 'DELETE',
-    });
-    return handleResponse(res);
+    return categoryRepository.delete(id);
   },
 
   async getTransactions(month, year, type, category) {
-    const params = new URLSearchParams();
-    if (month) params.append('month', month);
-    if (year) params.append('year', year);
-    if (type) params.append('type', type);
-    if (category) params.append('category', category);
-
-    const query = params.toString() ? `?${params.toString()}` : '';
-    const res = await fetch(`${API_BASE}/transactions${query}`);
-    return handleResponse(res);
+    return transactionRepository.getAll(month, year, type, category);
   },
 
   async createTransaction(data) {
-    const res = await fetch(`${API_BASE}/transactions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return handleResponse(res);
+    return transactionRepository.create(data);
   },
 
   async updateTransaction(id, data) {
-    const res = await fetch(`${API_BASE}/transactions/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return handleResponse(res);
+    return transactionRepository.update(id, data);
   },
 
   async deleteTransaction(id) {
-    const res = await fetch(`${API_BASE}/transactions/${id}`, {
-      method: 'DELETE',
-    });
-    return handleResponse(res);
+    return transactionRepository.delete(id);
   },
 
   async setBudget(data) {
-    const res = await fetch(`${API_BASE}/budget`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return handleResponse(res);
+    return budgetRepository.setBudget(data);
   },
 
   async getBudget(month, year) {
-    const res = await fetch(`${API_BASE}/budget?month=${month}&year=${year}`);
-    return handleResponse(res);
+    return budgetRepository.getBudget(month, year);
   },
 
   async getBudgetSummary(month, year) {
-    const res = await fetch(`${API_BASE}/budget/summary?month=${month}&year=${year}`);
-    return handleResponse(res);
+    return budgetRepository.getSummary(month, year);
   },
 
   async getCategorySummary(month, year) {
-    const res = await fetch(`${API_BASE}/budget/categories?month=${month}&year=${year}`);
-    return handleResponse(res);
+    return budgetRepository.getCategorySummary(month, year);
   },
 };
-

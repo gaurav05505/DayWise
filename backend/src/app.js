@@ -5,6 +5,8 @@ import attendanceRoutes from './routes/attendance.routes.js';
 import categoryRoutes from './routes/category.routes.js';
 import transactionRoutes from './routes/transaction.routes.js';
 import budgetRoutes from './routes/budget.routes.js';
+import customBudgetRoutes from './routes/customBudget.routes.js';
+import customBudgetTransactionRoutes from './routes/customBudgetTransaction.routes.js';
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.use('/api/attendance', attendanceRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/budget', budgetRoutes);
+app.use('/api/custom-budgets', customBudgetRoutes);
+app.use('/api/custom-budget-transactions', customBudgetTransactionRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });

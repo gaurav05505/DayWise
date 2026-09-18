@@ -13,7 +13,6 @@ import {
 import { BudgetProgress } from '../components/customBudget/BudgetProgress.jsx';
 import { CustomBudgetTransactionModal } from '../components/customBudget/CustomBudgetTransactionModal.jsx';
 import { CreateBudgetModal } from '../components/customBudget/CreateBudgetModal.jsx';
-import { BottomNavigation } from '../components/attendance/BottomNavigation.jsx';
 import { customBudgetService } from '../services/customBudgetService.js';
 import { formatCurrency, formatDate, getBudgetIcon } from '../utils/budgetUtils.js';
 import { PageTransition } from '../components/animations/PageTransition.jsx';
@@ -330,11 +329,6 @@ export const CustomBudgetDetailsPage = ({
             </div>
           </main>
         </PageTransition>
-
-        <BottomNavigation
-          activeTab="custom-budgets"
-          onTabChange={(tab) => onNavigate?.(tab)}
-        />
 
         <CustomBudgetTransactionModal
           isOpen={isTxModalOpen}

@@ -5,7 +5,6 @@ import { useSettings } from '../hooks/useSettings.js';
 import { BudgetHeader } from '../components/budget/BudgetHeader.jsx';
 import { BudgetOverview } from '../components/budget/BudgetOverview.jsx';
 import { TransactionCard } from '../components/budget/TransactionCard.jsx';
-import { BottomNavigation } from '../components/attendance/BottomNavigation.jsx';
 import { QuickMinusModal } from '../components/budget/QuickMinusModal.jsx';
 import { SetBudgetModal } from '../components/budget/SetBudgetModal.jsx';
 import { EditTransactionModal } from '../components/budget/EditTransactionModal.jsx';
@@ -274,11 +273,6 @@ export const BudgetPage = ({ onNavigate }) => {
             </div>
           </main>
         </PageTransition>
-
-        <BottomNavigation
-          activeTab="budget"
-          onTabChange={(tab) => onNavigate?.(tab)}
-        />
 
         <QuickMinusModal
           isOpen={isQuickModalOpen}

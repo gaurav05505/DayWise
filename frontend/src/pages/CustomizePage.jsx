@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Target, Palette, Sparkles, Check, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { PageTransition } from '../components/animations/PageTransition.jsx';
-import { BottomNavigation } from '../components/attendance/BottomNavigation.jsx';
 import { useSettings } from '../hooks/useSettings.js';
 
 const PRESET_TARGETS = [70, 75, 80, 85, 90];
@@ -333,11 +332,6 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
             </button>
           </main>
         </PageTransition>
-
-        <BottomNavigation
-          activeTab="more"
-          onTabChange={(tab) => onNavigate?.(tab)}
-        />
       </div>
     </div>
   );

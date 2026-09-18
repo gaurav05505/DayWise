@@ -6,6 +6,7 @@ import { CustomBudgetsPage } from './pages/CustomBudgetsPage.jsx';
 import { CustomBudgetDetailsPage } from './pages/CustomBudgetDetailsPage.jsx';
 import { MorePage } from './pages/MorePage.jsx';
 import { CustomizePage } from './pages/CustomizePage.jsx';
+import { BottomNavigation } from './components/attendance/BottomNavigation.jsx';
 import { OfflineIndicator } from './components/common/OfflineIndicator.jsx';
 import { SplashScreen } from './components/animations/SplashScreen.jsx';
 
@@ -22,6 +23,12 @@ const App = () => {
   const handleSelectCustomBudget = (budgetId) => {
     setSelectedCustomBudgetId(budgetId);
     setCurrentPage('custom-budget-details');
+  };
+
+  const getActiveNavTab = () => {
+    if (currentPage === 'custom-budget-details') return 'custom-budgets';
+    if (currentPage === 'customize') return 'more';
+    return currentPage;
   };
 
   return (
@@ -67,6 +74,11 @@ const App = () => {
           />
         )}
       </AnimatePresence>
+
+      <BottomNavigation
+        activeTab={getActiveNavTab()}
+        onTabChange={handleNavigate}
+      />
     </>
   );
 };

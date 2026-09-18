@@ -15,7 +15,6 @@ import { ThemeSelector } from '../components/more/ThemeSelector.jsx';
 import { AttendanceTargetModal } from '../components/more/AttendanceTargetModal.jsx';
 import { ConfirmationModal } from '../components/more/ConfirmationModal.jsx';
 import { AboutSection } from '../components/more/AboutSection.jsx';
-import { BottomNavigation } from '../components/attendance/BottomNavigation.jsx';
 import { PageTransition } from '../components/animations/PageTransition.jsx';
 
 export const MorePage = ({ onNavigate }) => {
@@ -143,11 +142,6 @@ export const MorePage = ({ onNavigate }) => {
           accept=".json"
           onChange={handleFileChange}
           className="hidden"
-        />
-
-        <BottomNavigation
-          activeTab="more"
-          onTabChange={(tab) => onNavigate?.(tab)}
         />
 
         <ThemeSelector

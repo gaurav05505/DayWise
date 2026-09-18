@@ -5,7 +5,6 @@ import { useCustomBudgets } from '../hooks/useCustomBudgets.js';
 import { CustomBudgetSummary } from '../components/customBudget/CustomBudgetSummary.jsx';
 import { CustomBudgetCard } from '../components/customBudget/CustomBudgetCard.jsx';
 import { CreateBudgetModal } from '../components/customBudget/CreateBudgetModal.jsx';
-import { BottomNavigation } from '../components/attendance/BottomNavigation.jsx';
 import { PageTransition } from '../components/animations/PageTransition.jsx';
 import { SkeletonCard } from '../components/common/SkeletonCard.jsx';
 
@@ -130,11 +129,6 @@ export const CustomBudgetsPage = ({ onNavigate, onSelectBudget }) => {
             )}
           </main>
         </PageTransition>
-
-        <BottomNavigation
-          activeTab="custom-budgets"
-          onTabChange={(tab) => onNavigate?.(tab)}
-        />
 
         <CreateBudgetModal
           isOpen={isCreateModalOpen}

@@ -5,7 +5,6 @@ import { useSettings } from '../hooks/useSettings.js';
 import { AttendanceHeader } from '../components/attendance/AttendanceHeader.jsx';
 import { AttendanceOverview } from '../components/attendance/AttendanceOverview.jsx';
 import { SubjectCard } from '../components/attendance/SubjectCard.jsx';
-import { BottomNavigation } from '../components/attendance/BottomNavigation.jsx';
 import { AddSubjectModal } from '../components/attendance/AddSubjectModal.jsx';
 import { EditSubjectModal } from '../components/attendance/EditSubjectModal.jsx';
 import { BulkAttendanceModal } from '../components/attendance/BulkAttendanceModal.jsx';
@@ -98,11 +97,6 @@ export const AttendancePage = ({ onNavigate }) => {
             </div>
           </main>
         </PageTransition>
-
-        <BottomNavigation
-          activeTab="attendance"
-          onTabChange={(tab) => onNavigate?.(tab)}
-        />
 
         <AddSubjectModal
           isOpen={isAddModalOpen}

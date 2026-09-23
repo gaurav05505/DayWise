@@ -179,7 +179,7 @@ export const BulkAttendanceModal = ({
                 <button
                   type="submit"
                   disabled={submitting || subjects.length === 0}
-                  className="flex-1 bg-[#FF6D1F] hover:bg-[#E85C0D] disabled:opacity-50 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#FF6D1F]/20 cursor-pointer"
+                  className="flex-1 bg-[#55F130] hover:bg-[#48D827] disabled:opacity-50 text-[#090A0F] text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#55F130]/20 cursor-pointer"
                 >
                   {submitting ? 'Saving...' : 'Submit All'}
                 </button>

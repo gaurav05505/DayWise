@@ -4,7 +4,7 @@ import { settingsService } from '../services/settingsService.js';
 const DEFAULT_SETTINGS = {
   theme: 'dark',
   attendanceTarget: 75,
-  progressCardColor: '#FF6D1F',
+  progressCardColor: '#55F130',
   showRecommendations: true,
 };
 

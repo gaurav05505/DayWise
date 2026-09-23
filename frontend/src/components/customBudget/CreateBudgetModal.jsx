@@ -93,7 +93,7 @@ export const CreateBudgetModal = ({
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center">
                   <PiggyBank className="w-4.5 h-4.5" />
                 </div>
                 <h2 className="text-base font-bold text-white">
@@ -125,13 +125,13 @@ export const CreateBudgetModal = ({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Travel, Gym, College, Shopping"
-                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#55F130] transition-colors"
                 />
               </div>
 
               <div>
                 <div className="flex items-center gap-1 text-[11px] text-[#8A92A0] mb-2">
-                  <Sparkles className="w-3 h-3 text-[#FF6D1F]" />
+                  <Sparkles className="w-3 h-3 text-[#55F130]" />
                   <span>Suggestions:</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
@@ -142,7 +142,7 @@ export const CreateBudgetModal = ({
                       onClick={() => setName(sName)}
                       className={`text-[11px] px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
                         name === sName
-                          ? 'bg-[#FF6D1F]/20 border-[#FF6D1F] text-[#FF6D1F] font-bold'
+                          ? 'bg-[#55F130]/20 border-[#55F130] text-[#55F130] font-bold'
                           : 'bg-[#1A1F29] border-white/[0.06] text-[#8A92A0] hover:text-white hover:border-white/20'
                       }`}
                     >
@@ -167,7 +167,7 @@ export const CreateBudgetModal = ({
                     placeholder="5000"
                     min="1"
                     step="any"
-                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl pl-8 pr-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl pl-8 pr-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#55F130] transition-colors"
                   />
                 </div>
               </div>
@@ -181,7 +181,7 @@ export const CreateBudgetModal = ({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="e.g. For Goa trip or Semester fees"
-                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#55F130] transition-colors"
                 />
               </div>
 
@@ -194,7 +194,7 @@ export const CreateBudgetModal = ({
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none focus:border-[#55F130] transition-colors"
                   />
                 </div>
                 <div>
@@ -205,7 +205,7 @@ export const CreateBudgetModal = ({
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none focus:border-[#55F130] transition-colors"
                   />
                 </div>
               </div>
@@ -220,7 +220,7 @@ export const CreateBudgetModal = ({
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold shadow-md shadow-[#FF6D1F]/20 transition-all cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold shadow-md shadow-[#55F130]/20 transition-all cursor-pointer"
                 >
                   {initialData ? 'Save Changes' : 'Create Budget'}
                 </button>

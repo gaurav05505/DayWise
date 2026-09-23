@@ -86,6 +86,16 @@ export const useAttendance = () => {
     }
   };
 
+  const deleteLog = async (subjectId, logId) => {
+    try {
+      await attendanceService.deleteLog(subjectId, logId);
+      await fetchData();
+      return { success: true };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  };
+
   return {
     subjects,
     summary,
@@ -98,5 +108,6 @@ export const useAttendance = () => {
     markAbsent,
     markBulkAttendance,
     deleteSubject,
+    deleteLog,
   };
 };

@@ -177,7 +177,7 @@ export const QuickMinusModal = ({
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Note (optional e.g. Snacks, Chai, Auto)"
-                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130]"
                 />
               </div>
 

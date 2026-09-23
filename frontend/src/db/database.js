@@ -13,13 +13,13 @@ export const generateId = () => {
 const DEFAULT_CATEGORIES = [
   { name: 'Salary', type: 'income', icon: 'wallet', color: '#8CFF57' },
   { name: 'Pocket Money', type: 'income', icon: 'piggy-bank', color: '#00C9A7' },
-  { name: 'Food & Mess', type: 'expense', icon: 'utensils', color: '#FF9F43' },
+  { name: 'Food & Mess', type: 'expense', icon: 'utensils', color: '#55F130' },
   { name: 'Travel & Transport', type: 'expense', icon: 'bus', color: '#54A0FF' },
   { name: 'Rent & Accommodation', type: 'expense', icon: 'home', color: '#5F27CD' },
   { name: 'Shopping', type: 'expense', icon: 'shopping-bag', color: '#EE5253' },
   { name: 'Books & Supplies', type: 'expense', icon: 'book-open', color: '#8CFF57' },
   { name: 'Entertainment', type: 'expense', icon: 'film', color: '#FF6EA7' },
-  { name: 'General Expense', type: 'expense', icon: 'tag', color: '#FF6B2C' },
+  { name: 'General Expense', type: 'expense', icon: 'tag', color: '#4ADE80' },
 ];
 
 export const getDB = async () => {

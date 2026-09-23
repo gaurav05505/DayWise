@@ -59,6 +59,10 @@ export const attendanceService = {
     return subjectRepository.delete(id);
   },
 
+  async deleteLog(subjectId, logId) {
+    return subjectRepository.deleteLog(subjectId, logId);
+  },
+
   async getSummary() {
     const subjects = await this.getSubjects();
     const target = await settingsRepository.get('attendanceTarget', 75);

@@ -42,7 +42,7 @@ export const ManageCategoriesModal = ({
       <div className="w-full max-w-[360px] max-h-[85vh] flex flex-col bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center">
               <Tag className="w-4.5 h-4.5" />
             </div>
             <h3 className="text-base font-bold text-white">
@@ -97,13 +97,13 @@ export const ManageCategoriesModal = ({
               onChange={(e) => setName(e.target.value)}
               placeholder={`New ${type} category...`}
               required
-              className="flex-1 min-w-0 bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+              className="flex-1 min-w-0 bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130]"
             />
 
             <button
               type="submit"
               disabled={submitting}
-              className="px-3.5 py-2 bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50 shrink-0 transition-all shadow-md shadow-[#FF6D1F]/20"
+              className="px-3.5 py-2 bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50 shrink-0 transition-all shadow-md shadow-[#55F130]/20"
             >
               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Add</span>

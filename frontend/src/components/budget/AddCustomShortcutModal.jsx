@@ -58,7 +58,7 @@ export const AddCustomShortcutModal = ({
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center">
                   <Zap className="w-4.5 h-4.5" />
                 </div>
                 <div>
@@ -93,7 +93,7 @@ export const AddCustomShortcutModal = ({
                   onChange={(e) => setLabel(e.target.value)}
                   placeholder="e.g. Rent, Chai"
                   required
-                  className="bg-[#1A1F29] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+                  className="bg-[#1A1F29] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130]"
                 />
 
                 <input
@@ -103,13 +103,13 @@ export const AddCustomShortcutModal = ({
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="₹ Amount"
                   required
-                  className="bg-[#1A1F29] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+                  className="bg-[#1A1F29] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#FF6D1F]/20 cursor-pointer"
+                className="w-full bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#55F130]/20 cursor-pointer"
               >
                 + Add Custom Button
               </button>

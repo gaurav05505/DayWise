@@ -23,12 +23,12 @@ export const TransactionCard = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.2 }}
-      className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] p-4 flex items-center justify-between relative shadow-lg"
+      className="w-full bg-[#14161B] border border-white/[0.04] rounded-[24px] p-4 flex items-center justify-between relative shadow-xl"
     >
       <div className="flex items-center gap-3.5 min-w-0 pr-2">
         <div
           className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${
-            isIncome ? 'bg-[#10B981]/15 text-[#10B981]' : 'bg-[#EF4444]/15 text-[#EF4444]'
+            isIncome ? 'bg-[#16A34A]/20 text-[#4ADE80]' : 'bg-[#EF4444]/20 text-[#EF4444]'
           }`}
         >
           {isIncome ? (
@@ -51,7 +51,7 @@ export const TransactionCard = ({
       <div className="flex items-center gap-2.5 shrink-0">
         <span
           className={`text-[15px] font-black tracking-tight ${
-            isIncome ? 'text-[#10B981]' : 'text-white'
+            isIncome ? 'text-[#4ADE80]' : 'text-white'
           }`}
         >
           {isIncome ? '+' : '-'}₹{transaction.amount.toLocaleString()}
@@ -62,44 +62,50 @@ export const TransactionCard = ({
             type="button"
             aria-label="More options"
             onClick={() => setShowMenu((prev) => !prev)}
-            className="text-[#64748B] hover:text-white p-1 transition-colors cursor-pointer"
+            className="text-[#8A92A0] hover:text-white p-1 transition-colors cursor-pointer"
           >
             <MoreVertical className="w-4 h-4" />
           </button>
 
           <AnimatePresence>
             {showMenu && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: -4 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -4 }}
-                transition={{ duration: 0.15 }}
-                className="absolute right-0 top-8 z-30 bg-[#1A1F29] border border-white/10 rounded-2xl py-1.5 px-1 shadow-2xl min-w-[125px]"
-              >
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowMenu(false);
-                    onEditTransaction(transaction);
-                  }}
-                  className="w-full text-left px-3 py-2 text-[12.5px] text-[#F3F4F6] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+              <>
+                <div
+                  className="fixed inset-0 z-20 cursor-default"
+                  onClick={() => setShowMenu(false)}
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-8 z-30 bg-[#1B1E26] border border-white/10 rounded-2xl py-1.5 px-1 shadow-2xl min-w-[125px]"
                 >
-                  <Pencil className="w-3.5 h-3.5 text-[#FF6D1F]" />
-                  <span>Edit</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowMenu(false);
+                      onEditTransaction(transaction);
+                    }}
+                    className="w-full text-left px-3 py-2 text-[12.5px] text-[#F3F4F6] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <Pencil className="w-3.5 h-3.5 text-[#55F130]" />
+                    <span>Edit</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowMenu(false);
-                    onDeleteTransaction(transaction._id);
-                  }}
-                  className="w-full text-left px-3 py-2 text-[12.5px] text-[#EF4444] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                  <span>Delete</span>
-                </button>
-              </motion.div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowMenu(false);
+                      onDeleteTransaction(transaction._id);
+                    }}
+                    className="w-full text-left px-3 py-2 text-[12.5px] text-[#EF4444] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete</span>
+                  </button>
+                </motion.div>
+              </>
             )}
           </AnimatePresence>
         </div>

@@ -27,8 +27,8 @@ export const SplashScreen = ({ onFinish }) => {
           className="relative mb-6"
         >
           <div className="w-24 h-24 rounded-3xl bg-[#14171E] border border-white/10 flex items-center justify-center relative shadow-2xl overflow-hidden">
-            <div className="absolute inset-0 bg-[#FF6D1F]/15 blur-xl rounded-full" />
-            <div className="w-14 h-14 rounded-2xl bg-[#FF6D1F] text-white flex items-center justify-center font-black text-2xl tracking-tighter shadow-lg shadow-[#FF6D1F]/30 relative z-10">
+            <div className="absolute inset-0 bg-[#55F130]/15 blur-xl rounded-full" />
+            <div className="w-14 h-14 rounded-2xl bg-[#55F130] text-[#090A0F] flex items-center justify-center font-black text-2xl tracking-tighter shadow-lg shadow-[#55F130]/30 relative z-10">
               DW
             </div>
           </div>
@@ -42,7 +42,7 @@ export const SplashScreen = ({ onFinish }) => {
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="absolute -inset-1 rounded-3xl bg-[#FF6D1F]/20 blur-md -z-10"
+            className="absolute -inset-1 rounded-3xl bg-[#55F130]/20 blur-md -z-10"
           />
         </motion.div>
 
@@ -53,7 +53,7 @@ export const SplashScreen = ({ onFinish }) => {
           className="text-2xl font-black tracking-tight text-white flex items-center gap-1.5"
         >
           <span>DayWise</span>
-          <span className="w-2 h-2 rounded-full bg-[#FF6D1F]" />
+          <span className="w-2 h-2 rounded-full bg-[#55F130]" />
         </motion.h1>
 
         <motion.p
@@ -71,9 +71,9 @@ export const SplashScreen = ({ onFinish }) => {
           transition={{ duration: 0.3, delay: 0.6 }}
           className="mt-8 flex items-center gap-1.5"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D1F] animate-pulse" />
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D1F]/60 animate-pulse [animation-delay:200ms]" />
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D1F]/30 animate-pulse [animation-delay:400ms]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#55F130] animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#55F130]/60 animate-pulse [animation-delay:200ms]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#55F130]/30 animate-pulse [animation-delay:400ms]" />
         </motion.div>
       </div>
     </motion.div>

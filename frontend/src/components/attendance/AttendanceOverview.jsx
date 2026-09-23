@@ -20,6 +20,9 @@ export const AttendanceOverview = ({
   const month = today.toLocaleString('en-US', { month: 'short' }).toLowerCase();
   const dateStr = `${day} ${month}`;
 
+  const canBunk = summary?.canBunk ?? 0;
+  const needToAttend = summary?.needToAttend ?? 0;
+
   const recommendationText = summary?.recommendation || (
     isHealthy
       ? `You may miss classes and still maintain ${targetPercentage}% attendance.`
@@ -33,7 +36,7 @@ export const AttendanceOverview = ({
           <span className="text-[13px] text-[#8A92A0] font-medium block">
             {dateStr}
           </span>
-          <div className="space-y-1 mt-3">
+          <div className="space-y-1 mt-2.5">
             <p className="text-[13px] text-white font-medium">
               Target : <span className="font-bold">{targetPercentage}%</span>
             </p>
@@ -47,6 +50,28 @@ export const AttendanceOverview = ({
                 {currentPercentage}%
               </span>
             </p>
+            <p className="text-[12px] text-[#8A92A0] font-medium pt-0.5">
+              {canBunk > 0 ? (
+                <span>
+                  Can leave :{' '}
+                  <span className="font-bold text-[#4ADE80]">
+                    {canBunk} class{canBunk > 1 ? 'es' : ''}
+                  </span>
+                </span>
+              ) : needToAttend > 0 ? (
+                <span>
+                  Need :{' '}
+                  <span className="font-bold text-[#EF4444]">
+                    {needToAttend} class{needToAttend > 1 ? 'es' : ''}
+                  </span>
+                </span>
+              ) : (
+                <span>
+                  Can leave :{' '}
+                  <span className="font-bold text-white">0 classes</span>
+                </span>
+              )}
+            </p>
           </div>
         </div>
 
@@ -54,7 +79,7 @@ export const AttendanceOverview = ({
           <button
             type="button"
             onClick={onOpenAddModal}
-            className="w-full bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-3 px-3 rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-[#FF6D1F]/20 transition-all cursor-pointer active:scale-95"
+            className="w-full bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-3 px-3 rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-[#55F130]/20 transition-all cursor-pointer active:scale-95"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Add Subject</span>

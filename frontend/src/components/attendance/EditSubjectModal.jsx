@@ -75,7 +75,7 @@ export const EditSubjectModal = ({ isOpen, onClose, subject, onUpdateSubject }) 
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center">
                   <Pencil className="w-4.5 h-4.5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -108,7 +108,7 @@ export const EditSubjectModal = ({ isOpen, onClose, subject, onUpdateSubject }) 
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Mathematics"
                   required
-                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130] transition-colors"
                 />
               </div>
 
@@ -122,7 +122,7 @@ export const EditSubjectModal = ({ isOpen, onClose, subject, onUpdateSubject }) 
                     min="0"
                     value={totalClasses}
                     onChange={(e) => setTotalClasses(e.target.value)}
-                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#55F130] transition-colors"
                   />
                 </div>
 
@@ -135,7 +135,7 @@ export const EditSubjectModal = ({ isOpen, onClose, subject, onUpdateSubject }) 
                     min="0"
                     value={attendedClasses}
                     onChange={(e) => setAttendedClasses(e.target.value)}
-                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
+                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#55F130] transition-colors"
                   />
                 </div>
               </div>
@@ -151,7 +151,7 @@ export const EditSubjectModal = ({ isOpen, onClose, subject, onUpdateSubject }) 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-[#FF6D1F] hover:bg-[#E85C0D] disabled:opacity-50 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#FF6D1F]/20 cursor-pointer"
+                  className="flex-1 bg-[#55F130] hover:bg-[#48D827] disabled:opacity-50 text-[#090A0F] text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#55F130]/20 cursor-pointer"
                 >
                   {submitting ? 'Saving...' : 'Save Changes'}
                 </button>

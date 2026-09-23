@@ -3,7 +3,7 @@ import { ChevronRight } from 'lucide-react';
 
 export const SettingsItem = ({
   icon: Icon,
-  iconColor = '#FF6D1F',
+  iconColor = '#55F130',
   title,
   subtitle,
   value,

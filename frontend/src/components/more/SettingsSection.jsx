@@ -8,7 +8,7 @@ export const SettingsSection = ({ title, children }) => {
           {title}
         </h3>
       )}
-      <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] divide-y divide-white/[0.06] overflow-hidden shadow-lg">
+      <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] divide-y divide-white/[0.04] overflow-hidden shadow-xl">
         {children}
       </div>
     </div>

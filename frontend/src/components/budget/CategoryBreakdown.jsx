@@ -27,7 +27,7 @@ export const CategoryBreakdown = ({ categorySummary, totalExpenses }) => {
               </div>
               <div className="w-full bg-[#1A1F29] h-2 rounded-full overflow-hidden">
                 <div
-                  className="bg-[#FF6D1F] h-full rounded-full transition-all duration-500"
+                  className="bg-[#55F130] h-full rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(100, percentage)}%` }}
                 />
               </div>

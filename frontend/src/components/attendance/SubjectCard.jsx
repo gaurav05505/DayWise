@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X, MoreVertical, Trash2, Pencil } from 'lucide-react';
+import { Check, X, MoreVertical, Trash2, Pencil, Clock } from 'lucide-react';
 
 export const SubjectCard = ({
   subject,
@@ -8,6 +8,7 @@ export const SubjectCard = ({
   onMarkAbsent,
   onEditSubject,
   onDeleteSubject,
+  onOpenHistory,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -16,7 +17,7 @@ export const SubjectCard = ({
   const isHealthy = percentage >= target;
   const strokeColor = isHealthy ? '#4ADE80' : '#EF4444';
 
-  const radius = 21;
+  const radius = 28;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (Math.min(100, Math.max(0, percentage)) / 100) * circumference;
 
@@ -30,7 +31,8 @@ export const SubjectCard = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.2 }}
-      className="w-full bg-[#14161B] border border-white/[0.04] rounded-[24px] p-4 shadow-xl relative"
+      onClick={() => onOpenHistory?.(subject)}
+      className="w-full bg-[#14161B] border border-white/[0.04] rounded-[24px] p-4 shadow-xl relative cursor-pointer active:scale-[0.99] transition-transform select-none"
     >
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0 pr-2">
@@ -63,22 +65,22 @@ export const SubjectCard = ({
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
-          <div className="relative flex items-center justify-center w-[52px] h-[52px] shrink-0">
-            <svg className="w-[52px] h-[52px] -rotate-90" viewBox="0 0 52 52">
+          <div className="relative flex items-center justify-center w-[68px] h-[68px] shrink-0">
+            <svg className="w-[68px] h-[68px] -rotate-90" viewBox="0 0 68 68">
               <circle
-                cx="26"
-                cy="26"
+                cx="34"
+                cy="34"
                 r={radius}
                 stroke="#1B1E26"
-                strokeWidth="4"
+                strokeWidth="5"
                 fill="transparent"
               />
               <motion.circle
-                cx="26"
-                cy="26"
+                cx="34"
+                cy="34"
                 r={radius}
                 stroke={strokeColor}
-                strokeWidth="4"
+                strokeWidth="5"
                 strokeDasharray={circumference}
                 initial={{ strokeDashoffset: circumference }}
                 animate={{ strokeDashoffset }}
@@ -87,17 +89,20 @@ export const SubjectCard = ({
                 fill="transparent"
               />
             </svg>
-            <span className="absolute text-[12px] font-bold text-white tracking-tight">
+            <span className="absolute text-[13.5px] font-bold text-white tracking-tight">
               {percentage}%
             </span>
           </div>
 
-          <div className="flex flex-col gap-1.5 shrink-0">
+          <div className="flex flex-col gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
             <motion.button
               type="button"
               aria-label="Mark Present"
               whileTap={{ scale: 0.88 }}
-              onClick={() => onMarkPresent(subject._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onMarkPresent(subject._id);
+              }}
               className="w-8 h-8 bg-[#16A34A] hover:bg-[#15803D] rounded-xl flex items-center justify-center text-white font-bold cursor-pointer shadow-sm transition-all"
             >
               <Check className="w-4 h-4 stroke-[3]" />
@@ -107,18 +112,24 @@ export const SubjectCard = ({
               type="button"
               aria-label="Mark Absent"
               whileTap={{ scale: 0.88 }}
-              onClick={() => onMarkAbsent(subject._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onMarkAbsent(subject._id);
+              }}
               className="w-8 h-8 bg-[#B91C1C] hover:bg-[#991B1B] rounded-xl flex items-center justify-center text-white font-bold cursor-pointer shadow-sm transition-all"
             >
               <X className="w-4 h-4 stroke-[3]" />
             </motion.button>
           </div>
 
-          <div className="relative">
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               aria-label="More options"
-              onClick={() => setShowMenu((prev) => !prev)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMenu((prev) => !prev);
+              }}
               className="w-7 h-7 rounded-lg flex items-center justify-center text-[#8A92A0] hover:text-white transition-colors cursor-pointer"
             >
               <MoreVertical className="w-4.5 h-4.5" />
@@ -129,7 +140,10 @@ export const SubjectCard = ({
                 <>
                   <div
                     className="fixed inset-0 z-20 cursor-default"
-                    onClick={() => setShowMenu(false)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowMenu(false);
+                    }}
                   />
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: -4 }}
@@ -140,25 +154,40 @@ export const SubjectCard = ({
                   >
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setShowMenu(false);
-                        onEditSubject(subject);
+                        onOpenHistory?.(subject);
                       }}
                       className="w-full text-left px-3 py-2 text-[12.5px] text-[#F3F4F6] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
                     >
-                      <Pencil className="w-3.5 h-3.5 text-[#FF6D1F]" />
+                      <Clock className="w-3.5 h-3.5 text-[#8A92A0]" />
+                      <span>History</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowMenu(false);
+                        onEditSubject(subject);
+                      }}
+                      className="w-full text-left px-3 py-2 text-[12.5px] text-[#55F130] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <Pencil className="w-3.5 h-3.5 inline mr-2 text-[#55F130]" />
                       <span>Edit</span>
                     </button>
 
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setShowMenu(false);
                         onDeleteSubject(subject._id);
                       }}
                       className="w-full text-left px-3 py-2 text-[12.5px] text-[#EF4444] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Trash2 className="w-3.5 h-3.5 inline mr-2" />
                       <span>Delete</span>
                     </button>
                   </motion.div>

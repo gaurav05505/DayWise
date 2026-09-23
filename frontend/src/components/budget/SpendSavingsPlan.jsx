@@ -9,7 +9,7 @@ export const SpendSavingsPlan = ({
   onDeductOne,
   onDeductAll,
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const totalFixed = fixedExpenses.reduce(
     (sum, item) => sum + (Number(item.amount) || 0),
@@ -17,10 +17,10 @@ export const SpendSavingsPlan = ({
   );
 
   return (
-    <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] p-4 shadow-lg transition-all overflow-hidden">
+    <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 shadow-xl transition-all overflow-hidden">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center shrink-0">
             <Calendar className="w-4 h-4" />
           </div>
           <div>
@@ -37,7 +37,7 @@ export const SpendSavingsPlan = ({
           <button
             type="button"
             onClick={onOpenPlanning}
-            className="text-xs font-semibold text-[#FF6D1F] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-semibold text-[#55F130] hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" />
             <span>Edit</span>
@@ -46,7 +46,7 @@ export const SpendSavingsPlan = ({
           <button
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
-            className="w-7 h-7 rounded-full flex items-center justify-center text-[#8A92A0] hover:text-white bg-[#1A1F29] transition-colors cursor-pointer"
+            className="w-7 h-7 rounded-full flex items-center justify-center text-[#8A92A0] hover:text-white bg-[#1B1E26] transition-colors cursor-pointer"
           >
             <ChevronDown
               className={`w-3.5 h-3.5 transition-transform duration-300 ${
@@ -67,8 +67,8 @@ export const SpendSavingsPlan = ({
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="mt-3 pt-3 border-t border-white/[0.06]">
-              <div className="grid grid-cols-2 gap-2 mb-3 py-2.5 bg-[#1A1F29] border border-white/[0.06] rounded-2xl px-3 text-xs">
+            <div className="mt-3 pt-3 border-t border-white/[0.04]">
+              <div className="grid grid-cols-2 gap-2 mb-3 py-2.5 bg-[#1B1E26] border border-white/[0.04] rounded-2xl px-3 text-xs">
                 <div>
                   <span className="text-[#8A92A0] block text-[11px]">Fixed (Rent/Rasan)</span>
                   <span className="text-white font-bold text-sm">
@@ -91,7 +91,7 @@ export const SpendSavingsPlan = ({
                       <button
                         type="button"
                         onClick={() => onDeductAll(fixedExpenses)}
-                        className="bg-[#FF6D1F]/15 hover:bg-[#FF6D1F]/25 active:scale-95 text-[#FF6D1F] text-[11px] font-bold py-1 px-2.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer"
+                        className="bg-[#55F130]/15 hover:bg-[#55F130]/25 active:scale-95 text-[#55F130] text-[11px] font-bold py-1 px-2.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer"
                       >
                         <Zap className="w-3 h-3" />
                         <span>Deduct All (₹{totalFixed.toLocaleString()})</span>
@@ -102,7 +102,7 @@ export const SpendSavingsPlan = ({
                   {fixedExpenses.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between bg-[#1A1F29] border border-white/[0.06] rounded-2xl px-3 py-2 text-xs"
+                      className="flex items-center justify-between bg-[#1B1E26] border border-white/[0.04] rounded-2xl px-3 py-2 text-xs"
                     >
                       <div className="flex items-center gap-2">
                         <span className="text-white font-semibold">{item.title}</span>
@@ -114,7 +114,7 @@ export const SpendSavingsPlan = ({
                       <button
                         type="button"
                         onClick={() => onDeductOne(item)}
-                        className="bg-[#14171E] hover:bg-[#222834] active:scale-95 text-[#EF4444] text-[11px] font-bold py-1 px-2.5 rounded-xl border border-white/[0.06] transition-all cursor-pointer"
+                        className="bg-[#14161B] hover:bg-[#222733] active:scale-95 text-[#EF4444] text-[11px] font-bold py-1 px-2.5 rounded-xl border border-white/[0.04] transition-all cursor-pointer"
                       >
                         − Deduct
                       </button>

@@ -98,18 +98,18 @@ export const CustomBudgetDetailsPage = ({
   if (loading && !budget) {
     return (
       <div className="w-full min-h-screen bg-[#090A0F] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-[#FF6D1F] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#55F130] animate-spin" />
       </div>
     );
   }
 
   if (!budget) {
     return (
-      <div className="w-full min-h-screen bg-[#090A0F] flex flex-col items-center justify-center  text-center">
+      <div className="w-full min-h-screen bg-[#090A0F] flex flex-col items-center justify-center text-center">
         <p className="text-[#8A92A0] mb-4 text-sm">Budget not found</p>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-[#FF6D1F] text-white rounded-xl text-xs font-bold cursor-pointer"
+          className="px-4 py-2 bg-[#55F130] text-[#090A0F] rounded-xl text-xs font-bold cursor-pointer"
         >
           Go Back
         </button>
@@ -125,69 +125,34 @@ export const CustomBudgetDetailsPage = ({
 
   return (
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-28 px-4">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1">
         <PageTransition className="flex-1 flex flex-col">
-          <header className="pt-4 pb-2 flex items-center justify-between">
+          <header className="pt-5 pb-3 flex items-center justify-between">
             <button
               type="button"
               onClick={onBack}
-              className="w-10 h-10 rounded-2xl bg-[#14171E] border border-white/[0.06] flex items-center justify-center text-white hover:bg-white/5 transition-colors cursor-pointer active:scale-95"
+              className="w-10 h-10 rounded-2xl bg-[#14161B] border border-white/[0.04] flex items-center justify-center text-white hover:bg-white/5 transition-colors cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
 
-            <h1 className="text-base font-bold text-white max-w-[180px] truncate text-center">
+            <h1 className="text-[17px] font-bold text-white max-w-[180px] truncate text-center">
               {budget.name}
             </h1>
 
-            <div className="relative" ref={menuRef}>
+            <div className="relative">
               <button
                 type="button"
-                onClick={() => setShowMenu((prev) => !prev)}
-                className="w-10 h-10 rounded-2xl bg-[#14171E] border border-white/[0.06] flex items-center justify-center text-[#8A92A0] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                onClick={() => setIsEditModalOpen(true)}
+                className="w-10 h-10 rounded-2xl bg-[#14161B] border border-white/[0.04] flex items-center justify-center text-[#8A92A0] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
               >
-                <MoreVertical className="w-5 h-5" />
+                <Edit2 className="w-4 h-4" />
               </button>
-
-              <AnimatePresence>
-                {showMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: -4 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: -4 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-12 w-36 bg-[#1A1F29] border border-white/10 rounded-2xl shadow-2xl py-1.5 z-30"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowMenu(false);
-                        setIsEditModalOpen(true);
-                      }}
-                      className="w-full px-3.5 py-2 text-left text-xs text-[#F3F4F6] hover:bg-white/5 flex items-center gap-2 transition-colors cursor-pointer"
-                    >
-                      <Edit2 className="w-3.5 h-3.5 text-[#FF6D1F]" />
-                      <span>Edit Budget</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowMenu(false);
-                        handleDeleteBudget();
-                      }}
-                      className="w-full px-3.5 py-2 text-left text-xs text-[#EF4444] hover:bg-white/5 flex items-center gap-2 transition-colors cursor-pointer"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      <span>Delete</span>
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </header>
 
           <main className="flex-1 space-y-4">
-            <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[28px] p-5 shadow-xl space-y-4">
+            <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-5 shadow-xl space-y-4">
               <div className="flex items-center gap-3.5">
                 <div
                   className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-md"
@@ -234,7 +199,7 @@ export const CustomBudgetDetailsPage = ({
                         Over by {formatCurrency(Math.abs(remaining))}
                       </span>
                     ) : (
-                      <span className="text-[#FF6D1F] font-bold">
+                      <span className="text-[#55F130] font-bold">
                         {formatCurrency(remaining)} left
                       </span>
                     )}
@@ -244,7 +209,7 @@ export const CustomBudgetDetailsPage = ({
 
               {(budget.startDate || budget.endDate) && (
                 <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 text-[11px] text-[#8A92A0]">
-                  <Calendar className="w-3.5 h-3.5 text-[#FF6D1F]" />
+                  <Calendar className="w-3.5 h-3.5 text-[#55F130]" />
                   <span>
                     {budget.startDate ? formatDate(budget.startDate) : 'Start'}
                     {' → '}
@@ -256,14 +221,14 @@ export const CustomBudgetDetailsPage = ({
 
             <div className="flex items-center justify-between pt-1 px-1">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-                <Receipt className="w-4 h-4 text-[#FF6D1F]" />
+                <Receipt className="w-4 h-4 text-[#55F130]" />
                 Expenses ({transactions.length})
               </h3>
 
               <button
                 type="button"
                 onClick={() => setIsTxModalOpen(true)}
-                className="bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2 px-3.5 rounded-xl transition-all shadow-md shadow-[#FF6D1F]/20 flex items-center gap-1.5 cursor-pointer active:scale-95"
+                className="bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2 px-3.5 rounded-xl transition-all shadow-md shadow-[#55F130]/20 flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Add Expense</span>
@@ -272,8 +237,8 @@ export const CustomBudgetDetailsPage = ({
 
             <div className="space-y-2.5">
               {transactions.length === 0 ? (
-                <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] p-8 text-center">
-                  <div className="w-12 h-12 rounded-2xl bg-[#1A1F29] text-[#8A92A0] flex items-center justify-center mx-auto mb-3">
+                <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[24px] p-8 text-center shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-[#1B1E26] text-[#8A92A0] flex items-center justify-center mx-auto mb-3">
                     <TrendingDown className="w-6 h-6" />
                   </div>
                   <h4 className="text-sm font-bold text-white mb-1">
@@ -285,9 +250,9 @@ export const CustomBudgetDetailsPage = ({
                   <button
                     type="button"
                     onClick={() => setIsTxModalOpen(true)}
-                    className="bg-[#1A1F29] hover:bg-[#222834] border border-white/10 text-white text-xs font-bold py-2 px-4 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5"
+                    className="bg-[#1B1E26] hover:bg-[#222733] border border-white/10 text-white text-xs font-bold py-2 px-4 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5"
                   >
-                    <Plus className="w-3.5 h-3.5 text-[#FF6D1F]" />
+                    <Plus className="w-3.5 h-3.5 text-[#55F130]" />
                     Add First Expense
                   </button>
                 </div>
@@ -295,7 +260,7 @@ export const CustomBudgetDetailsPage = ({
                 transactions.map((tx) => (
                   <div
                     key={tx._id}
-                    className="w-full bg-[#14171E] border border-white/[0.06] rounded-[22px] p-3.5 flex items-center justify-between group hover:border-white/10 transition-colors shadow-sm"
+                    className="w-full bg-[#14161B] border border-white/[0.04] rounded-[22px] p-3.5 flex items-center justify-between group hover:border-white/10 transition-colors shadow-xl"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center">
@@ -318,7 +283,7 @@ export const CustomBudgetDetailsPage = ({
                       <button
                         type="button"
                         onClick={() => handleDeleteTransaction(tx._id)}
-                        className="w-7 h-7 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#EF4444] hover:bg-white/5 transition-colors cursor-pointer"
+                        className="w-7 h-7 rounded-lg flex items-center justify-center text-[#8A92A0] hover:text-[#EF4444] hover:bg-white/5 transition-colors cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

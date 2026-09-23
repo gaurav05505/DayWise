@@ -11,7 +11,7 @@ export const BudgetOverview = ({
   shortcuts = [],
   fixedExpenses = [],
   targetSavings = 0,
-  progressCardColor = '#FF6D1F',
+  progressCardColor = '#55F130',
   showRecommendations = true,
   onOpenQuickMinus,
   onOpenQuickAdd,
@@ -56,21 +56,21 @@ export const BudgetOverview = ({
         className={`w-full rounded-[28px] p-4 sm:p-5 text-white relative transition-colors ${
           isCharcoal
             ? 'bg-[#14171E] border border-white/[0.06] shadow-xl'
-            : 'bg-[#FF6D1F] shadow-xl shadow-[#FF6D1F]/15'
+            : 'bg-[#55F130] text-[#090A0F] shadow-xl shadow-[#55F130]/15'
         }`}
       >
         <div className="flex items-center justify-between relative z-10">
           <div className="flex items-center gap-2">
             <div
               className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                isCharcoal ? 'bg-[#FF6D1F]/15 text-[#FF6D1F]' : 'bg-black/15 text-white'
+                isCharcoal ? 'bg-[#55F130]/15 text-[#55F130]' : 'bg-black/15 text-[#090A0F]'
               }`}
             >
               <Wallet className="w-4 h-4" />
             </div>
             <span
               className={`text-xs font-bold uppercase tracking-wider ${
-                isCharcoal ? 'text-white' : 'text-white/90'
+                isCharcoal ? 'text-white' : 'text-[#090A0F]/90'
               }`}
             >
               {monthNames[month - 1]} {year} Budget
@@ -177,7 +177,7 @@ export const BudgetOverview = ({
               >
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
-                    isCharcoal ? 'bg-[#FF6D1F]' : 'bg-white'
+                    isCharcoal ? 'bg-[#55F130]' : 'bg-[#090A0F]'
                   }`}
                   style={{ width: `${Math.min(100, Math.max(0, percentageSpent))}%` }}
                 />
@@ -215,7 +215,7 @@ export const BudgetOverview = ({
                 >
                   <div
                     className={`h-full rounded-full ${
-                      isCharcoal ? 'bg-[#FF6D1F]' : 'bg-white'
+                      isCharcoal ? 'bg-[#55F130]' : 'bg-[#090A0F]'
                     }`}
                     style={{ width: `${Math.min(100, Math.max(0, percentageSpent))}%` }}
                   />
@@ -230,7 +230,7 @@ export const BudgetOverview = ({
         <button
           type="button"
           onClick={onOpenQuickMinus}
-          className="bg-[#14171E] hover:bg-[#1A1F29] active:scale-[0.98] border border-white/[0.06] rounded-2xl py-2.5 px-3.5 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md text-white font-bold text-xs"
+          className="bg-[#14161B] hover:bg-[#1B1E26] active:scale-[0.98] border border-white/[0.04] rounded-2xl py-3 px-3.5 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md text-white font-bold text-xs"
         >
           <ArrowDownRight className="w-4 h-4 text-[#EF4444] stroke-[2.5]" />
           <span>Minus Money</span>
@@ -239,14 +239,14 @@ export const BudgetOverview = ({
         <button
           type="button"
           onClick={onOpenQuickAdd}
-          className="bg-[#14171E] hover:bg-[#1A1F29] active:scale-[0.98] border border-white/[0.06] rounded-2xl py-2.5 px-3.5 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md text-white font-bold text-xs"
+          className="bg-[#14161B] hover:bg-[#1B1E26] active:scale-[0.98] border border-white/[0.04] rounded-2xl py-3 px-3.5 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md text-white font-bold text-xs"
         >
-          <ArrowUpRight className="w-4 h-4 text-[#10B981] stroke-[2.5]" />
+          <ArrowUpRight className="w-4 h-4 text-[#4ADE80] stroke-[2.5]" />
           <span>Add Money</span>
         </button>
       </div>
 
-      <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] p-4 shadow-lg">
+      <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 shadow-xl">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-[#8A92A0]">
@@ -256,7 +256,7 @@ export const BudgetOverview = ({
           <button
             type="button"
             onClick={onOpenCustomShortcuts}
-            className="text-xs font-semibold text-[#FF6D1F] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-semibold text-[#55F130] hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Settings2 className="w-3.5 h-3.5" />
             <span>Customize</span>
@@ -269,7 +269,7 @@ export const BudgetOverview = ({
               key={btn.id}
               type="button"
               onClick={() => onDirectMinus(btn.amount, btn.label)}
-              className="bg-[#1A1F29] hover:bg-[#222834] active:scale-95 text-[#F3F4F6] border border-white/[0.06] rounded-2xl py-2 px-3.5 text-center font-semibold text-xs transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+              className="bg-[#1B1E26] hover:bg-[#222733] active:scale-95 text-[#F3F4F6] border border-white/[0.04] rounded-2xl py-2 px-3.5 text-center font-semibold text-xs transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
             >
               <span>{btn.label}</span>
               <span className="text-[#EF4444] font-bold">
@@ -281,9 +281,9 @@ export const BudgetOverview = ({
           <button
             type="button"
             onClick={onOpenCustomShortcuts}
-            className="bg-[#1A1F29]/60 hover:bg-[#1A1F29] text-[#8A92A0] hover:text-white border border-dashed border-white/10 rounded-2xl py-2 px-3 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1"
+            className="bg-[#1B1E26]/60 hover:bg-[#1B1E26] text-[#8A92A0] hover:text-white border border-dashed border-white/10 rounded-2xl py-2 px-3 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1"
           >
-            <Plus className="w-3.5 h-3.5 text-[#FF6D1F]" />
+            <Plus className="w-3.5 h-3.5 text-[#55F130]" />
             <span>New</span>
           </button>
         </div>

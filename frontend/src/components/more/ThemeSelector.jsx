@@ -29,7 +29,7 @@ export const ThemeSelector = ({ isOpen, onClose, currentTheme = 'dark', onSelect
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center">
                   <Moon className="w-4.5 h-4.5" />
                 </div>
                 <h2 className="text-base font-bold text-white">Choose Theme</h2>
@@ -57,14 +57,14 @@ export const ThemeSelector = ({ isOpen, onClose, currentTheme = 'dark', onSelect
                     }}
                     className={`w-full p-3.5 rounded-2xl border flex items-center justify-between transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#1A1F29] border-[#FF6D1F] text-white shadow-md'
+                        ? 'bg-[#1A1F29] border-[#55F130] text-white shadow-md'
                         : 'bg-[#1A1F29]/60 border-white/[0.06] text-[#8A92A0] hover:border-white/15'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                          isSelected ? 'bg-[#FF6D1F] text-white font-bold' : 'bg-[#14171E] text-[#8A92A0]'
+                          isSelected ? 'bg-[#55F130] text-[#090A0F] font-bold' : 'bg-[#14171E] text-[#8A92A0]'
                         }`}
                       >
                         <Icon className="w-4.5 h-4.5" />
@@ -77,7 +77,7 @@ export const ThemeSelector = ({ isOpen, onClose, currentTheme = 'dark', onSelect
                       </div>
                     </div>
 
-                    {isSelected && <Check className="w-5 h-5 text-[#FF6D1F] stroke-[2.5]" />}
+                    {isSelected && <Check className="w-5 h-5 text-[#55F130] stroke-[2.5]" />}
                   </button>
                 );
               })}

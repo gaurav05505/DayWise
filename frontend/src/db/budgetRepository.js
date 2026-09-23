@@ -80,7 +80,7 @@ export const budgetRepository = {
 
     for (const tx of transactions) {
       const catId = typeof tx.category === 'object' ? tx.category._id : tx.category;
-      const cat = catMap.get(catId) || { _id: catId, name: 'General', color: '#FF6B2C' };
+      const cat = catMap.get(catId) || { _id: catId, name: 'General', color: '#55F130' };
       const amt = Number(tx.amount) || 0;
       totalExpense += amt;
 

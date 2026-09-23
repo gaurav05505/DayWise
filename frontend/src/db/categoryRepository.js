@@ -22,7 +22,7 @@ export const categoryRepository = {
       name: data.name.trim(),
       type: data.type || 'expense',
       icon: data.icon || 'tag',
-      color: data.color || '#FF6B2C',
+      color: data.color || '#55F130',
       createdAt: new Date().toISOString(),
     };
     await db.put('categories', newCategory);

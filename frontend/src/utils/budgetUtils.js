@@ -15,7 +15,7 @@ import {
 export const getBudgetProgressColor = (percentage) => {
   if (percentage > 90) return '#EF4444';
   if (percentage >= 70) return '#F59E0B';
-  return '#FF6D1F';
+  return '#55F130';
 };
 
 export const formatCurrency = (amount) => {
@@ -39,7 +39,7 @@ export const getBudgetIcon = (name = '') => {
     return { icon: Plane, emoji: '✈️', color: '#00C9A7' };
   }
   if (lower.includes('food') || lower.includes('snack') || lower.includes('mess') || lower.includes('eat') || lower.includes('dining')) {
-    return { icon: Utensils, emoji: '🍔', color: '#FF6D1F' };
+    return { icon: Utensils, emoji: '🍔', color: '#55F130' };
   }
   if (lower.includes('college') || lower.includes('school') || lower.includes('study') || lower.includes('exam') || lower.includes('tuition')) {
     return { icon: GraduationCap, emoji: '🎓', color: '#38BDF8' };
@@ -65,5 +65,5 @@ export const getBudgetIcon = (name = '') => {
   if (lower.includes('movie') || lower.includes('game') || lower.includes('party') || lower.includes('fun')) {
     return { icon: Film, emoji: '🍿', color: '#F43F5E' };
   }
-  return { icon: Target, emoji: '🎯', color: '#FF6D1F' };
+  return { icon: Target, emoji: '🎯', color: '#55F130' };
 };

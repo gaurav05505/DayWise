@@ -86,7 +86,7 @@ export const MonthlyPlanningModal = ({
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center">
                   <PiggyBank className="w-4.5 h-4.5" />
                 </div>
                 <div>
@@ -116,7 +116,7 @@ export const MonthlyPlanningModal = ({
             <div className="space-y-3.5 flex-1 overflow-y-auto pr-1 my-2">
               <div className="bg-[#1A1F29] border border-white/[0.06] rounded-2xl p-3.5">
                 <div className="flex items-center gap-1.5 mb-2">
-                  <PiggyBank className="w-4 h-4 text-[#FF6D1F]" />
+                  <PiggyBank className="w-4 h-4 text-[#55F130]" />
                   <label className="text-xs font-bold text-white">
                     Monthly Savings Goal (₹)
                   </label>
@@ -127,7 +127,7 @@ export const MonthlyPlanningModal = ({
                   value={savings}
                   onChange={(e) => setSavings(e.target.value)}
                   placeholder="e.g. 2000"
-                  className="w-full bg-[#14171E] border border-white/10 rounded-xl px-3.5 py-2 text-sm font-bold text-[#FF6D1F] focus:outline-none focus:border-[#FF6D1F]"
+                  className="w-full bg-[#14171E] border border-white/10 rounded-xl px-3.5 py-2 text-sm font-bold text-[#55F130] focus:outline-none focus:border-[#55F130]"
                 />
               </div>
 
@@ -151,7 +151,7 @@ export const MonthlyPlanningModal = ({
                       value={newTitle}
                       onChange={(e) => setNewTitle(e.target.value)}
                       placeholder="e.g. Rent, Mess"
-                      className="bg-[#14171E] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+                      className="bg-[#14171E] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130]"
                     />
                     <input
                       type="number"
@@ -159,12 +159,12 @@ export const MonthlyPlanningModal = ({
                       value={newAmount}
                       onChange={(e) => setNewAmount(e.target.value)}
                       placeholder="₹ Amount"
-                      className="bg-[#14171E] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F]"
+                      className="bg-[#14171E] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130]"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer shadow-sm"
+                    className="w-full bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer shadow-sm"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                     <span>Add Fixed Expense</span>
@@ -213,7 +213,7 @@ export const MonthlyPlanningModal = ({
               <button
                 type="button"
                 onClick={handleSaveAll}
-                className="flex-1 bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#FF6D1F]/20 cursor-pointer"
+                className="flex-1 bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-[#55F130]/20 cursor-pointer"
               >
                 Save Plan
               </button>

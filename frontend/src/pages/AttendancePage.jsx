@@ -5,6 +5,7 @@ import { useSettings } from '../hooks/useSettings.js';
 import { AttendanceHeader } from '../components/attendance/AttendanceHeader.jsx';
 import { AttendanceOverview } from '../components/attendance/AttendanceOverview.jsx';
 import { SubjectCard } from '../components/attendance/SubjectCard.jsx';
+import { SubjectHistoryModal } from '../components/attendance/SubjectHistoryModal.jsx';
 import { AddSubjectModal } from '../components/attendance/AddSubjectModal.jsx';
 import { EditSubjectModal } from '../components/attendance/EditSubjectModal.jsx';
 import { BulkAttendanceModal } from '../components/attendance/BulkAttendanceModal.jsx';
@@ -24,16 +25,20 @@ export const AttendancePage = ({ onNavigate }) => {
     markAbsent,
     markBulkAttendance,
     deleteSubject,
+    deleteLog,
   } = useAttendance();
   const { settings } = useSettings();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
+  const [historySubjectId, setHistorySubjectId] = useState(null);
+
+  const activeHistorySubject = subjects.find((s) => s._id === historySubjectId) || null;
 
   return (
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1">
         <PageTransition className="flex-1 flex flex-col">
           <AttendanceHeader />
 
@@ -42,7 +47,7 @@ export const AttendancePage = ({ onNavigate }) => {
               summary={summary}
               onOpenAddModal={() => setIsAddModalOpen(true)}
               onOpenBulkModal={() => setIsBulkModalOpen(true)}
-              progressCardColor={settings.progressCardColor || '#FF6D1F'}
+              progressCardColor={settings.progressCardColor || '#55F130'}
               showRecommendations={settings.showRecommendations !== false}
             />
 
@@ -63,7 +68,7 @@ export const AttendancePage = ({ onNavigate }) => {
                 <SkeletonCard count={3} />
               ) : subjects.length === 0 ? (
                 <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[28px] p-8 text-center shadow-xl">
-                  <div className="w-14 h-14 rounded-2xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center mx-auto mb-3 shadow-inner">
+                  <div className="w-14 h-14 rounded-2xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center mx-auto mb-3 shadow-inner">
                     <BookOpen className="w-7 h-7" />
                   </div>
                   <h4 className="text-base font-bold text-white mb-1">
@@ -75,7 +80,7 @@ export const AttendancePage = ({ onNavigate }) => {
                   <button
                     type="button"
                     onClick={() => setIsAddModalOpen(true)}
-                    className="bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#FF6D1F]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
+                    className="bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#55F130]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
                   >
                     + Add First Subject
                   </button>
@@ -90,6 +95,7 @@ export const AttendancePage = ({ onNavigate }) => {
                       onMarkAbsent={markAbsent}
                       onEditSubject={(sub) => setEditingSubject(sub)}
                       onDeleteSubject={deleteSubject}
+                      onOpenHistory={(sub) => setHistorySubjectId(sub._id)}
                     />
                   ))}
                 </AnimatePresence>
@@ -97,6 +103,13 @@ export const AttendancePage = ({ onNavigate }) => {
             </div>
           </main>
         </PageTransition>
+
+        <SubjectHistoryModal
+          isOpen={Boolean(activeHistorySubject)}
+          subject={activeHistorySubject}
+          onClose={() => setHistorySubjectId(null)}
+          onDeleteLog={deleteLog}
+        />
 
         <AddSubjectModal
           isOpen={isAddModalOpen}

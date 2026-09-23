@@ -154,7 +154,7 @@ export const BudgetPage = ({ onNavigate }) => {
 
   return (
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-28 px-4">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1">
         <PageTransition className="flex-1 flex flex-col">
           <BudgetHeader month={month} year={year} />
 
@@ -166,7 +166,7 @@ export const BudgetPage = ({ onNavigate }) => {
               shortcuts={shortcuts}
               fixedExpenses={fixedExpenses}
               targetSavings={targetSavings}
-              progressCardColor={settings.progressCardColor || '#FF6D1F'}
+              progressCardColor={settings.progressCardColor || '#55F130'}
               showRecommendations={settings.showRecommendations !== false}
               onOpenQuickMinus={openMinusMoney}
               onOpenQuickAdd={openAddMoney}
@@ -196,7 +196,7 @@ export const BudgetPage = ({ onNavigate }) => {
                     onClick={() => setFilterType('all')}
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                       filterType === 'all'
-                        ? 'bg-[#FF6D1F] text-white shadow-sm'
+                        ? 'bg-[#55F130] text-[#090A0F] shadow-sm'
                         : 'text-[#8A92A0] hover:text-white'
                     }`}
                   >
@@ -218,7 +218,7 @@ export const BudgetPage = ({ onNavigate }) => {
                     onClick={() => setFilterType('income')}
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                       filterType === 'income'
-                        ? 'bg-[#10B981] text-white shadow-sm'
+                        ? 'bg-[#10B981] text-[#090A0F] shadow-sm'
                         : 'text-[#8A92A0] hover:text-[#10B981]'
                     }`}
                   >
@@ -232,7 +232,7 @@ export const BudgetPage = ({ onNavigate }) => {
                   <SkeletonCard count={3} />
                 ) : filteredTransactions.length === 0 ? (
                   <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[28px] p-8 text-center shadow-xl">
-                    <div className="w-14 h-14 rounded-2xl bg-[#FF6D1F]/10 text-[#FF6D1F] flex items-center justify-center mx-auto mb-3 shadow-inner">
+                    <div className="w-14 h-14 rounded-2xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center mx-auto mb-3 shadow-inner">
                       <Wallet className="w-7 h-7" />
                     </div>
                     <h4 className="text-base font-bold text-white mb-1">
@@ -252,7 +252,7 @@ export const BudgetPage = ({ onNavigate }) => {
                     <button
                       type="button"
                       onClick={filterType === 'income' ? openAddMoney : openMinusMoney}
-                      className="bg-[#FF6D1F] hover:bg-[#E85C0D] text-white text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#FF6D1F]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
+                      className="bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#55F130]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
                     >
                       {filterType === 'income' ? '+ Add First Income' : '− Minus First Money'}
                     </button>

@@ -19,7 +19,7 @@ export const settingsRepository = {
     const result = {
       theme: 'dark',
       attendanceTarget: 75,
-      progressCardColor: '#FF6D1F',
+      progressCardColor: '#55F130',
       showRecommendations: true,
     };
     items.forEach((item) => {
@@ -47,13 +47,13 @@ export const settingsRepository = {
     await store.clear();
     await store.put({ key: 'theme', value: 'dark' });
     await store.put({ key: 'attendanceTarget', value: 75 });
-    await store.put({ key: 'progressCardColor', value: '#FF6D1F' });
+    await store.put({ key: 'progressCardColor', value: '#55F130' });
     await store.put({ key: 'showRecommendations', value: true });
     await tx.done;
     return {
       theme: 'dark',
       attendanceTarget: 75,
-      progressCardColor: '#FF6D1F',
+      progressCardColor: '#55F130',
       showRecommendations: true,
     };
   },

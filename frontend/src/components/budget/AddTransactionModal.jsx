@@ -150,7 +150,7 @@ export const AddTransactionModal = ({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Lunch, Freelance"
               required
-              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#525B6D] focus:outline-none focus:border-[#FF6D1F] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#525B6D] focus:outline-none focus:border-[#55F130] transition-colors"
             />
           </div>
 
@@ -166,7 +166,7 @@ export const AddTransactionModal = ({
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               required
-              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#55F130] transition-colors"
             />
           </div>
 
@@ -177,7 +177,7 @@ export const AddTransactionModal = ({
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#55F130] transition-colors"
             >
               {filteredCategories.length === 0 ? (
                 <option value="">No {type} categories found</option>
@@ -200,7 +200,7 @@ export const AddTransactionModal = ({
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF6D1F] transition-colors"
+              className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#55F130] transition-colors"
             />
           </div>
 
@@ -217,8 +217,8 @@ export const AddTransactionModal = ({
               disabled={submitting || !category}
               className={`flex-1 text-xs font-bold py-2.5 rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50 ${
                 type === 'income'
-                  ? 'bg-[#10B981] hover:bg-[#059669] text-white'
-                  : 'bg-[#FF6D1F] hover:bg-[#E85C0D] text-white shadow-[#FF6D1F]/20'
+                  ? 'bg-[#10B981] hover:bg-[#059669] text-[#090A0F]'
+                  : 'bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] shadow-[#55F130]/20'
               }`}
             >
               {submitting ? 'Adding...' : 'Add'}

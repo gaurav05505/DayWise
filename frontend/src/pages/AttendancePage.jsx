@@ -33,7 +33,7 @@ export const AttendancePage = ({ onNavigate }) => {
 
   return (
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-28 ">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36">
         <PageTransition className="flex-1 flex flex-col">
           <AttendanceHeader />
 

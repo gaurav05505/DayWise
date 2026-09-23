@@ -58,7 +58,7 @@ export const AddSubjectModal = ({ isOpen, onClose, onAddSubject }) => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md"
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md"
         >
           <motion.div
             variants={modalVariants}

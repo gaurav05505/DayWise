@@ -75,10 +75,12 @@ const App = () => {
         )}
       </AnimatePresence>
 
-      <BottomNavigation
-        activeTab={getActiveNavTab()}
-        onTabChange={handleNavigate}
-      />
+      {!showSplash && (
+        <BottomNavigation
+          activeTab={getActiveNavTab()}
+          onTabChange={handleNavigate}
+        />
+      )}
     </>
   );
 };

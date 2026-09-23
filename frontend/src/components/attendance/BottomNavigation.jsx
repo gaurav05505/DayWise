@@ -44,7 +44,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
   const ActiveIcon = tabs[activeIndex]?.icon || Home;
 
   return (
-    <div className="fixed bottom-5 left-0 right-0 px-4 max-w-[370px] mx-auto z-50 pointer-events-auto select-none">
+    <div className="fixed bottom-5 left-0 right-0 px-4 max-w-[370px] mx-auto z-40 pointer-events-auto select-none">
       <nav className="w-full h-[64px] relative flex items-center">
         <svg
           viewBox="0 0 352 64"

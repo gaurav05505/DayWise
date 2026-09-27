@@ -35,7 +35,7 @@ export const subjectRepository = {
       name: data.name.trim(),
       totalClasses: Number(data.totalClasses) || 0,
       attendedClasses: Number(data.attendedClasses) || 0,
-      color: data.color || '#55F130',
+      color: data.color || '#22C55E',
       logs: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

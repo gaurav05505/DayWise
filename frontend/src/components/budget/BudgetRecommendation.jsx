@@ -37,7 +37,7 @@ export const BudgetRecommendation = ({
   return (
     <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 shadow-xl">
       <div className="flex items-center gap-2 mb-1.5">
-        <Sparkles className="w-4 h-4 text-[#55F130]" />
+        <Sparkles className="w-4 h-4 text-[#22C55E]" />
         <h3 className="text-[13.5px] font-bold text-white">
           Budget Recommendation
         </h3>

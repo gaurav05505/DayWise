@@ -172,9 +172,9 @@ export const SubjectCard = ({
                         setShowMenu(false);
                         onEditSubject(subject);
                       }}
-                      className="w-full text-left px-3 py-2 text-[12.5px] text-[#55F130] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                      className="w-full text-left px-3 py-2 text-[12.5px] text-[#22C55E] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
                     >
-                      <Pencil className="w-3.5 h-3.5 inline mr-2 text-[#55F130]" />
+                      <Pencil className="w-3.5 h-3.5 inline mr-2 text-[#22C55E]" />
                       <span>Edit</span>
                     </button>
 

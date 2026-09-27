@@ -98,7 +98,7 @@ export const CustomBudgetDetailsPage = ({
   if (loading && !budget) {
     return (
       <div className="w-full min-h-screen bg-[#090A0F] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-[#55F130] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#22C55E] animate-spin" />
       </div>
     );
   }
@@ -109,7 +109,7 @@ export const CustomBudgetDetailsPage = ({
         <p className="text-[#8A92A0] mb-4 text-sm">Budget not found</p>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-[#55F130] text-[#090A0F] rounded-xl text-xs font-bold cursor-pointer"
+          className="px-4 py-2 bg-[#22C55E] text-[#090A0F] rounded-xl text-xs font-bold cursor-pointer"
         >
           Go Back
         </button>
@@ -199,7 +199,7 @@ export const CustomBudgetDetailsPage = ({
                         Over by {formatCurrency(Math.abs(remaining))}
                       </span>
                     ) : (
-                      <span className="text-[#55F130] font-bold">
+                      <span className="text-[#22C55E] font-bold">
                         {formatCurrency(remaining)} left
                       </span>
                     )}
@@ -209,7 +209,7 @@ export const CustomBudgetDetailsPage = ({
 
               {(budget.startDate || budget.endDate) && (
                 <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 text-[11px] text-[#8A92A0]">
-                  <Calendar className="w-3.5 h-3.5 text-[#55F130]" />
+                  <Calendar className="w-3.5 h-3.5 text-[#22C55E]" />
                   <span>
                     {budget.startDate ? formatDate(budget.startDate) : 'Start'}
                     {' → '}
@@ -221,14 +221,14 @@ export const CustomBudgetDetailsPage = ({
 
             <div className="flex items-center justify-between pt-1 px-1">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-                <Receipt className="w-4 h-4 text-[#55F130]" />
+                <Receipt className="w-4 h-4 text-[#22C55E]" />
                 Expenses ({transactions.length})
               </h3>
 
               <button
                 type="button"
                 onClick={() => setIsTxModalOpen(true)}
-                className="bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2 px-3.5 rounded-xl transition-all shadow-md shadow-[#55F130]/20 flex items-center gap-1.5 cursor-pointer active:scale-95"
+                className="bg-[#22C55E] hover:bg-[#16A34A] text-[#090A0F] text-xs font-bold py-2 px-3.5 rounded-xl transition-all shadow-md shadow-[#22C55E]/20 flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Add Expense</span>
@@ -252,7 +252,7 @@ export const CustomBudgetDetailsPage = ({
                     onClick={() => setIsTxModalOpen(true)}
                     className="bg-[#1B1E26] hover:bg-[#222733] border border-white/10 text-white text-xs font-bold py-2 px-4 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5"
                   >
-                    <Plus className="w-3.5 h-3.5 text-[#55F130]" />
+                    <Plus className="w-3.5 h-3.5 text-[#22C55E]" />
                     Add First Expense
                   </button>
                 </div>

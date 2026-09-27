@@ -13,7 +13,7 @@ export const generateId = () => {
 const DEFAULT_CATEGORIES = [
   { name: 'Salary', type: 'income', icon: 'wallet', color: '#8CFF57' },
   { name: 'Pocket Money', type: 'income', icon: 'piggy-bank', color: '#00C9A7' },
-  { name: 'Food & Mess', type: 'expense', icon: 'utensils', color: '#55F130' },
+  { name: 'Food & Mess', type: 'expense', icon: 'utensils', color: '#22C55E' },
   { name: 'Travel & Transport', type: 'expense', icon: 'bus', color: '#54A0FF' },
   { name: 'Rent & Accommodation', type: 'expense', icon: 'home', color: '#5F27CD' },
   { name: 'Shopping', type: 'expense', icon: 'shopping-bag', color: '#EE5253' },

@@ -37,7 +37,7 @@ export const SubjectHistoryModal = ({
           >
             <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.06] shrink-0">
               <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#22C55E]/15 text-[#22C55E] flex items-center justify-center shrink-0">
                   <Clock className="w-4.5 h-4.5" />
                 </div>
                 <div className="min-w-0">

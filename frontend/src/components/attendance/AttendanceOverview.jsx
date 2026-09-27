@@ -79,7 +79,7 @@ export const AttendanceOverview = ({
           <button
             type="button"
             onClick={onOpenAddModal}
-            className="w-full bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-3 px-3 rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-[#55F130]/20 transition-all cursor-pointer active:scale-95"
+            className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-[#090A0F] text-xs font-bold py-3 px-3 rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-[#22C55E]/20 transition-all cursor-pointer active:scale-95"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Add Subject</span>
@@ -88,7 +88,7 @@ export const AttendanceOverview = ({
           <button
             type="button"
             onClick={onOpenBulkModal}
-            className="w-full bg-[#2E7D1F] hover:bg-[#256B18] text-white text-xs font-bold py-3 px-3 rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-[#2E7D1F]/20 transition-all cursor-pointer active:scale-95"
+            className="w-full bg-[#1B281E] hover:bg-[#223627] text-white text-xs font-bold py-3 px-3 rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-[#1B281E]/20 transition-all cursor-pointer active:scale-95"
           >
             <Check className="w-4 h-4 stroke-[3]" />
             <span>All Class</span>

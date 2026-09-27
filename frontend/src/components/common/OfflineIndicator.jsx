@@ -21,7 +21,7 @@ export const OfflineIndicator = () => {
 
   return (
     <div className="fixed top-2 left-1/2 -translate-x-1/2 z-50 bg-[#14171E]/90 border border-white/10 backdrop-blur-md text-[#8A92A0] text-[11px] font-semibold py-1 px-3.5 rounded-full shadow-lg flex items-center gap-1.5 animate-fadeIn">
-      <WifiOff className="w-3 h-3 text-[#55F130]" />
+      <WifiOff className="w-3 h-3 text-[#22C55E]" />
       <span>Offline Mode</span>
     </div>
   );

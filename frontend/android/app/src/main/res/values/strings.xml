@@ -4,4 +4,6 @@
     <string name="title_activity_main">DayWise</string>
     <string name="package_name">com.daywise.app</string>
     <string name="custom_url_scheme">com.daywise.app</string>
+    <string name="widget_attendance_name">DayWise Attendance</string>
+    <string name="widget_attendance_description">Track your overall attendance percentage, safe bunks, and next class at a glance.</string>
 </resources>

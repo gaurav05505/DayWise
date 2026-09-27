@@ -11,7 +11,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
 
   const [target, setTarget] = useState(settings.attendanceTarget || 75);
   const [customTarget, setCustomTarget] = useState('');
-  const [cardColor, setCardColor] = useState(settings.progressCardColor || '#55F130');
+  const [cardColor, setCardColor] = useState(settings.progressCardColor || '#22C55E');
   const [showRecs, setShowRecs] = useState(settings.showRecommendations !== false);
   const [savedToast, setSavedToast] = useState(false);
 
@@ -22,7 +22,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
     } else {
       setCustomTarget('');
     }
-    setCardColor(settings.progressCardColor || '#55F130');
+    setCardColor(settings.progressCardColor || '#22C55E');
     setShowRecs(settings.showRecommendations !== false);
   }, [settings]);
 
@@ -59,8 +59,8 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
       <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1">
         {(toastMessage || savedToast) && (
-          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[70] bg-[#14161B] border border-[#55F130]/30 text-white text-xs py-2 px-4 rounded-full shadow-2xl flex items-center gap-2 animate-fadeIn">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#55F130]" />
+          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[70] bg-[#14161B] border border-[#22C55E]/30 text-white text-xs py-2 px-4 rounded-full shadow-2xl flex items-center gap-2 animate-fadeIn">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E]" />
             <span>{toastMessage || 'Preferences saved successfully!'}</span>
           </div>
         )}
@@ -94,14 +94,14 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                 className={`w-full rounded-[28px] p-4 sm:p-5 text-white relative transition-all duration-300 ${
                   isCharcoal
                     ? 'bg-[#14161B] border border-white/[0.04] shadow-xl'
-                    : 'bg-[#55F130] text-[#090A0F] shadow-xl shadow-[#55F130]/15'
+                    : 'bg-[#22C55E] text-[#090A0F] shadow-xl shadow-[#22C55E]/15'
                 }`}
               >
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex items-center gap-2">
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                        isCharcoal ? 'bg-[#55F130]/15 text-[#55F130]' : 'bg-black/15 text-[#090A0F]'
+                        isCharcoal ? 'bg-[#22C55E]/15 text-[#22C55E]' : 'bg-black/15 text-[#090A0F]'
                       }`}
                     >
                       <TrendingUp className="w-4 h-4" />
@@ -144,7 +144,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                     className={`text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm ${
                       isCharcoal
                         ? 'bg-[#16A34A]/20 text-[#4ADE80] border border-[#16A34A]/30'
-                        : 'bg-[#090A0F] text-[#55F130]'
+                        : 'bg-[#090A0F] text-[#22C55E]'
                     }`}
                   >
                     On Track
@@ -158,7 +158,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                 >
                   <div
                     className={`h-full rounded-full transition-all duration-300 ${
-                      isCharcoal ? 'bg-[#55F130]' : 'bg-[#090A0F]'
+                      isCharcoal ? 'bg-[#22C55E]' : 'bg-[#090A0F]'
                     }`}
                     style={{ width: '85%' }}
                   />
@@ -168,7 +168,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
 
             <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 sm:p-5 shadow-xl space-y-4">
               <div className="flex items-center gap-2 pb-2 border-b border-white/[0.04]">
-                <Palette className="w-4.5 h-4.5 text-[#55F130]" />
+                <Palette className="w-4.5 h-4.5 text-[#22C55E]" />
                 <h3 className="text-sm font-bold text-white">
                   Progress Box Theme
                 </h3>
@@ -177,19 +177,19 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
               <div className="grid grid-cols-2 gap-2.5">
                 <button
                   type="button"
-                  onClick={() => setCardColor('#55F130')}
+                  onClick={() => setCardColor('#22C55E')}
                   className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
-                    cardColor === '#55F130'
-                      ? 'bg-[#1B1E26] border-[#55F130] shadow-lg shadow-[#55F130]/10'
+                    cardColor === '#22C55E'
+                      ? 'bg-[#1B1E26] border-[#22C55E] shadow-lg shadow-[#22C55E]/10'
                       : 'bg-[#1B1E26]/40 border-white/[0.04] hover:border-white/15'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <div className="w-6 h-6 rounded-xl bg-[#55F130] shadow-sm flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-xl bg-[#22C55E] shadow-sm flex items-center justify-center">
                       <span className="w-2 h-2 rounded-full bg-[#090A0F]" />
                     </div>
-                    {cardColor === '#55F130' && (
-                      <Check className="w-4.5 h-4.5 text-[#55F130] stroke-[2.5]" />
+                    {cardColor === '#22C55E' && (
+                      <Check className="w-4.5 h-4.5 text-[#22C55E] stroke-[2.5]" />
                     )}
                   </div>
                   <div>
@@ -207,16 +207,16 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                   onClick={() => setCardColor('#212121')}
                   className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
                     cardColor === '#212121'
-                      ? 'bg-[#1B1E26] border-[#55F130] shadow-lg shadow-[#55F130]/10'
+                      ? 'bg-[#1B1E26] border-[#22C55E] shadow-lg shadow-[#22C55E]/10'
                       : 'bg-[#1B1E26]/40 border-white/[0.04] hover:border-white/15'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="w-6 h-6 rounded-xl bg-[#14161B] border border-white/20 shadow-sm flex items-center justify-center">
-                      <span className="w-2 h-2 rounded-full bg-[#55F130]" />
+                      <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
                     </div>
                     {cardColor === '#212121' && (
-                      <Check className="w-4.5 h-4.5 text-[#55F130] stroke-[2.5]" />
+                      <Check className="w-4.5 h-4.5 text-[#22C55E] stroke-[2.5]" />
                     )}
                   </div>
                   <div>
@@ -233,7 +233,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
 
             <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 sm:p-5 shadow-xl space-y-4">
               <div className="flex items-center gap-2 pb-2 border-b border-white/[0.04]">
-                <Target className="w-4.5 h-4.5 text-[#55F130]" />
+                <Target className="w-4.5 h-4.5 text-[#22C55E]" />
                 <h3 className="text-sm font-bold text-white">
                   Target Attendance Threshold
                 </h3>
@@ -254,7 +254,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                         onClick={() => handlePresetSelect(val)}
                         className={`py-2.5 rounded-2xl border text-xs font-black transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-[#55F130] border-[#55F130] text-[#090A0F] shadow-md shadow-[#55F130]/20'
+                            ? 'bg-[#22C55E] border-[#22C55E] text-[#090A0F] shadow-md shadow-[#22C55E]/20'
                             : 'bg-[#1B1E26] border-white/[0.04] text-[#8A92A0] hover:border-white/20'
                         }`}
                       >
@@ -272,7 +272,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                     value={customTarget}
                     onChange={handleCustomChange}
                     placeholder="Custom target % (e.g. 78)"
-                    className="w-full bg-[#1B1E26] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#55F130] transition-colors"
+                    className="w-full bg-[#1B1E26] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#22C55E] transition-colors"
                   />
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8A92A0] text-xs font-bold">
                     %
@@ -283,7 +283,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
 
             <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 sm:p-5 shadow-xl space-y-4">
               <div className="flex items-center gap-2 pb-2 border-b border-white/[0.04]">
-                <Sparkles className="w-4.5 h-4.5 text-[#55F130]" />
+                <Sparkles className="w-4.5 h-4.5 text-[#22C55E]" />
                 <h3 className="text-sm font-bold text-white">
                   Smart Recommendations
                 </h3>
@@ -303,7 +303,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
                   type="button"
                   onClick={() => setShowRecs((prev) => !prev)}
                   className={`w-12 h-6.5 rounded-full transition-colors relative cursor-pointer p-0.5 shrink-0 ${
-                    showRecs ? 'bg-[#55F130]' : 'bg-[#1B1E26] border border-white/10'
+                    showRecs ? 'bg-[#22C55E]' : 'bg-[#1B1E26] border border-white/10'
                   }`}
                 >
                   <div
@@ -318,7 +318,7 @@ export const CustomizePage = ({ onBack, onNavigate }) => {
             <button
               type="button"
               onClick={handleSave}
-              className="w-full bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-3.5 rounded-2xl shadow-lg shadow-[#55F130]/20 transition-all cursor-pointer active:scale-[0.99] flex items-center justify-center gap-2"
+              className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-[#090A0F] text-xs font-bold py-3.5 rounded-2xl shadow-lg shadow-[#22C55E]/20 transition-all cursor-pointer active:scale-[0.99] flex items-center justify-center gap-2"
             >
               <Check className="w-4 h-4 stroke-[2.5]" />
               <span>Save All Preferences</span>

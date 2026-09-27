@@ -91,7 +91,7 @@ export const CustomBudgetTransactionModal = ({
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Taxi ride, Lunch, Gym membership"
-                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#55F130] transition-colors"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#22C55E] transition-colors"
                 />
               </div>
 
@@ -110,7 +110,7 @@ export const CustomBudgetTransactionModal = ({
                     placeholder="250"
                     min="1"
                     step="any"
-                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl pl-8 pr-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#55F130] transition-colors"
+                    className="w-full bg-[#1A1F29] border border-white/10 rounded-xl pl-8 pr-3.5 py-2.5 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-[#22C55E] transition-colors"
                   />
                 </div>
               </div>
@@ -123,7 +123,7 @@ export const CustomBudgetTransactionModal = ({
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs focus:outline-none focus:border-[#55F130] transition-colors"
+                  className="w-full bg-[#1A1F29] border border-white/10 rounded-xl px-3.5 py-2 text-white text-xs focus:outline-none focus:border-[#22C55E] transition-colors"
                 />
               </div>
 
@@ -137,7 +137,7 @@ export const CustomBudgetTransactionModal = ({
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold shadow-md shadow-[#55F130]/20 transition-all cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl bg-[#22C55E] hover:bg-[#16A34A] text-[#090A0F] text-xs font-bold shadow-md shadow-[#22C55E]/20 transition-all cursor-pointer"
                 >
                   Add Expense
                 </button>

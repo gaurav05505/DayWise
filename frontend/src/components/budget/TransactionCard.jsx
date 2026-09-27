@@ -89,7 +89,7 @@ export const TransactionCard = ({
                     }}
                     className="w-full text-left px-3 py-2 text-[12.5px] text-[#F3F4F6] hover:bg-white/5 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
                   >
-                    <Pencil className="w-3.5 h-3.5 text-[#55F130]" />
+                    <Pencil className="w-3.5 h-3.5 text-[#22C55E]" />
                     <span>Edit</span>
                   </button>
 

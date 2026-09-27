@@ -20,7 +20,7 @@ export const SpendSavingsPlan = ({
     <div className="w-full bg-[#14161B] border border-white/[0.04] rounded-[28px] p-4 shadow-xl transition-all overflow-hidden">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-[#22C55E]/15 text-[#22C55E] flex items-center justify-center shrink-0">
             <Calendar className="w-4 h-4" />
           </div>
           <div>
@@ -37,7 +37,7 @@ export const SpendSavingsPlan = ({
           <button
             type="button"
             onClick={onOpenPlanning}
-            className="text-xs font-semibold text-[#55F130] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-semibold text-[#22C55E] hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" />
             <span>Edit</span>
@@ -91,7 +91,7 @@ export const SpendSavingsPlan = ({
                       <button
                         type="button"
                         onClick={() => onDeductAll(fixedExpenses)}
-                        className="bg-[#55F130]/15 hover:bg-[#55F130]/25 active:scale-95 text-[#55F130] text-[11px] font-bold py-1 px-2.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer"
+                        className="bg-[#22C55E]/15 hover:bg-[#22C55E]/25 active:scale-95 text-[#22C55E] text-[11px] font-bold py-1 px-2.5 rounded-xl flex items-center gap-1 transition-all cursor-pointer"
                       >
                         <Zap className="w-3 h-3" />
                         <span>Deduct All (₹{totalFixed.toLocaleString()})</span>

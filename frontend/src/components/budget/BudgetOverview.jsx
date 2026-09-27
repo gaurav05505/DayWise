@@ -11,7 +11,7 @@ export const BudgetOverview = ({
   shortcuts = [],
   fixedExpenses = [],
   targetSavings = 0,
-  progressCardColor = '#55F130',
+  progressCardColor = '#22C55E',
   showRecommendations = true,
   onOpenQuickMinus,
   onOpenQuickAdd,
@@ -56,14 +56,14 @@ export const BudgetOverview = ({
         className={`w-full rounded-[28px] p-4 sm:p-5 text-white relative transition-colors ${
           isCharcoal
             ? 'bg-[#14171E] border border-white/[0.06] shadow-xl'
-            : 'bg-[#55F130] text-[#090A0F] shadow-xl shadow-[#55F130]/15'
+            : 'bg-[#22C55E] text-[#090A0F] shadow-xl shadow-[#22C55E]/15'
         }`}
       >
         <div className="flex items-center justify-between relative z-10">
           <div className="flex items-center gap-2">
             <div
               className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                isCharcoal ? 'bg-[#55F130]/15 text-[#55F130]' : 'bg-black/15 text-[#090A0F]'
+                isCharcoal ? 'bg-[#22C55E]/15 text-[#22C55E]' : 'bg-black/15 text-[#090A0F]'
               }`}
             >
               <Wallet className="w-4 h-4" />
@@ -177,7 +177,7 @@ export const BudgetOverview = ({
               >
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
-                    isCharcoal ? 'bg-[#55F130]' : 'bg-[#090A0F]'
+                    isCharcoal ? 'bg-[#22C55E]' : 'bg-[#090A0F]'
                   }`}
                   style={{ width: `${Math.min(100, Math.max(0, percentageSpent))}%` }}
                 />
@@ -215,7 +215,7 @@ export const BudgetOverview = ({
                 >
                   <div
                     className={`h-full rounded-full ${
-                      isCharcoal ? 'bg-[#55F130]' : 'bg-[#090A0F]'
+                      isCharcoal ? 'bg-[#22C55E]' : 'bg-[#090A0F]'
                     }`}
                     style={{ width: `${Math.min(100, Math.max(0, percentageSpent))}%` }}
                   />
@@ -256,7 +256,7 @@ export const BudgetOverview = ({
           <button
             type="button"
             onClick={onOpenCustomShortcuts}
-            className="text-xs font-semibold text-[#55F130] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-semibold text-[#22C55E] hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Settings2 className="w-3.5 h-3.5" />
             <span>Customize</span>
@@ -283,7 +283,7 @@ export const BudgetOverview = ({
             onClick={onOpenCustomShortcuts}
             className="bg-[#1B1E26]/60 hover:bg-[#1B1E26] text-[#8A92A0] hover:text-white border border-dashed border-white/10 rounded-2xl py-2 px-3 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1"
           >
-            <Plus className="w-3.5 h-3.5 text-[#55F130]" />
+            <Plus className="w-3.5 h-3.5 text-[#22C55E]" />
             <span>New</span>
           </button>
         </div>

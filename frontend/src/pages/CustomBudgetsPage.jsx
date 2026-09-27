@@ -56,7 +56,7 @@ export const CustomBudgetsPage = ({ onNavigate, onSelectBudget }) => {
                 setEditingBudget(null);
                 setIsCreateModalOpen(true);
               }}
-              className="bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2.5 px-4 rounded-xl shadow-md shadow-[#55F130]/20 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="bg-[#22C55E] hover:bg-[#16A34A] text-[#090A0F] text-xs font-bold py-2.5 px-4 rounded-xl shadow-md shadow-[#22C55E]/20 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>Create</span>
@@ -76,7 +76,7 @@ export const CustomBudgetsPage = ({ onNavigate, onSelectBudget }) => {
               <SkeletonCard count={2} />
             ) : budgets.length === 0 ? (
               <div className="w-full bg-[#14171E] border border-white/[0.06] rounded-[28px] p-8 text-center shadow-xl">
-                <div className="w-14 h-14 rounded-2xl bg-[#55F130]/15 text-[#55F130] flex items-center justify-center mx-auto mb-3 shadow-inner">
+                <div className="w-14 h-14 rounded-2xl bg-[#22C55E]/15 text-[#22C55E] flex items-center justify-center mx-auto mb-3 shadow-inner">
                   <PiggyBank className="w-7 h-7" />
                 </div>
                 <h3 className="text-base font-bold text-white mb-1">
@@ -91,7 +91,7 @@ export const CustomBudgetsPage = ({ onNavigate, onSelectBudget }) => {
                     setEditingBudget(null);
                     setIsCreateModalOpen(true);
                   }}
-                  className="bg-[#55F130] hover:bg-[#48D827] text-[#090A0F] text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#55F130]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
+                  className="bg-[#22C55E] hover:bg-[#16A34A] text-[#090A0F] text-xs font-bold py-2.5 px-5 rounded-xl shadow-md shadow-[#22C55E]/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Create First Budget</span>

@@ -51,7 +51,7 @@ export const CustomBudgetCard = ({ budget, onSelect, onEdit, onDelete }) => {
             <IconComponent className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-white font-bold text-[15px] leading-snug group-hover:text-[#55F130] transition-colors">
+            <h3 className="text-white font-bold text-[15px] leading-snug group-hover:text-[#22C55E] transition-colors">
               {name}
             </h3>
             {budget.description ? (
@@ -95,7 +95,7 @@ export const CustomBudgetCard = ({ budget, onSelect, onEdit, onDelete }) => {
                     }}
                     className="w-full px-3 py-2 text-left text-xs text-[#F3F4F6] hover:bg-white/5 flex items-center gap-2 transition-colors cursor-pointer"
                   >
-                    <Edit2 className="w-3.5 h-3.5 text-[#55F130]" />
+                    <Edit2 className="w-3.5 h-3.5 text-[#22C55E]" />
                     <span>Edit</span>
                   </button>
                   <button
@@ -135,7 +135,7 @@ export const CustomBudgetCard = ({ budget, onSelect, onEdit, onDelete }) => {
             ) : (
               <div>
                 <span className="text-[#8A92A0] text-[11px]">Left </span>
-                <span className="text-[#55F130] font-bold">{formatCurrency(remaining)}</span>
+                <span className="text-[#22C55E] font-bold">{formatCurrency(remaining)}</span>
               </div>
             )}
           </div>

@@ -75,7 +75,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
           }}
         >
           <motion.div
-            className="absolute top-[4px] w-[46px] h-[46px] rounded-full bg-[#55F130] shadow-md shadow-black/40 flex items-center justify-center cursor-pointer pointer-events-auto"
+            className="absolute top-[4px] w-[46px] h-[46px] rounded-full bg-[#22C55E] shadow-md shadow-black/40 flex items-center justify-center cursor-pointer pointer-events-auto"
             onClick={() => onTabChange?.(tabs[activeIndex].id)}
             whileTap={{ scale: 0.92 }}
           >

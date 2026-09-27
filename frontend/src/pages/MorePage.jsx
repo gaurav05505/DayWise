@@ -53,8 +53,8 @@ export const MorePage = ({ onNavigate }) => {
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
       <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1">
         {toastMessage && (
-          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[70] bg-[#14161B] border border-[#55F130]/30 text-white text-xs py-2 px-4 rounded-full shadow-2xl flex items-center gap-2 animate-fadeIn">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#55F130]" />
+          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[70] bg-[#14161B] border border-[#22C55E]/30 text-white text-xs py-2 px-4 rounded-full shadow-2xl flex items-center gap-2 animate-fadeIn">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E]" />
             <span>{toastMessage}</span>
           </div>
         )}
@@ -78,7 +78,7 @@ export const MorePage = ({ onNavigate }) => {
               />
               <SettingsItem
                 icon={Target}
-                iconColor="#55F130"
+                iconColor="#22C55E"
                 title="Customize & Targets"
                 subtitle={`Target: ${settings.attendanceTarget || 75}% • Theme: ${settings.progressCardColor === '#212121' ? 'Charcoal' : 'Neon'} • Insights: ${settings.showRecommendations !== false ? 'On' : 'Off'}`}
                 value={`${settings.attendanceTarget || 75}%`}
@@ -89,7 +89,7 @@ export const MorePage = ({ onNavigate }) => {
             <SettingsSection title="Data & Storage">
               <SettingsItem
                 icon={Download}
-                iconColor="#55F130"
+                iconColor="#22C55E"
                 title="Export Data"
                 subtitle="Save local backup JSON"
                 onClick={exportData}
@@ -140,7 +140,7 @@ export const MorePage = ({ onNavigate }) => {
           isOpen={isTargetModalOpen}
           onClose={() => setIsTargetModalOpen(false)}
           currentTarget={settings.attendanceTarget || 75}
-          currentProgressColor={settings.progressCardColor || '#55F130'}
+          currentProgressColor={settings.progressCardColor || '#22C55E'}
           currentShowRecommendations={settings.showRecommendations !== false}
           onSavePreferences={(prefs) => updateMultipleSettings(prefs)}
         />

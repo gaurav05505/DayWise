@@ -12,7 +12,7 @@ export const AboutSection = () => {
     <SettingsSection title="About DayWise">
       <SettingsItem
         icon={Sparkles}
-        iconColor="#55F130"
+        iconColor="#22C55E"
         title="DayWise"
         subtitle="Version 1.0.0"
         value="v1.0.0"

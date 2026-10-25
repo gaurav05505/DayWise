@@ -14,7 +14,7 @@ export const CurrentClassCard = ({
     : null;
 
   return (
-    <div className="w-full bg-[#1D1D1D] border border-white/[0.05] text-[#F4F5F7] rounded-[20px] p-3.5 flex flex-col justify-between min-h-[105px] shadow-lg select-none">
+    <div className="w-full bg-[#1D1D1D] border border-white/[0.05] text-[#F4F5F7] rounded-[22px] p-3.5 sm:p-4 flex flex-col justify-between min-h-[108px] shadow-lg select-none">
       <div className="flex items-start justify-between gap-1.5">
         <div className="min-w-0 flex-1">
           <h4 className="text-[14px] font-bold text-[#F4F5F7] truncate tracking-tight leading-tight">

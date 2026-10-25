@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { AttendancePage } from './pages/AttendancePage.jsx';
+import { AnalyticsPage } from './pages/AnalyticsPage.jsx';
 import { TimetablePage } from './pages/TimetablePage.jsx';
 import { MorePage } from './pages/MorePage.jsx';
 import { CustomizePage } from './pages/CustomizePage.jsx';
@@ -34,6 +35,9 @@ const App = () => {
       <AnimatePresence mode="wait">
         {currentPage === 'attendance' && (
           <AttendancePage key="attendance" onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'analytics' && (
+          <AnalyticsPage key="analytics" onNavigate={handleNavigate} />
         )}
         {currentPage === 'timetable' && (
           <TimetablePage key="timetable" onNavigate={handleNavigate} />

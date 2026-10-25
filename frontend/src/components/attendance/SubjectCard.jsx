@@ -139,10 +139,15 @@ export const SubjectCard = ({
             </motion.button>
           </div>
 
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
               aria-label="More options"
+              onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => {
                 e.stopPropagation();
                 setShowMenu(!showMenu);
@@ -157,20 +162,33 @@ export const SubjectCard = ({
                 <>
                   <div
                     className="fixed inset-0 z-40"
-                    onClick={() => setShowMenu(false)}
+                    onPointerDown={(e) => {
+                      e.stopPropagation();
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowMenu(false);
+                    }}
                   />
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: -10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -10 }}
                     transition={{ duration: 0.15 }}
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
                     className="absolute right-0 top-9 z-50 w-36 bg-[#1D1D1D] border border-white/10 rounded-2xl shadow-2xl py-1.5 overflow-hidden"
                   >
                     <button
                       type="button"
-                      onClick={() => {
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
                         setShowMenu(false);
-                        onOpenHistory?.(subject);
+                        setTimeout(() => {
+                          onOpenHistory?.(subject);
+                        }, 50);
                       }}
                       className="w-full px-3 py-2 text-xs text-[#9A9DA8] hover:text-white hover:bg-white/5 flex items-center gap-2 cursor-pointer transition-colors"
                     >
@@ -180,9 +198,14 @@ export const SubjectCard = ({
 
                     <button
                       type="button"
-                      onClick={() => {
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
                         setShowMenu(false);
-                        onEditSubject?.(subject);
+                        setTimeout(() => {
+                          onEditSubject?.(subject);
+                        }, 50);
                       }}
                       className="w-full px-3 py-2 text-xs text-[#9A9DA8] hover:text-white hover:bg-white/5 flex items-center gap-2 cursor-pointer transition-colors"
                     >
@@ -192,9 +215,14 @@ export const SubjectCard = ({
 
                     <button
                       type="button"
-                      onClick={() => {
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
                         setShowMenu(false);
-                        onDeleteSubject?.(subject._id);
+                        setTimeout(() => {
+                          onDeleteSubject?.(subject);
+                        }, 50);
                       }}
                       className="w-full px-3 py-2 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2 cursor-pointer transition-colors"
                     >

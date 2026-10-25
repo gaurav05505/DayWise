@@ -13,6 +13,7 @@ import { AddSubjectModal } from '../components/attendance/AddSubjectModal.jsx';
 import { EditSubjectModal } from '../components/attendance/EditSubjectModal.jsx';
 import { BulkAttendanceModal } from '../components/attendance/BulkAttendanceModal.jsx';
 import { AddWidgetModal } from '../components/attendance/AddWidgetModal.jsx';
+import { ConfirmationModal } from '../components/more/ConfirmationModal.jsx';
 import { PageTransition } from '../components/animations/PageTransition.jsx';
 import { SkeletonCard } from '../components/common/SkeletonCard.jsx';
 import { syncAttendanceToWidget } from '../plugins/widgetBridge.js';
@@ -42,6 +43,7 @@ export const AttendancePage = ({ onNavigate }) => {
   const [isWidgetModalOpen, setIsWidgetModalOpen] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
   const [historySubjectId, setHistorySubjectId] = useState(null);
+  const [deletingSubject, setDeletingSubject] = useState(null);
   const [isMarkingQuick, setIsMarkingQuick] = useState(false);
 
   const activeHistorySubject = subjects.find((s) => s._id === historySubjectId) || null;
@@ -73,6 +75,14 @@ export const AttendancePage = ({ onNavigate }) => {
       markedStatus = log.status;
     }
   }
+
+  const handleConfirmDeleteSubject = async () => {
+    if (deletingSubject) {
+      const id = deletingSubject._id || deletingSubject;
+      await deleteSubject(id);
+      setDeletingSubject(null);
+    }
+  };
 
   const handleQuickAttendance = async (status) => {
     if (!currentClass) return;
@@ -134,7 +144,7 @@ export const AttendancePage = ({ onNavigate }) => {
 
   return (
     <div className="w-full min-h-screen bg-[#0B0C0F] flex justify-center text-[#F4F5F7]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-4">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-32 px-4">
         <PageTransition className="flex-1 flex flex-col">
           <AttendanceHeader onOpenMenu={() => setIsWidgetModalOpen(true)} />
 
@@ -143,6 +153,7 @@ export const AttendancePage = ({ onNavigate }) => {
               summary={summary}
               onOpenAddModal={() => setIsAddModalOpen(true)}
               onOpenBulkModal={() => setIsBulkModalOpen(true)}
+              onOpenAnalytics={() => onNavigate?.('analytics')}
               progressCardColor={settings.progressCardColor || '#24D366'}
               showRecommendations={false}
             />
@@ -208,7 +219,7 @@ export const AttendancePage = ({ onNavigate }) => {
                       onMarkPresent={markPresent}
                       onMarkAbsent={markAbsent}
                       onEditSubject={(sub) => setEditingSubject(sub)}
-                      onDeleteSubject={deleteSubject}
+                      onDeleteSubject={(sub) => setDeletingSubject(sub)}
                       onOpenHistory={(sub) => setHistorySubjectId(sub._id)}
                     />
                   ))}
@@ -249,6 +260,15 @@ export const AttendancePage = ({ onNavigate }) => {
           isOpen={isWidgetModalOpen}
           onClose={() => setIsWidgetModalOpen(false)}
           summary={summary}
+        />
+
+        <ConfirmationModal
+          isOpen={Boolean(deletingSubject)}
+          onClose={() => setDeletingSubject(null)}
+          onConfirm={handleConfirmDeleteSubject}
+          title={`Delete ${deletingSubject?.name || 'Subject'}?`}
+          message="Are you sure you want to delete this subject? All attendance records for this subject will be permanently removed."
+          confirmLabel="Delete Subject"
         />
       </div>
     </div>

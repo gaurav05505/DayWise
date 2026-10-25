@@ -5,6 +5,7 @@ export const AttendanceOverview = ({
   summary,
   onOpenAddModal,
   onOpenBulkModal,
+  onOpenAnalytics,
 }) => {
   const currentPercentage = Math.round(
     summary?.overallAttendancePercentage ?? summary?.overallPercentage ?? 0
@@ -28,8 +29,11 @@ export const AttendanceOverview = ({
 
   return (
     <section className="w-full bg-[#141414] border border-white/[0.05] rounded-[24px] p-3.5 sm:p-4 shadow-xl">
-      <div className="grid grid-cols-2 gap-3">
-        <div className="bg-[#1D1D1D] rounded-[18px] p-3.5 sm:p-4 flex flex-col justify-center space-y-2">
+      <div className="grid grid-cols-2 gap-3 items-stretch">
+        <div
+          onClick={onOpenAnalytics}
+          className="h-full bg-[#1D1D1D] hover:bg-[#222222] rounded-[18px] p-3.5 sm:p-4 flex flex-col justify-center space-y-2 cursor-pointer transition-colors active:scale-[0.99]"
+        >
           <p className="text-[13.5px] text-[#F4F5F7] font-medium leading-tight">
             Target : <span className="font-bold">{targetPercentage}%</span>
           </p>

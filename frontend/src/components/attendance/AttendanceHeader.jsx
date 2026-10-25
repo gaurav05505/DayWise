@@ -34,8 +34,8 @@ export const AttendanceHeader = ({ onOpenMenu }) => {
   }, []);
 
   return (
-    <header className="pt-3 pb-2 px-1 space-y-2">
-      <div className="flex items-center justify-between text-xs text-[#9A9DA8] font-medium">
+    <header className="pt-2 pb-2 px-0.5 space-y-1.5">
+      <div className="flex items-center justify-between text-[11.5px] text-[#9A9DA8] font-medium">
         <div className="flex items-center gap-1.5">
           <Calendar className="w-3.5 h-3.5 text-[#9A9DA8]" />
           <span>{dateStr || 'Today'}</span>
@@ -47,7 +47,7 @@ export const AttendanceHeader = ({ onOpenMenu }) => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-0.5">
+      <div className="flex items-center justify-between pt-1">
         <h1 className="text-[26px] font-bold text-[#F4F5F7] tracking-tight">
           Attendance
         </h1>

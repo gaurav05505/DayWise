@@ -53,7 +53,7 @@ export const ConfirmationModal = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex-1 py-2.5 rounded-xl bg-[#1A1F29] hover:bg-[#222834] text-white text-xs font-semibold transition-colors cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl bg-[#242424] hover:bg-[#2e2e2e] text-white text-xs font-semibold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

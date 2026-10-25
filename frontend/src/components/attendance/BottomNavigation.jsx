@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, CalendarDays, User } from 'lucide-react';
+import { Home, BarChart3, CalendarDays, User } from 'lucide-react';
 
-const getNavPath = (idx, total = 3) => {
+const getNavPath = (idx, total = 4) => {
   const W = 352;
   const H = 64;
   const R = 22;
@@ -22,6 +22,11 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
       id: 'attendance',
       label: 'Home',
       icon: Home,
+    },
+    {
+      id: 'analytics',
+      label: 'Analytics',
+      icon: BarChart3,
     },
     {
       id: 'timetable',

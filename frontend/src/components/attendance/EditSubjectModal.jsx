@@ -71,7 +71,7 @@ export const EditSubjectModal = ({ isOpen, onClose, subject, onUpdateSubject }) 
             initial="initial"
             animate="animate"
             exit="exit"
-            className="w-full max-w-[360px] bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
+            className="w-full max-w-[360px] bg-[#181818] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5">

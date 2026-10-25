@@ -63,26 +63,68 @@ export const subjectRepository = {
     return this.getById(id);
   },
 
-  async markPresent(id) {
+  async markPresent(id, meta = {}) {
     const db = await getDB();
     const sub = await db.get('subjects', id);
     if (!sub) throw new Error('Subject not found');
 
     const now = new Date();
-    const newLog = {
-      _id: generateId(),
-      status: 'present',
-      timestamp: now.toISOString(),
-      date: now.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-      time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
-    };
+    const dateKey = meta.dateKey || now.toISOString().split('T')[0];
+    const timetableClassId = meta.timetableClassId || null;
 
-    const logs = Array.isArray(sub.logs) ? [newLog, ...sub.logs] : [newLog];
+    let logs = Array.isArray(sub.logs) ? [...sub.logs] : [];
+    let totalClasses = Number(sub.totalClasses) || 0;
+    let attendedClasses = Number(sub.attendedClasses) || 0;
+
+    const existingIndex = timetableClassId
+      ? logs.findIndex(
+          (l) =>
+            l.timetableClassId === timetableClassId &&
+            (l.dateKey === dateKey ||
+              l.date ===
+                now.toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                }))
+        )
+      : -1;
+
+    if (existingIndex >= 0) {
+      const existingLog = logs[existingIndex];
+      if (existingLog.status === 'present') {
+        return this.getById(id);
+      }
+      existingLog.status = 'present';
+      existingLog.updatedAt = now.toISOString();
+      attendedClasses = Math.min(totalClasses, attendedClasses + 1);
+    } else {
+      const newLog = {
+        _id: generateId(),
+        status: 'present',
+        timestamp: now.toISOString(),
+        dateKey,
+        timetableClassId,
+        date: now.toLocaleDateString('en-US', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        }),
+        time: now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        }),
+      };
+      logs = [newLog, ...logs];
+      totalClasses += 1;
+      attendedClasses += 1;
+    }
 
     const updated = {
       ...sub,
-      totalClasses: (Number(sub.totalClasses) || 0) + 1,
-      attendedClasses: (Number(sub.attendedClasses) || 0) + 1,
+      totalClasses,
+      attendedClasses,
       logs,
       updatedAt: now.toISOString(),
     };
@@ -91,25 +133,67 @@ export const subjectRepository = {
     return this.getById(id);
   },
 
-  async markAbsent(id) {
+  async markAbsent(id, meta = {}) {
     const db = await getDB();
     const sub = await db.get('subjects', id);
     if (!sub) throw new Error('Subject not found');
 
     const now = new Date();
-    const newLog = {
-      _id: generateId(),
-      status: 'absent',
-      timestamp: now.toISOString(),
-      date: now.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-      time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
-    };
+    const dateKey = meta.dateKey || now.toISOString().split('T')[0];
+    const timetableClassId = meta.timetableClassId || null;
 
-    const logs = Array.isArray(sub.logs) ? [newLog, ...sub.logs] : [newLog];
+    let logs = Array.isArray(sub.logs) ? [...sub.logs] : [];
+    let totalClasses = Number(sub.totalClasses) || 0;
+    let attendedClasses = Number(sub.attendedClasses) || 0;
+
+    const existingIndex = timetableClassId
+      ? logs.findIndex(
+          (l) =>
+            l.timetableClassId === timetableClassId &&
+            (l.dateKey === dateKey ||
+              l.date ===
+                now.toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                }))
+        )
+      : -1;
+
+    if (existingIndex >= 0) {
+      const existingLog = logs[existingIndex];
+      if (existingLog.status === 'absent') {
+        return this.getById(id);
+      }
+      existingLog.status = 'absent';
+      existingLog.updatedAt = now.toISOString();
+      attendedClasses = Math.max(0, attendedClasses - 1);
+    } else {
+      const newLog = {
+        _id: generateId(),
+        status: 'absent',
+        timestamp: now.toISOString(),
+        dateKey,
+        timetableClassId,
+        date: now.toLocaleDateString('en-US', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        }),
+        time: now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        }),
+      };
+      logs = [newLog, ...logs];
+      totalClasses += 1;
+    }
 
     const updated = {
       ...sub,
-      totalClasses: (Number(sub.totalClasses) || 0) + 1,
+      totalClasses,
+      attendedClasses,
       logs,
       updatedAt: now.toISOString(),
     };

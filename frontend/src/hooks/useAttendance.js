@@ -48,18 +48,18 @@ export const useAttendance = () => {
     }
   };
 
-  const markPresent = async (id) => {
+  const markPresent = async (id, meta = {}) => {
     try {
-      await attendanceService.markPresent(id);
+      await attendanceService.markPresent(id, meta);
       await fetchData();
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const markAbsent = async (id) => {
+  const markAbsent = async (id, meta = {}) => {
     try {
-      await attendanceService.markAbsent(id);
+      await attendanceService.markAbsent(id, meta);
       await fetchData();
     } catch (err) {
       setError(err.message);

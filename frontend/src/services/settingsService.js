@@ -1,10 +1,7 @@
 import { getDB } from '../db/database.js';
 import { settingsRepository } from '../db/settingsRepository.js';
 import { subjectRepository } from '../db/subjectRepository.js';
-import { budgetRepository } from '../db/budgetRepository.js';
-import { categoryRepository } from '../db/categoryRepository.js';
-import { transactionRepository } from '../db/transactionRepository.js';
-import { customBudgetRepository } from '../db/customBudgetRepository.js';
+import { timetableRepository } from '../db/timetableRepository.js';
 
 export const settingsService = {
   async getSettings() {
@@ -18,22 +15,10 @@ export const settingsService = {
   async exportAllData() {
     try {
       const db = await getDB();
-      const [
-        subjects,
-        categories,
-        transactions,
-        budgets,
-        customBudgets,
-        customBudgetTransactions,
-        settings,
-      ] = await Promise.all([
+      const [subjects, settings, timetable] = await Promise.all([
         db.getAll('subjects'),
-        db.getAll('categories'),
-        db.getAll('transactions'),
-        db.getAll('budgets'),
-        db.getAll('customBudgets'),
-        db.getAll('customBudgetTransactions'),
         db.getAll('settings'),
+        db.getAll('timetable'),
       ]);
 
       const exportPayload = {
@@ -42,11 +27,7 @@ export const settingsService = {
         exportedAt: new Date().toISOString(),
         settings,
         subjects,
-        categories,
-        transactions,
-        budgets,
-        customBudgets,
-        customBudgetTransactions,
+        timetable,
       };
 
       const blob = new Blob([JSON.stringify(exportPayload, null, 2)], {
@@ -74,15 +55,7 @@ export const settingsService = {
       }
 
       const db = await getDB();
-      const stores = [
-        'subjects',
-        'categories',
-        'transactions',
-        'budgets',
-        'customBudgets',
-        'customBudgetTransactions',
-        'settings',
-      ];
+      const stores = ['subjects', 'settings', 'timetable'];
 
       const tx = db.transaction(stores, 'readwrite');
 
@@ -93,38 +66,10 @@ export const settingsService = {
         }
       }
 
-      if (Array.isArray(jsonData.categories)) {
-        await tx.objectStore('categories').clear();
-        for (const item of jsonData.categories) {
-          await tx.objectStore('categories').put(item);
-        }
-      }
-
-      if (Array.isArray(jsonData.transactions)) {
-        await tx.objectStore('transactions').clear();
-        for (const item of jsonData.transactions) {
-          await tx.objectStore('transactions').put(item);
-        }
-      }
-
-      if (Array.isArray(jsonData.budgets)) {
-        await tx.objectStore('budgets').clear();
-        for (const item of jsonData.budgets) {
-          await tx.objectStore('budgets').put(item);
-        }
-      }
-
-      if (Array.isArray(jsonData.customBudgets)) {
-        await tx.objectStore('customBudgets').clear();
-        for (const item of jsonData.customBudgets) {
-          await tx.objectStore('customBudgets').put(item);
-        }
-      }
-
-      if (Array.isArray(jsonData.customBudgetTransactions)) {
-        await tx.objectStore('customBudgetTransactions').clear();
-        for (const item of jsonData.customBudgetTransactions) {
-          await tx.objectStore('customBudgetTransactions').put(item);
+      if (Array.isArray(jsonData.timetable)) {
+        await tx.objectStore('timetable').clear();
+        for (const item of jsonData.timetable) {
+          await tx.objectStore('timetable').put(item);
         }
       }
 
@@ -155,22 +100,11 @@ export const settingsService = {
     }
   },
 
-  async resetBudgetData() {
-    try {
-      await budgetRepository.resetAll();
-      return { success: true };
-    } catch (err) {
-      return { success: false, error: err.message };
-    }
-  },
-
   async resetAllData() {
     try {
       await Promise.all([
         subjectRepository.resetAll(),
-        budgetRepository.resetAll(),
-        categoryRepository.resetAll(),
-        customBudgetRepository.resetAll(),
+        timetableRepository.resetAll(),
         settingsRepository.resetAll(),
       ]);
       return { success: true };

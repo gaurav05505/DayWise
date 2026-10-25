@@ -26,7 +26,7 @@ export const SplashScreen = ({ onFinish }) => {
           }}
           className="relative mb-6"
         >
-          <div className="w-24 h-24 rounded-3xl bg-[#14171E] border border-white/10 flex items-center justify-center relative shadow-2xl overflow-hidden">
+          <div className="w-24 h-24 rounded-3xl bg-[#1D1D1D] border border-white/10 flex items-center justify-center relative shadow-2xl overflow-hidden">
             <div className="absolute inset-0 bg-[#22C55E]/15 blur-xl rounded-full" />
             <div className="w-14 h-14 rounded-2xl bg-[#22C55E] text-[#090A0F] flex items-center justify-center font-black text-2xl tracking-tighter shadow-lg shadow-[#22C55E]/30 relative z-10">
               DW

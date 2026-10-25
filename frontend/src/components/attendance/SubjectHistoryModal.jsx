@@ -12,9 +12,20 @@ export const SubjectHistoryModal = ({
   if (!subject) return null;
 
   const logs = subject.logs || [];
-  const percentage = Math.round(subject.percentage ?? subject.attendancePercentage ?? 0);
-  const target = subject.target || 75;
-  const isHealthy = percentage >= target;
+  const total = Number(subject.totalClasses) || 0;
+  const attended = Number(subject.attendedClasses) || 0;
+  const target = Number(subject.target) || 75;
+  const percentage = Math.round(
+    subject.percentage ?? (total > 0 ? (attended / total) * 100 : 0)
+  );
+  const isHealthy =
+    subject.isTargetMet !== undefined
+      ? subject.isTargetMet
+      : total === 0
+      ? true
+      : attended * 100 >= target * total;
+  const canBunk = subject.canBunk ?? 0;
+  const needToAttend = subject.needToAttend ?? 0;
 
   return (
     <AnimatePresence>
@@ -33,7 +44,7 @@ export const SubjectHistoryModal = ({
             animate="animate"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[390px] bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-5 shadow-2xl flex flex-col max-h-[85vh]"
+            className="w-full max-w-[390px] bg-[#181818] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-5 shadow-2xl flex flex-col max-h-[85vh]"
           >
             <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.06] shrink-0">
               <div className="flex items-center gap-2.5 min-w-0 pr-2">
@@ -61,7 +72,7 @@ export const SubjectHistoryModal = ({
             </div>
 
             <div className="grid grid-cols-3 gap-2 py-3 border-b border-white/[0.06] shrink-0">
-              <div className="bg-[#1B1E26] rounded-xl p-2 text-center">
+              <div className="bg-[#1D1D1D] rounded-xl p-2 text-center">
                 <span className="text-[10.5px] text-[#8A92A0] font-medium block">
                   Total
                 </span>
@@ -69,7 +80,7 @@ export const SubjectHistoryModal = ({
                   {subject.totalClasses}
                 </span>
               </div>
-              <div className="bg-[#1B1E26] rounded-xl p-2 text-center">
+              <div className="bg-[#1D1D1D] rounded-xl p-2 text-center">
                 <span className="text-[10.5px] text-[#8A92A0] font-medium block">
                   Attended
                 </span>
@@ -77,7 +88,7 @@ export const SubjectHistoryModal = ({
                   {subject.attendedClasses}
                 </span>
               </div>
-              <div className="bg-[#1B1E26] rounded-xl p-2 text-center">
+              <div className="bg-[#1D1D1D] rounded-xl p-2 text-center">
                 <span className="text-[10.5px] text-[#8A92A0] font-medium block">
                   Current
                 </span>
@@ -89,6 +100,35 @@ export const SubjectHistoryModal = ({
                   {percentage}%
                 </span>
               </div>
+            </div>
+
+            <div className="py-2 px-3 rounded-xl bg-white/[0.03] border border-white/[0.04] flex items-center justify-between text-xs my-2.5 shrink-0">
+              <span
+                className={`font-bold px-2 py-0.5 rounded-full text-[9.5px] uppercase tracking-wider ${
+                  isHealthy
+                    ? 'bg-emerald-500/15 text-[#4ADE80] border border-emerald-500/25'
+                    : 'bg-red-500/15 text-[#EF4444] border border-red-500/25'
+                }`}
+              >
+                {isHealthy ? 'On Track' : 'Shortage'}
+              </span>
+              <span className="text-[11.5px] text-[#8A92A0]">
+                {isHealthy ? (
+                  canBunk > 0 ? (
+                    <span>
+                      Can miss <strong className="text-[#4ADE80] font-bold">{canBunk}</strong> class{canBunk > 1 ? 'es' : ''}
+                    </span>
+                  ) : (
+                    <span className="text-[#4ADE80] font-medium">
+                      At target ({target}%)
+                    </span>
+                  )
+                ) : (
+                  <span className="text-[#EF4444] font-medium">
+                    Need <strong className="font-bold underline">{needToAttend}</strong> class{needToAttend > 1 ? 'es' : ''} to reach {target}%
+                  </span>
+                )}
+              </span>
             </div>
 
             <div className="flex-1 overflow-y-auto py-3 space-y-2 min-h-0 pr-0.5">
@@ -130,7 +170,7 @@ export const SubjectHistoryModal = ({
                   return (
                     <div
                       key={log._id || log.timestamp}
-                      className="flex items-center justify-between bg-[#1B1E26] border border-white/[0.04] rounded-2xl p-3"
+                      className="flex items-center justify-between bg-[#1D1D1D] border border-white/[0.04] rounded-2xl p-3"
                     >
                       <div className="flex items-center gap-2.5">
                         <span

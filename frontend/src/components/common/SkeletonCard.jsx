@@ -6,7 +6,7 @@ export const SkeletonCard = ({ count = 3 }) => {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="w-full bg-[#14171E] border border-white/[0.06] rounded-[24px] p-4 space-y-3"
+          className="w-full bg-[#1D1D1D] border border-white/[0.06] rounded-[24px] p-4 space-y-3"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

@@ -73,7 +73,7 @@ export const AttendanceTargetModal = ({
             initial="initial"
             animate="animate"
             exit="exit"
-            className="w-full max-w-[375px] max-h-[88vh] flex flex-col bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-5 shadow-2xl overflow-hidden"
+            className="w-full max-w-[375px] max-h-[88vh] flex flex-col bg-[#181818] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-5 shadow-2xl overflow-hidden"
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] shrink-0">
               <div className="flex items-center gap-2.5">
@@ -209,7 +209,7 @@ export const AttendanceTargetModal = ({
                     type="button"
                     onClick={() => setShowRecs((prev) => !prev)}
                     className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 ${
-                      showRecs ? 'bg-[#22C55E]' : 'bg-[#14171E] border border-white/10'
+                      showRecs ? 'bg-[#22C55E]' : 'bg-[#1D1D1D] border border-white/10'
                     }`}
                   >
                     <div

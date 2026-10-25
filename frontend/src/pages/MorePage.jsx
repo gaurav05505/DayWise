@@ -6,7 +6,6 @@ import {
   Upload,
   Trash2,
   CheckCircle2,
-  Settings,
 } from 'lucide-react';
 import { useSettings } from '../hooks/useSettings.js';
 import { SettingsSection } from '../components/more/SettingsSection.jsx';
@@ -26,7 +25,6 @@ export const MorePage = ({ onNavigate }) => {
     exportData,
     importData,
     resetAttendance,
-    resetBudget,
   } = useSettings();
 
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
@@ -51,7 +49,7 @@ export const MorePage = ({ onNavigate }) => {
 
   return (
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-3.5 sm:px-4">
         {toastMessage && (
           <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[70] bg-[#14161B] border border-[#22C55E]/30 text-white text-xs py-2 px-4 rounded-full shadow-2xl flex items-center gap-2 animate-fadeIn">
             <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E]" />
@@ -108,13 +106,6 @@ export const MorePage = ({ onNavigate }) => {
                 isDestructive={true}
                 onClick={() => setResetModalType('attendance')}
               />
-              <SettingsItem
-                icon={Trash2}
-                title="Reset Budget Data"
-                subtitle="Clear budget & transactions"
-                isDestructive={true}
-                onClick={() => setResetModalType('budget')}
-              />
             </SettingsSection>
 
             <AboutSection />
@@ -152,15 +143,6 @@ export const MorePage = ({ onNavigate }) => {
           title="Reset Attendance Data?"
           message="This will permanently delete all your subjects and attendance records. This action cannot be undone."
           confirmLabel="Reset Attendance"
-        />
-
-        <ConfirmationModal
-          isOpen={resetModalType === 'budget'}
-          onClose={() => setResetModalType(null)}
-          onConfirm={resetBudget}
-          title="Reset Budget Data?"
-          message="This will permanently delete your monthly budget and transaction history. This action cannot be undone."
-          confirmLabel="Reset Budget"
         />
       </div>
     </div>

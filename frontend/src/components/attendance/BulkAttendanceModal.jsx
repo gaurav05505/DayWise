@@ -73,7 +73,7 @@ export const BulkAttendanceModal = ({
             initial="initial"
             animate="animate"
             exit="exit"
-            className="w-full max-w-[360px] max-h-[85vh] flex flex-col bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
+            className="w-full max-w-[360px] max-h-[85vh] flex flex-col bg-[#181818] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] shrink-0">
               <div className="flex items-center gap-2.5">
@@ -116,7 +116,7 @@ export const BulkAttendanceModal = ({
                     return (
                       <div
                         key={s._id}
-                        className="flex items-center justify-between bg-[#1A1F29] border border-white/[0.06] rounded-2xl p-3"
+                        className="flex items-center justify-between bg-[#1D1D1D] border border-white/[0.06] rounded-2xl p-3"
                       >
                         <span className="text-xs font-bold text-white truncate max-w-[130px]">
                           {s.name}
@@ -129,7 +129,7 @@ export const BulkAttendanceModal = ({
                             className={`px-2.5 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer ${
                               current === 'present'
                                 ? 'bg-[#10B981] text-white shadow-sm'
-                                : 'bg-[#14171E] text-[#8A92A0] hover:text-white'
+                                : 'bg-[#242424] text-[#8A92A0] hover:text-white'
                             }`}
                           >
                             <Check className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -142,7 +142,7 @@ export const BulkAttendanceModal = ({
                             className={`px-2.5 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer ${
                               current === 'absent'
                                 ? 'bg-[#EF4444] text-white shadow-sm'
-                                : 'bg-[#14171E] text-[#8A92A0] hover:text-white'
+                                : 'bg-[#242424] text-[#8A92A0] hover:text-white'
                             }`}
                           >
                             <X className="w-3.5 h-3.5 stroke-[2.5]" />

@@ -116,18 +116,6 @@ export const useSettings = () => {
     return result;
   };
 
-  const resetBudget = async () => {
-    setLoading(true);
-    const result = await settingsService.resetBudgetData();
-    setLoading(false);
-    if (result.success) {
-      showToast('Budget data reset');
-    } else {
-      showToast('Failed to reset budget data');
-    }
-    return result;
-  };
-
   return {
     settings,
     loading,
@@ -137,6 +125,5 @@ export const useSettings = () => {
     exportData,
     importData,
     resetAttendance,
-    resetBudget,
   };
 };

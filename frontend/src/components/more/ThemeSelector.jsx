@@ -25,7 +25,7 @@ export const ThemeSelector = ({ isOpen, onClose, currentTheme = 'dark', onSelect
             initial="initial"
             animate="animate"
             exit="exit"
-            className="w-full max-w-[360px] bg-[#14171E] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
+            className="w-full max-w-[360px] bg-[#181818] border border-white/10 rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl"
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5">
@@ -64,7 +64,7 @@ export const ThemeSelector = ({ isOpen, onClose, currentTheme = 'dark', onSelect
                     <div className="flex items-center gap-3">
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                          isSelected ? 'bg-[#22C55E] text-[#090A0F] font-bold' : 'bg-[#14171E] text-[#8A92A0]'
+                          isSelected ? 'bg-[#22C55E] text-[#090A0F] font-bold' : 'bg-[#1D1D1D] text-[#8A92A0]'
                         }`}
                       >
                         <Icon className="w-4.5 h-4.5" />

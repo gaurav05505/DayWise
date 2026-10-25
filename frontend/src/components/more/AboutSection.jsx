@@ -22,7 +22,7 @@ export const AboutSection = () => {
         icon={Info}
         iconColor="#38BDF8"
         title="About"
-        subtitle="A simple app to manage attendance, budgets, and personal goals."
+        subtitle="A simple app to manage attendance and personal goals."
         showChevron={false}
       />
       <SettingsItem

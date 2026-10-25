@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Clock, PieChart, User } from 'lucide-react';
+import { Home, CalendarDays, User } from 'lucide-react';
 
-const getNavPath = (idx) => {
+const getNavPath = (idx, total = 3) => {
   const W = 352;
   const H = 64;
   const R = 22;
-  const cx = 44 + idx * 88;
+  const tabW = W / total;
+  const cx = tabW / 2 + idx * tabW;
   const nw = 30;
   const nd = 36;
   const x1 = cx - nw;
@@ -23,14 +24,9 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
       icon: Home,
     },
     {
-      id: 'budget',
-      label: 'History',
-      icon: Clock,
-    },
-    {
-      id: 'custom-budgets',
-      label: 'Analytics',
-      icon: PieChart,
+      id: 'timetable',
+      label: 'Timetable',
+      icon: CalendarDays,
     },
     {
       id: 'more',
@@ -52,19 +48,20 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
         >
           <motion.path
             initial={false}
-            animate={{ d: getNavPath(activeIndex) }}
+            animate={{ d: getNavPath(activeIndex, tabs.length) }}
             transition={{
               type: 'spring',
               stiffness: 280,
               damping: 24,
               mass: 0.8,
             }}
-            fill="#1F1F1F"
+            fill="#181818"
           />
         </svg>
 
         <motion.div
-          className="absolute top-0 bottom-0 w-1/4 pointer-events-none flex flex-col items-center z-20"
+          className="absolute top-0 bottom-0 pointer-events-none flex flex-col items-center z-20"
+          style={{ width: `${100 / tabs.length}%` }}
           initial={false}
           animate={{ x: `${activeIndex * 100}%` }}
           transition={{
@@ -75,7 +72,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
           }}
         >
           <motion.div
-            className="absolute top-[4px] w-[46px] h-[46px] rounded-full bg-[#22C55E] shadow-md shadow-black/40 flex items-center justify-center cursor-pointer pointer-events-auto"
+            className="absolute top-[4px] w-[46px] h-[46px] rounded-full bg-emerald-500 shadow-lg shadow-emerald-950/50 flex items-center justify-center cursor-pointer pointer-events-auto"
             onClick={() => onTabChange?.(tabs[activeIndex].id)}
             whileTap={{ scale: 0.92 }}
           >
@@ -87,7 +84,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
                 exit={{ scale: 0.5, opacity: 0 }}
                 transition={{ duration: 0.18, ease: 'easeOut' }}
               >
-                <ActiveIcon className="w-5 h-5 text-[#1F1F1F] stroke-[2.3]" />
+                <ActiveIcon className="w-5 h-5 text-white stroke-[2.3]" />
               </motion.div>
             </AnimatePresence>
           </motion.div>
@@ -104,7 +101,8 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
                 type="button"
                 aria-label={tab.label}
                 onClick={() => onTabChange?.(tab.id)}
-                className="w-1/4 h-full flex flex-col items-center justify-center cursor-pointer relative focus:outline-none"
+                style={{ width: `${100 / tabs.length}%` }}
+                className="h-full flex flex-col items-center justify-center cursor-pointer relative focus:outline-none"
               >
                 <motion.div
                   animate={{
@@ -112,7 +110,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
                     scale: isActive ? 0.6 : 1,
                   }}
                   transition={{ duration: 0.18 }}
-                  className="text-[#D1D5DB] hover:text-white transition-colors flex items-center justify-center"
+                  className="text-[#8E95A5] hover:text-white transition-colors flex items-center justify-center"
                 >
                   <Icon className="w-5 h-5 stroke-[2]" />
                 </motion.div>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { AttendancePage } from './pages/AttendancePage.jsx';
-import { BudgetPage } from './pages/BudgetPage.jsx';
-import { CustomBudgetsPage } from './pages/CustomBudgetsPage.jsx';
-import { CustomBudgetDetailsPage } from './pages/CustomBudgetDetailsPage.jsx';
+import { TimetablePage } from './pages/TimetablePage.jsx';
 import { MorePage } from './pages/MorePage.jsx';
 import { CustomizePage } from './pages/CustomizePage.jsx';
 import { BottomNavigation } from './components/attendance/BottomNavigation.jsx';
@@ -13,20 +11,12 @@ import { SplashScreen } from './components/animations/SplashScreen.jsx';
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [currentPage, setCurrentPage] = useState('attendance');
-  const [selectedCustomBudgetId, setSelectedCustomBudgetId] = useState(null);
 
   const handleNavigate = (page) => {
-    setSelectedCustomBudgetId(null);
     setCurrentPage(page);
   };
 
-  const handleSelectCustomBudget = (budgetId) => {
-    setSelectedCustomBudgetId(budgetId);
-    setCurrentPage('custom-budget-details');
-  };
-
   const getActiveNavTab = () => {
-    if (currentPage === 'custom-budget-details') return 'custom-budgets';
     if (currentPage === 'customize') return 'more';
     return currentPage;
   };
@@ -45,23 +35,8 @@ const App = () => {
         {currentPage === 'attendance' && (
           <AttendancePage key="attendance" onNavigate={handleNavigate} />
         )}
-        {currentPage === 'budget' && (
-          <BudgetPage key="budget" onNavigate={handleNavigate} />
-        )}
-        {currentPage === 'custom-budgets' && (
-          <CustomBudgetsPage
-            key="custom-budgets"
-            onNavigate={handleNavigate}
-            onSelectBudget={handleSelectCustomBudget}
-          />
-        )}
-        {currentPage === 'custom-budget-details' && (
-          <CustomBudgetDetailsPage
-            key={`custom-budget-details-${selectedCustomBudgetId}`}
-            budgetId={selectedCustomBudgetId}
-            onBack={() => setCurrentPage('custom-budgets')}
-            onNavigate={handleNavigate}
-          />
+        {currentPage === 'timetable' && (
+          <TimetablePage key="timetable" onNavigate={handleNavigate} />
         )}
         {currentPage === 'more' && (
           <MorePage key="more" onNavigate={handleNavigate} />

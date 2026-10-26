@@ -2,6 +2,8 @@ package com.daywise.app.widget
 
 import android.content.Context
 import android.content.SharedPreferences
+import org.json.JSONArray
+import org.json.JSONObject
 
 data class AttendanceWidgetData(
     val percentage: Int,
@@ -31,8 +33,47 @@ object WidgetPrefs {
     private const val KEY_NEXT_CLASS_TIME = "next_class_time"
     private const val KEY_LAST_UPDATED = "last_updated"
 
+    private const val KEY_TIMETABLE_JSON = "timetable_json"
+    private const val KEY_SUBJECTS_JSON = "subjects_json"
+    private const val KEY_PENDING_ACTIONS = "pending_attendance_actions"
+
     private fun getPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
+
+    fun saveTimetableJson(context: Context, jsonStr: String) {
+        getPrefs(context).edit().putString(KEY_TIMETABLE_JSON, jsonStr).apply()
+    }
+
+    fun getTimetableJson(context: Context): String {
+        return getPrefs(context).getString(KEY_TIMETABLE_JSON, "[]") ?: "[]"
+    }
+
+    fun saveSubjectsJson(context: Context, jsonStr: String) {
+        getPrefs(context).edit().putString(KEY_SUBJECTS_JSON, jsonStr).apply()
+    }
+
+    fun getSubjectsJson(context: Context): String {
+        return getPrefs(context).getString(KEY_SUBJECTS_JSON, "[]") ?: "[]"
+    }
+
+    fun getPendingAttendanceActions(context: Context): JSONArray {
+        val raw = getPrefs(context).getString(KEY_PENDING_ACTIONS, "[]") ?: "[]"
+        return try {
+            JSONArray(raw)
+        } catch (_: Exception) {
+            JSONArray()
+        }
+    }
+
+    fun appendPendingAttendanceAction(context: Context, action: JSONObject) {
+        val current = getPendingAttendanceActions(context)
+        current.put(action)
+        getPrefs(context).edit().putString(KEY_PENDING_ACTIONS, current.toString()).apply()
+    }
+
+    fun clearPendingAttendanceActions(context: Context) {
+        getPrefs(context).edit().putString(KEY_PENDING_ACTIONS, "[]").apply()
     }
 
     fun saveAttendanceData(

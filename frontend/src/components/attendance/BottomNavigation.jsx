@@ -60,7 +60,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
               damping: 24,
               mass: 0.8,
             }}
-            fill="#181818"
+            fill="#1D1D1D"
           />
         </svg>
 
@@ -77,7 +77,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
           }}
         >
           <motion.div
-            className="absolute top-[4px] w-[46px] h-[46px] rounded-full bg-emerald-500 shadow-lg shadow-emerald-950/50 flex items-center justify-center cursor-pointer pointer-events-auto"
+            className="absolute top-[4px] w-[46px] h-[46px] rounded-full bg-[#24D366] shadow-lg shadow-[#24D366]/30 flex items-center justify-center cursor-pointer pointer-events-auto"
             onClick={() => onTabChange?.(tabs[activeIndex].id)}
             whileTap={{ scale: 0.92 }}
           >
@@ -89,7 +89,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
                 exit={{ scale: 0.5, opacity: 0 }}
                 transition={{ duration: 0.18, ease: 'easeOut' }}
               >
-                <ActiveIcon className="w-5 h-5 text-white stroke-[2.3]" />
+                <ActiveIcon className="w-5 h-5 text-[#0B0C0F] stroke-[2.4]" />
               </motion.div>
             </AnimatePresence>
           </motion.div>
@@ -115,7 +115,7 @@ export const BottomNavigation = ({ activeTab = 'attendance', onTabChange }) => {
                     scale: isActive ? 0.6 : 1,
                   }}
                   transition={{ duration: 0.18 }}
-                  className="text-[#8E95A5] hover:text-white transition-colors flex items-center justify-center"
+                  className="text-[#9A9DA8] hover:text-white transition-colors flex items-center justify-center"
                 >
                   <Icon className="w-5 h-5 stroke-[2]" />
                 </motion.div>

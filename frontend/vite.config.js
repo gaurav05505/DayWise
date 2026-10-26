@@ -3,11 +3,12 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
+      disable: mode === 'android' || process.env.VITE_DISABLE_PWA === 'true',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'pwa-icon.svg'],
       manifest: {
@@ -42,4 +43,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

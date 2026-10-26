@@ -36,7 +36,7 @@ export const AttendancePage = ({ onNavigate }) => {
     deleteLog,
   } = useAttendance();
   const { settings } = useSettings();
-  const { todayStatus } = useTimetable();
+  const { todayStatus, allClasses } = useTimetable();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
@@ -138,13 +138,19 @@ export const AttendancePage = ({ onNavigate }) => {
       } else if (subjects.length > 0) {
         nextClassPayload = { name: subjects[0].name, time: '' };
       }
-      syncAttendanceToWidget(summary, nextClassPayload);
+      syncAttendanceToWidget(
+        summary,
+        nextClassPayload,
+        subjects,
+        allClasses,
+        settings?.attendanceTarget || 75
+      );
     }
-  }, [summary, subjects, todayStatus]);
+  }, [summary, subjects, todayStatus, allClasses, settings]);
 
   return (
     <div className="w-full min-h-screen bg-[#0B0C0F] flex justify-center text-[#F4F5F7]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-32 px-4">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-32 px-1">
         <PageTransition className="flex-1 flex flex-col">
           <AttendanceHeader onOpenMenu={() => setIsWidgetModalOpen(true)} />
 
@@ -166,6 +172,8 @@ export const AttendancePage = ({ onNavigate }) => {
                 markedStatus={markedStatus}
                 onMarkAttendance={handleQuickAttendance}
                 isMarking={isMarkingQuick}
+                nextClass={todayStatus?.nextClass}
+                onNavigateToTimetable={() => onNavigate?.('timetable')}
               />
 
               <NextClassCard

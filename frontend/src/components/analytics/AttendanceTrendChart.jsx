@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, Info } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { TrendingUp } from 'lucide-react';
 
 export const AttendanceTrendChart = ({
-  title = 'Overall Attendance Trend',
+  title = 'Attendance Trend',
   timeSeriesData,
   target = 75,
 }) => {
@@ -17,12 +17,12 @@ export const AttendanceTrendChart = ({
       ? points[selectedPointIndex]
       : points[points.length - 1] || null;
 
-  const width = 340;
-  const height = 180;
-  const padLeft = 36;
-  const padRight = 14;
-  const padTop = 18;
-  const padBottom = 30;
+  const width = 330;
+  const height = 150;
+  const padLeft = 32;
+  const padRight = 12;
+  const padTop = 16;
+  const padBottom = 26;
 
   const chartW = width - padLeft - padRight;
   const chartH = height - padTop - padBottom;
@@ -69,73 +69,31 @@ export const AttendanceTrendChart = ({
   const lineColor = isHealthy ? '#24D366' : '#F04444';
 
   return (
-    <div className="w-full bg-[#1D1D1D] border border-white/[0.05] rounded-[24px] p-4 sm:p-5 shadow-xl select-none space-y-3">
+    <div className="w-full bg-[#1D1D1D] border border-white/[0.05] rounded-[22px] p-4 shadow-xl select-none space-y-2.5">
       <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <h3 className="text-[15px] font-bold text-[#F4F5F7] tracking-tight">
-              {title}
-            </h3>
-            <div className="w-5 h-5 rounded-md bg-white/5 flex items-center justify-center text-[#9A9DA8]">
-              <TrendingUp className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-[11.5px] text-[#9A9DA8] font-medium mt-0.5">
-            Cumulative percentage over time
-          </p>
+        <div className="flex items-center gap-2">
+          <h3 className="text-[14px] font-bold text-[#F4F5F7] tracking-tight">
+            {title}
+          </h3>
+          <TrendingUp className="w-3.5 h-3.5 text-[#9A9DA8]" />
         </div>
 
         {activePoint && (
-          <div className="text-right">
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="text-[#9A9DA8]">{activePoint.date}:</span>
             <span
-              className={`text-lg font-black tracking-tight leading-none ${
+              className={`font-bold ${
                 activePoint.percentage >= target ? 'text-[#24D366]' : 'text-[#F04444]'
               }`}
             >
               {activePoint.percentage}%
             </span>
-            <span className="text-[10px] text-[#9A9DA8] block font-medium">
-              {activePoint.date}
-            </span>
           </div>
         )}
       </div>
 
-      <AnimatePresence mode="wait">
-        {activePoint && (
-          <motion.div
-            key={activePoint.dateKey || activePoint.date}
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.15 }}
-            className="p-2.5 rounded-xl bg-[#141414] border border-white/[0.04] flex items-center justify-between text-xs"
-          >
-            <div className="flex items-center gap-2">
-              <span className="text-[#9A9DA8] font-medium">Cumulative:</span>
-              <span className="font-bold text-white">
-                {activePoint.attended}/{activePoint.total} classes
-              </span>
-            </div>
-            {activePoint.dayHeld > 0 && (
-              <div className="flex items-center gap-1.5 text-[11px]">
-                <span className="text-[#9A9DA8]">Logged:</span>
-                <span className="text-[#24D366] font-bold">
-                  +{activePoint.dayAttended}
-                </span>
-                <span className="text-[#9A9DA8]">/</span>
-                <span className="text-[#F04444] font-bold">
-                  -{activePoint.dayHeld - activePoint.dayAttended}
-                </span>
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {points.length === 0 ? (
-        <div className="py-10 text-center text-xs text-[#9A9DA8]">
-          <Info className="w-5 h-5 mx-auto mb-2 text-[#9A9DA8]/60" />
+        <div className="py-8 text-center text-xs text-[#9A9DA8]">
           No attendance logs recorded in this period.
         </div>
       ) : (
@@ -146,12 +104,12 @@ export const AttendanceTrendChart = ({
           >
             <defs>
               <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={lineColor} stopOpacity="0.28" />
+                <stop offset="0%" stopColor={lineColor} stopOpacity="0.25" />
                 <stop offset="100%" stopColor={lineColor} stopOpacity="0.0" />
               </linearGradient>
             </defs>
 
-            {[0, 25, 50, 75, 100].map((tick) => {
+            {[0, 50, 100].map((tick) => {
               const y = getY(tick);
               return (
                 <g key={tick}>
@@ -162,7 +120,6 @@ export const AttendanceTrendChart = ({
                     y2={y}
                     stroke="rgba(255, 255, 255, 0.05)"
                     strokeWidth="1"
-                    strokeDasharray={tick === target ? '0' : '2,3'}
                   />
                   <text
                     x={padLeft - 6}
@@ -184,7 +141,7 @@ export const AttendanceTrendChart = ({
               x2={width - padRight}
               y2={targetY}
               stroke="#F59E0B"
-              strokeWidth="1.2"
+              strokeWidth="1"
               strokeDasharray="4,4"
               opacity="0.8"
             />
@@ -196,7 +153,7 @@ export const AttendanceTrendChart = ({
               fontSize="8.5"
               fontWeight="600"
             >
-              {target}% Target
+              {target}%
             </text>
 
             {areaPath && (
@@ -213,7 +170,7 @@ export const AttendanceTrendChart = ({
                 strokeLinejoin="round"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
               />
             )}
 
@@ -230,11 +187,10 @@ export const AttendanceTrendChart = ({
                   <circle
                     cx={c.x}
                     cy={c.y}
-                    r={isSelected ? 6 : 4}
+                    r={isSelected ? 5.5 : 3.5}
                     fill={isSelected ? '#FFFFFF' : pointColor}
                     stroke="#1D1D1D"
                     strokeWidth="2"
-                    className="transition-all"
                   />
                   <circle
                     cx={c.x}
@@ -250,10 +206,10 @@ export const AttendanceTrendChart = ({
               <>
                 <text
                   x={coords[0].x}
-                  y={height - 8}
+                  y={height - 6}
                   textAnchor={coords.length === 1 ? 'middle' : 'start'}
                   fill="#9A9DA8"
-                  fontSize="9"
+                  fontSize="8.5"
                   fontWeight="500"
                 >
                   {coords[0].point.date}
@@ -261,10 +217,10 @@ export const AttendanceTrendChart = ({
                 {coords.length > 1 && (
                   <text
                     x={coords[coords.length - 1].x}
-                    y={height - 8}
+                    y={height - 6}
                     textAnchor="end"
                     fill="#9A9DA8"
-                    fontSize="9"
+                    fontSize="8.5"
                     fontWeight="500"
                   >
                     {coords[coords.length - 1].point.date}
@@ -273,15 +229,6 @@ export const AttendanceTrendChart = ({
               </>
             )}
           </svg>
-        </div>
-      )}
-
-      {points.length <= 1 && (
-        <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/[0.02] border border-white/[0.04] text-[11px] text-[#9A9DA8]">
-          <Info className="w-3.5 h-3.5 text-[#9A9DA8] shrink-0" />
-          <span>
-            Daily trend points will appear automatically as you log classes over multiple dates.
-          </span>
         </div>
       )}
     </div>

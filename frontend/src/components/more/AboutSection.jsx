@@ -14,8 +14,8 @@ export const AboutSection = () => {
         icon={Sparkles}
         iconColor="#22C55E"
         title="DayWise"
-        subtitle="Version 1.0.0"
-        value="v1.0.0"
+        subtitle="Version 1.6.0"
+        value="v1.6"
         showChevron={false}
       />
       <SettingsItem

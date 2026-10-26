@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CalendarPlus, Clock, MapPin, AlertCircle, BookOpen } from 'lucide-react';
+import { X, CalendarPlus, Clock, MapPin, AlertCircle, BookOpen, Repeat } from 'lucide-react';
 import { backdropVariants, modalVariants } from '../../animations/modalVariants.js';
 import { DAYS_OF_WEEK, timeToMinutes, formatTime12h } from '../../services/timetableService.js';
 
@@ -52,7 +52,7 @@ export const AddTimetableModal = ({
   subjectSuggestions = [],
 }) => {
   const [subjectName, setSubjectName] = useState('');
-  const [day, setDay] = useState(initialDay);
+  const [selectedDays, setSelectedDays] = useState([initialDay || 'Monday']);
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('10:00');
   const [room, setRoom] = useState('');
@@ -63,13 +63,13 @@ export const AddTimetableModal = ({
   useEffect(() => {
     if (editingClass) {
       setSubjectName(editingClass.subjectName || '');
-      setDay(editingClass.day || initialDay);
+      setSelectedDays([editingClass.day || initialDay || 'Monday']);
       setStartTime(editingClass.startTime || '09:00');
       setEndTime(editingClass.endTime || '10:00');
       setRoom(editingClass.room || '');
     } else {
       setSubjectName('');
-      setDay(initialDay || 'Monday');
+      setSelectedDays([initialDay || 'Monday']);
       setStartTime('09:00');
       setEndTime('10:00');
       setRoom('');
@@ -94,7 +94,7 @@ export const AddTimetableModal = ({
       });
       if (overlap) {
         setWarning(
-          `Notice: Overlaps with "${overlap.subjectName}" (${formatTime12h(overlap.startTime)} - ${formatTime12h(overlap.endTime)}).`
+          `Notice: Overlaps on ${initialDay} with "${overlap.subjectName}" (${formatTime12h(overlap.startTime)} - ${formatTime12h(overlap.endTime)}).`
         );
       } else {
         setWarning('');
@@ -102,7 +102,41 @@ export const AddTimetableModal = ({
     } else {
       setWarning('');
     }
-  }, [startTime, endTime, dayClasses, editingClass]);
+  }, [startTime, endTime, dayClasses, editingClass, initialDay]);
+
+  const toggleDay = (d) => {
+    if (editingClass) {
+      setSelectedDays([d]);
+      return;
+    }
+    if (selectedDays.includes(d)) {
+      if (selectedDays.length === 1) return;
+      setSelectedDays(selectedDays.filter((x) => x !== d));
+    } else {
+      setSelectedDays([...selectedDays, d]);
+    }
+    setError('');
+  };
+
+  const setPreset = (days) => {
+    setSelectedDays(days);
+    setError('');
+  };
+
+  const getDaysSummaryText = () => {
+    if (selectedDays.length === 1) {
+      return `Scheduled on ${selectedDays[0]}`;
+    }
+    if (selectedDays.length === 7) {
+      return 'Repeats every day (7 days)';
+    }
+    const isWeekdays = selectedDays.length === 5 && !selectedDays.includes('Saturday') && !selectedDays.includes('Sunday');
+    if (isWeekdays) {
+      return 'Repeats Weekdays: Mon to Fri (5 days)';
+    }
+    const shortNames = selectedDays.map((d) => d.substring(0, 3)).join(', ');
+    return `Repeats on ${selectedDays.length} days: ${shortNames}`;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -110,6 +144,11 @@ export const AddTimetableModal = ({
 
     if (!subjectName.trim()) {
       setError('Subject name is required.');
+      return;
+    }
+
+    if (!selectedDays || selectedDays.length === 0) {
+      setError('Please select at least one day for the schedule.');
       return;
     }
 
@@ -131,33 +170,11 @@ export const AddTimetableModal = ({
       return;
     }
 
-    const otherClasses = dayClasses.filter((c) => c._id !== editingClass?._id);
-
-    const duplicate = otherClasses.find(
-      (c) =>
-        c.subjectName.toLowerCase() === subjectName.trim().toLowerCase() &&
-        c.startTime === startTime
-    );
-    if (duplicate) {
-      setError(`A class for "${subjectName.trim()}" at ${formatTime12h(startTime)} already exists on ${day}.`);
-      return;
-    }
-
-    const overlap = otherClasses.find((c) => {
-      const cStart = timeToMinutes(c.startTime);
-      const cEnd = timeToMinutes(c.endTime);
-      return Math.max(startM, cStart) < Math.min(endM, cEnd);
-    });
-
-    if (overlap) {
-      setError(`Overlaps with "${overlap.subjectName}" (${formatTime12h(overlap.startTime)} - ${formatTime12h(overlap.endTime)}). Please choose another time.`);
-      return;
-    }
-
     setSubmitting(true);
     const res = await onSave({
       subjectName: subjectName.trim(),
-      day,
+      days: selectedDays,
+      day: selectedDays[0],
       startTime,
       endTime,
       room: room.trim(),
@@ -204,19 +221,19 @@ export const AddTimetableModal = ({
             initial="initial"
             animate="animate"
             exit="exit"
-            className="w-full max-w-[390px] bg-[#181818] border border-white/10 rounded-t-[32px] sm:rounded-[32px] p-5 pb-7 sm:pb-6 shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="w-full max-w-[390px] bg-[#1D1D1D] border border-white/10 rounded-t-[32px] sm:rounded-[32px] p-5 pb-7 sm:pb-6 shadow-2xl max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-white/10 text-white flex items-center justify-center">
-                  <CalendarPlus className="w-4.5 h-4.5" />
+                <div className="w-8 h-8 rounded-full aspect-square bg-[#24D366]/10 text-[#24D366] border border-[#24D366]/20 flex items-center justify-center shrink-0">
+                  <CalendarPlus className="w-4 h-4 shrink-0" />
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-white tracking-tight">
                     {editingClass ? 'Edit Schedule' : 'Add Subject Schedule'}
                   </h3>
-                  <p className="text-[11px] text-[#8E95A5]">
-                    {day} class timing & room
+                  <p className="text-[11px] text-[#9A9DA8]">
+                    {editingClass ? `Edit ${selectedDays[0]} class` : 'Schedule single or repeating weekly days'}
                   </p>
                 </div>
               </div>
@@ -224,9 +241,9 @@ export const AddTimetableModal = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-[#8E95A5] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full aspect-square bg-white/5 hover:bg-white/10 text-[#9A9DA8] hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4 shrink-0" />
               </button>
             </div>
 
@@ -246,7 +263,7 @@ export const AddTimetableModal = ({
               )}
 
               <div>
-                <label className="text-[11px] font-semibold text-[#8E95A5] uppercase tracking-wider block mb-1.5 px-0.5">
+                <label className="text-[11px] font-semibold text-[#9A9DA8] uppercase tracking-wider block mb-1.5 px-0.5">
                   Subject Name <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -259,13 +276,13 @@ export const AddTimetableModal = ({
                       setError('');
                     }}
                     placeholder="e.g. Mathematics, Physics, Programming"
-                    className="w-full bg-[#181B24] border border-white/10 rounded-2xl px-3.5 py-3 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-white/30 transition-colors"
+                    className="w-full bg-black/30 border border-white/10 rounded-2xl px-3.5 py-3 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-white/30 transition-colors"
                   />
                 </div>
 
                 {subjectSuggestions.length > 0 && !editingClass && (
                   <div className="flex items-center gap-1.5 flex-wrap mt-2 px-0.5">
-                    <span className="text-[10px] text-[#8E95A5] flex items-center gap-1">
+                    <span className="text-[10px] text-[#9A9DA8] flex items-center gap-1">
                       <BookOpen className="w-3 h-3" /> Quick pick:
                     </span>
                     {subjectSuggestions.slice(0, 4).map((sub) => (
@@ -283,21 +300,99 @@ export const AddTimetableModal = ({
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[#8E95A5] uppercase tracking-wider block mb-1.5 px-0.5">
-                  Day of Week <span className="text-red-400">*</span>
-                </label>
-                <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
+                <div className="flex items-center justify-between mb-1.5 px-0.5">
+                  <label className="text-[11px] font-semibold text-[#9A9DA8] uppercase tracking-wider flex items-center gap-1.5">
+                    <Repeat className="w-3.5 h-3.5 text-[#24D366]" />
+                    <span>Repeat on Days <span className="text-red-400">*</span></span>
+                  </label>
+                  <span className="text-[10.5px] font-bold text-[#24D366]">
+                    {selectedDays.length} {selectedDays.length === 1 ? 'day' : 'days'}
+                  </span>
+                </div>
+
+                {!editingClass && (
+                  <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1.5 mb-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setPreset([initialDay || 'Monday'])}
+                      className={`text-[10.5px] font-semibold px-2 py-1 rounded-lg border transition-colors shrink-0 cursor-pointer ${
+                        selectedDays.length === 1 && selectedDays[0] === initialDay
+                          ? 'bg-[#24D366]/15 border-[#24D366]/40 text-[#24D366]'
+                          : 'bg-white/[0.03] border-white/[0.06] text-[#9A9DA8] hover:text-white'
+                      }`}
+                    >
+                      1 Day
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPreset(['Tuesday', 'Thursday'])}
+                      className={`text-[10.5px] font-semibold px-2 py-1 rounded-lg border transition-colors shrink-0 cursor-pointer ${
+                        selectedDays.length === 2 && selectedDays.includes('Tuesday') && selectedDays.includes('Thursday')
+                          ? 'bg-[#24D366]/15 border-[#24D366]/40 text-[#24D366]'
+                          : 'bg-white/[0.03] border-white/[0.06] text-[#9A9DA8] hover:text-white'
+                      }`}
+                    >
+                      2 Days (Tue/Thu)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPreset(['Monday', 'Wednesday', 'Friday'])}
+                      className={`text-[10.5px] font-semibold px-2 py-1 rounded-lg border transition-colors shrink-0 cursor-pointer ${
+                        selectedDays.length === 3 && selectedDays.includes('Monday') && selectedDays.includes('Friday')
+                          ? 'bg-[#24D366]/15 border-[#24D366]/40 text-[#24D366]'
+                          : 'bg-white/[0.03] border-white/[0.06] text-[#9A9DA8] hover:text-white'
+                      }`}
+                    >
+                      3 Days (MWF)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPreset(['Monday', 'Tuesday', 'Wednesday', 'Thursday'])}
+                      className={`text-[10.5px] font-semibold px-2 py-1 rounded-lg border transition-colors shrink-0 cursor-pointer ${
+                        selectedDays.length === 4 && selectedDays.includes('Monday') && selectedDays.includes('Thursday')
+                          ? 'bg-[#24D366]/15 border-[#24D366]/40 text-[#24D366]'
+                          : 'bg-white/[0.03] border-white/[0.06] text-[#9A9DA8] hover:text-white'
+                      }`}
+                    >
+                      4 Days (M-Th)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPreset(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])}
+                      className={`text-[10.5px] font-semibold px-2 py-1 rounded-lg border transition-colors shrink-0 cursor-pointer ${
+                        selectedDays.length === 5 && !selectedDays.includes('Saturday')
+                          ? 'bg-[#24D366]/15 border-[#24D366]/40 text-[#24D366]'
+                          : 'bg-white/[0.03] border-white/[0.06] text-[#9A9DA8] hover:text-white'
+                      }`}
+                    >
+                      Weekdays (M-F)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPreset(DAYS_OF_WEEK)}
+                      className={`text-[10.5px] font-semibold px-2 py-1 rounded-lg border transition-colors shrink-0 cursor-pointer ${
+                        selectedDays.length === 7
+                          ? 'bg-[#24D366]/15 border-[#24D366]/40 text-[#24D366]'
+                          : 'bg-white/[0.03] border-white/[0.06] text-[#9A9DA8] hover:text-white'
+                      }`}
+                    >
+                      All 7 Days
+                    </button>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-7 gap-1.5">
                   {DAYS_OF_WEEK.map((d) => {
-                    const isSelected = day === d;
+                    const isSelected = selectedDays.includes(d);
                     return (
                       <button
                         key={d}
                         type="button"
-                        onClick={() => setDay(d)}
-                        className={`py-2 px-1 text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
+                        onClick={() => toggleDay(d)}
+                        className={`py-2 px-0.5 text-[11px] font-bold rounded-xl transition-all cursor-pointer text-center leading-none ${
                           isSelected
-                            ? 'bg-white text-zinc-950 shadow-sm'
-                            : 'bg-[#181B24] text-[#8E95A5] hover:text-white border border-white/[0.04]'
+                            ? 'bg-[#24D366] text-[#0B0C0F] shadow-sm font-extrabold scale-102'
+                            : 'bg-white/[0.04] text-[#9A9DA8] hover:text-white border border-white/[0.04]'
                         }`}
                       >
                         {d.substring(0, 3)}
@@ -305,20 +400,24 @@ export const AddTimetableModal = ({
                     );
                   })}
                 </div>
+
+                <p className="text-[10.5px] text-[#9A9DA8] mt-1.5 px-0.5">
+                  {getDaysSummaryText()}
+                </p>
               </div>
 
               <div className="space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-1.5 px-0.5">
-                    <label className="text-[11px] font-semibold text-[#8E95A5] uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-[#9A9DA8] uppercase tracking-wider">
                       Start Time <span className="text-red-400">*</span>
                     </label>
-                    <span className="text-xs font-bold text-emerald-400">
+                    <span className="text-xs font-bold text-[#24D366]">
                       {formatTime12h(startTime)}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between bg-[#181B24] border border-white/10 rounded-2xl p-1.5 focus-within:border-white/30 transition-colors">
+                  <div className="flex items-center justify-between bg-black/30 border border-white/10 rounded-2xl p-1.5 focus-within:border-white/30 transition-colors">
                     <div className="flex items-center gap-1.5 pl-1">
                       <select
                         aria-label="Start hour"
@@ -326,10 +425,10 @@ export const AddTimetableModal = ({
                         onChange={(e) =>
                           handleStartChange(e.target.value, start12.minute, start12.period)
                         }
-                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-emerald-500 cursor-pointer"
+                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-[#24D366] cursor-pointer"
                       >
                         {HOURS_LIST.map((h) => (
-                          <option key={h} value={h} className="bg-[#181B24] text-white">
+                          <option key={h} value={h} className="bg-[#1D1D1D] text-white">
                             {h}
                           </option>
                         ))}
@@ -343,10 +442,10 @@ export const AddTimetableModal = ({
                         onChange={(e) =>
                           handleStartChange(start12.hour, e.target.value, start12.period)
                         }
-                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-emerald-500 cursor-pointer"
+                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-[#24D366] cursor-pointer"
                       >
                         {startMinutesList.map((m) => (
-                          <option key={m} value={m} className="bg-[#181B24] text-white">
+                          <option key={m} value={m} className="bg-[#1D1D1D] text-white">
                             {m}
                           </option>
                         ))}
@@ -361,8 +460,8 @@ export const AddTimetableModal = ({
                         }
                         className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all cursor-pointer ${
                           start12.period === 'AM'
-                            ? 'bg-emerald-500 text-[#090A0F] shadow-sm scale-105'
-                            : 'text-[#8E95A5] hover:text-white'
+                            ? 'bg-[#24D366] text-[#0B0C0F] shadow-sm scale-105'
+                            : 'text-[#9A9DA8] hover:text-white'
                         }`}
                       >
                         AM
@@ -374,8 +473,8 @@ export const AddTimetableModal = ({
                         }
                         className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all cursor-pointer ${
                           start12.period === 'PM'
-                            ? 'bg-emerald-500 text-[#090A0F] shadow-sm scale-105'
-                            : 'text-[#8E95A5] hover:text-white'
+                            ? 'bg-[#24D366] text-[#0B0C0F] shadow-sm scale-105'
+                            : 'text-[#9A9DA8] hover:text-white'
                         }`}
                       >
                         PM
@@ -386,15 +485,15 @@ export const AddTimetableModal = ({
 
                 <div>
                   <div className="flex items-center justify-between mb-1.5 px-0.5">
-                    <label className="text-[11px] font-semibold text-[#8E95A5] uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-[#9A9DA8] uppercase tracking-wider">
                       End Time <span className="text-red-400">*</span>
                     </label>
-                    <span className="text-xs font-bold text-emerald-400">
+                    <span className="text-xs font-bold text-[#24D366]">
                       {formatTime12h(endTime)}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between bg-[#181B24] border border-white/10 rounded-2xl p-1.5 focus-within:border-white/30 transition-colors">
+                  <div className="flex items-center justify-between bg-black/30 border border-white/10 rounded-2xl p-1.5 focus-within:border-white/30 transition-colors">
                     <div className="flex items-center gap-1.5 pl-1">
                       <select
                         aria-label="End hour"
@@ -402,10 +501,10 @@ export const AddTimetableModal = ({
                         onChange={(e) =>
                           handleEndChange(e.target.value, end12.minute, end12.period)
                         }
-                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-emerald-500 cursor-pointer"
+                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-[#24D366] cursor-pointer"
                       >
                         {HOURS_LIST.map((h) => (
-                          <option key={h} value={h} className="bg-[#181B24] text-white">
+                          <option key={h} value={h} className="bg-[#1D1D1D] text-white">
                             {h}
                           </option>
                         ))}
@@ -419,10 +518,10 @@ export const AddTimetableModal = ({
                         onChange={(e) =>
                           handleEndChange(end12.hour, e.target.value, end12.period)
                         }
-                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-emerald-500 cursor-pointer"
+                        className="bg-[#1D1D1D] text-white font-bold text-sm rounded-xl px-2.5 py-2 border border-white/[0.08] focus:outline-none focus:border-[#24D366] cursor-pointer"
                       >
                         {endMinutesList.map((m) => (
-                          <option key={m} value={m} className="bg-[#181B24] text-white">
+                          <option key={m} value={m} className="bg-[#1D1D1D] text-white">
                             {m}
                           </option>
                         ))}
@@ -437,8 +536,8 @@ export const AddTimetableModal = ({
                         }
                         className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all cursor-pointer ${
                           end12.period === 'AM'
-                            ? 'bg-emerald-500 text-[#090A0F] shadow-sm scale-105'
-                            : 'text-[#8E95A5] hover:text-white'
+                            ? 'bg-[#24D366] text-[#0B0C0F] shadow-sm scale-105'
+                            : 'text-[#9A9DA8] hover:text-white'
                         }`}
                       >
                         AM
@@ -450,8 +549,8 @@ export const AddTimetableModal = ({
                         }
                         className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all cursor-pointer ${
                           end12.period === 'PM'
-                            ? 'bg-emerald-500 text-[#090A0F] shadow-sm scale-105'
-                            : 'text-[#8E95A5] hover:text-white'
+                            ? 'bg-[#24D366] text-[#0B0C0F] shadow-sm scale-105'
+                            : 'text-[#9A9DA8] hover:text-white'
                         }`}
                       >
                         PM
@@ -462,8 +561,8 @@ export const AddTimetableModal = ({
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[#8E95A5] uppercase tracking-wider block mb-1.5 px-0.5">
-                  Room or Location <span className="text-[#8E95A5] font-normal">(Optional)</span>
+                <label className="text-[11px] font-semibold text-[#9A9DA8] uppercase tracking-wider block mb-1.5 px-0.5">
+                  Room or Location <span className="text-[#9A9DA8] font-normal">(Optional)</span>
                 </label>
                 <div className="relative">
                   <input
@@ -471,9 +570,9 @@ export const AddTimetableModal = ({
                     value={room}
                     onChange={(e) => setRoom(e.target.value)}
                     placeholder="e.g. Room 304, Lab 2, Main Hall"
-                    className="w-full bg-[#181B24] border border-white/10 rounded-2xl px-3.5 py-3 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-white/30 transition-colors"
+                    className="w-full bg-black/30 border border-white/10 rounded-2xl px-3.5 py-3 text-white placeholder-[#525B6D] text-xs focus:outline-none focus:border-white/30 transition-colors"
                   />
-                  <MapPin className="w-4 h-4 text-[#8E95A5] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <MapPin className="w-4 h-4 text-[#9A9DA8] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
@@ -481,7 +580,7 @@ export const AddTimetableModal = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex-1 bg-[#181B24] hover:bg-[#222634] text-[#8E95A5] hover:text-white text-xs font-semibold py-3.5 rounded-2xl transition-all cursor-pointer border border-white/[0.04]"
+                  className="flex-1 bg-white/[0.05] hover:bg-white/10 text-[#9A9DA8] hover:text-white text-xs font-semibold py-3.5 rounded-2xl transition-all cursor-pointer border border-white/[0.04]"
                 >
                   Cancel
                 </button>
@@ -489,9 +588,15 @@ export const AddTimetableModal = ({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-white hover:bg-zinc-100 text-zinc-950 text-xs font-bold py-3.5 rounded-2xl shadow-lg transition-all cursor-pointer active:scale-95 disabled:opacity-50"
+                  className="flex-1 bg-[#24D366] hover:bg-[#16A34A] text-[#0B0C0F] text-xs font-bold py-3.5 rounded-2xl shadow-lg transition-all cursor-pointer active:scale-95 disabled:opacity-50"
                 >
-                  {submitting ? 'Saving...' : editingClass ? 'Save Changes' : 'Save Schedule'}
+                  {submitting
+                    ? 'Saving...'
+                    : editingClass
+                    ? 'Save Changes'
+                    : selectedDays.length > 1
+                    ? `Add to ${selectedDays.length} Days`
+                    : 'Save Schedule'}
                 </button>
               </div>
             </form>
@@ -501,4 +606,3 @@ export const AddTimetableModal = ({
     </AnimatePresence>
   );
 };
-

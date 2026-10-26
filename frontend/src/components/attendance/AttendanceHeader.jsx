@@ -34,7 +34,7 @@ export const AttendanceHeader = ({ onOpenMenu }) => {
   }, []);
 
   return (
-    <header className="pt-2 pb-2 px-0.5 space-y-1.5">
+    <header className="pt-5 pb-5 px-0.5 space-y-3">
       <div className="flex items-center justify-between text-[11.5px] text-[#9A9DA8] font-medium">
         <div className="flex items-center gap-1.5">
           <Calendar className="w-3.5 h-3.5 text-[#9A9DA8]" />

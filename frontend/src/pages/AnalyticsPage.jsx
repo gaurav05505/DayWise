@@ -4,9 +4,7 @@ import { useSettings } from '../hooks/useSettings.js';
 import { AnalyticsHeader } from '../components/analytics/AnalyticsHeader.jsx';
 import { OverallAttendanceCard } from '../components/analytics/OverallAttendanceCard.jsx';
 import { AttendanceTrendChart } from '../components/analytics/AttendanceTrendChart.jsx';
-import { SubjectComparisonChart } from '../components/analytics/SubjectComparisonChart.jsx';
-import { AttendanceDistributionCard } from '../components/analytics/AttendanceDistributionCard.jsx';
-import { SubjectAttendanceList } from '../components/analytics/SubjectAttendanceList.jsx';
+import { SubjectPerformanceList } from '../components/analytics/SubjectPerformanceList.jsx';
 import { SubjectDetailModal } from '../components/analytics/SubjectDetailModal.jsx';
 import { PageTransition } from '../components/animations/PageTransition.jsx';
 import {
@@ -15,7 +13,7 @@ import {
 } from '../services/analyticsService.js';
 
 export const AnalyticsPage = ({ onNavigate }) => {
-  const { subjects, summary, loading } = useAttendance();
+  const { subjects, summary } = useAttendance();
   const { settings } = useSettings();
 
   const [selectedPeriod, setSelectedPeriod] = useState('30d');
@@ -37,7 +35,7 @@ export const AnalyticsPage = ({ onNavigate }) => {
 
   return (
     <div className="w-full min-h-screen bg-[#0B0C0F] flex justify-center text-[#F4F5F7]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-32 px-4">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-32 px-1">
         <PageTransition className="flex-1 flex flex-col">
           <AnalyticsHeader
             onBack={() => onNavigate?.('attendance')}
@@ -45,25 +43,17 @@ export const AnalyticsPage = ({ onNavigate }) => {
             onSelectPeriod={setSelectedPeriod}
           />
 
-          <main className="flex-1 space-y-4">
+          <main className="flex-1 space-y-3.5">
             <OverallAttendanceCard summary={summary} />
 
             <AttendanceTrendChart
-              title="Overall Attendance Trend"
+              title="Attendance Trend"
               timeSeriesData={timeSeriesData}
               target={target}
             />
 
-            <SubjectComparisonChart
+            <SubjectPerformanceList
               subjectsComparison={subjectsComparison}
-              target={target}
-              onSelectSubject={(id) => setSelectedSubjectId(id)}
-            />
-
-            <AttendanceDistributionCard summary={summary} />
-
-            <SubjectAttendanceList
-              subjects={subjects}
               target={target}
               onSelectSubject={(id) => setSelectedSubjectId(id)}
             />

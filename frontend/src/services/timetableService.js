@@ -56,12 +56,169 @@ export const timetableService = {
   },
 
   async addClass(data) {
+    if (data.days && Array.isArray(data.days) && data.days.length > 0) {
+      return this.addWeekSubject(data);
+    }
     const existing = await timetableRepository.getByDay(data.day);
     const validation = this.validateClass(data, existing);
     if (!validation.isValid) {
       throw new Error(validation.error);
     }
     return timetableRepository.create(data);
+  },
+
+  async addWeekSubject(data) {
+    const daysToSchedule = data.days && Array.isArray(data.days) && data.days.length > 0
+      ? data.days
+      : [data.day];
+
+    if (!data.subjectName || !data.subjectName.trim()) {
+      throw new Error('Subject name is required.');
+    }
+    if (!data.startTime) {
+      throw new Error('Start time is required.');
+    }
+    if (!data.endTime) {
+      throw new Error('End time is required.');
+    }
+    const startM = timeToMinutes(data.startTime);
+    const endM = timeToMinutes(data.endTime);
+    if (endM <= startM) {
+      throw new Error('End time must be later than start time.');
+    }
+
+    const itemsToCreate = [];
+    const conflicts = [];
+
+    for (const d of daysToSchedule) {
+      const existing = await timetableRepository.getByDay(d);
+      const validation = this.validateClass({ ...data, day: d }, existing);
+      if (!validation.isValid) {
+        conflicts.push(`${d}: ${validation.error}`);
+      } else {
+        itemsToCreate.push({
+          subjectName: data.subjectName.trim(),
+          day: d,
+          startTime: data.startTime,
+          endTime: data.endTime,
+          room: data.room ? data.room.trim() : '',
+          color: data.color || '#24D366',
+        });
+      }
+    }
+
+    if (itemsToCreate.length === 0 && conflicts.length > 0) {
+      throw new Error(conflicts[0]);
+    }
+
+    const created = await timetableRepository.createMany(itemsToCreate);
+    return {
+      success: true,
+      createdCount: created.length,
+      scheduledDays: itemsToCreate.map((i) => i.day),
+      conflicts,
+    };
+  },
+
+  async copyDaySchedule(sourceDay, targetDays = [], overwrite = false) {
+    if (!DAYS_OF_WEEK.includes(sourceDay)) {
+      throw new Error('Invalid source day.');
+    }
+    const sourceClasses = await timetableRepository.getByDay(sourceDay);
+    if (sourceClasses.length === 0) {
+      throw new Error(`No classes found on ${sourceDay} to copy.`);
+    }
+
+    const validTargets = targetDays.filter((d) => DAYS_OF_WEEK.includes(d) && d !== sourceDay);
+    if (validTargets.length === 0) {
+      throw new Error('Please select at least one different day to copy to.');
+    }
+
+    let totalCopied = 0;
+    for (const targetDay of validTargets) {
+      if (overwrite) {
+        await timetableRepository.deleteByDay(targetDay);
+      }
+      const existing = overwrite ? [] : await timetableRepository.getByDay(targetDay);
+      const toInsert = [];
+
+      for (const item of sourceClasses) {
+        const itemData = {
+          subjectName: item.subjectName,
+          day: targetDay,
+          startTime: item.startTime,
+          endTime: item.endTime,
+          room: item.room || '',
+          color: item.color || '#24D366',
+        };
+        const validation = this.validateClass(itemData, existing);
+        if (validation.isValid) {
+          toInsert.push(itemData);
+        }
+      }
+
+      if (toInsert.length > 0) {
+        await timetableRepository.createMany(toInsert);
+        totalCopied += toInsert.length;
+      }
+    }
+
+    return {
+      success: true,
+      copiedCount: totalCopied,
+      targetDays: validTargets,
+    };
+  },
+
+  getWeeklySummary(allClasses = []) {
+    const byDay = {};
+    for (const d of DAYS_OF_WEEK) {
+      byDay[d] = [];
+    }
+
+    for (const item of allClasses) {
+      if (byDay[item.day]) {
+        byDay[item.day].push(item);
+      }
+    }
+
+    for (const d of DAYS_OF_WEEK) {
+      byDay[d].sort((a, b) => a.startTime.localeCompare(b.startTime));
+    }
+
+    const subjectsMap = {};
+    for (const item of allClasses) {
+      const name = item.subjectName.trim();
+      if (!subjectsMap[name]) {
+        subjectsMap[name] = {
+          name,
+          classes: [],
+          days: new Set(),
+        };
+      }
+      subjectsMap[name].classes.push(item);
+      subjectsMap[name].days.add(item.day);
+    }
+
+    const subjectsList = Object.values(subjectsMap).map((s) => ({
+      name: s.name,
+      classesCount: s.classes.length,
+      daysCount: s.days.size,
+      days: Array.from(s.days),
+      sampleTime: s.classes[0]
+        ? `${formatTime12h(s.classes[0].startTime)} - ${formatTime12h(s.classes[0].endTime)}`
+        : '',
+      room: s.classes[0]?.room || '',
+    })).sort((a, b) => b.classesCount - a.classesCount);
+
+    const activeDaysCount = Object.values(byDay).filter((arr) => arr.length > 0).length;
+
+    return {
+      totalClasses: allClasses.length,
+      activeDaysCount,
+      byDay,
+      subjects: subjectsList,
+    };
   },
 
   async updateClass(id, data) {
@@ -246,4 +403,3 @@ export const timetableService = {
     };
   },
 };
-

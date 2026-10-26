@@ -49,7 +49,7 @@ export const MorePage = ({ onNavigate }) => {
 
   return (
     <div className="w-full min-h-screen bg-[#090A0F] flex justify-center text-[#F3F4F6]">
-      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-3.5 sm:px-4">
+      <div className="w-full max-w-[390px] min-h-screen flex flex-col relative pb-36 px-1 sm:px-1">
         {toastMessage && (
           <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[70] bg-[#14161B] border border-[#22C55E]/30 text-white text-xs py-2 px-4 rounded-full shadow-2xl flex items-center gap-2 animate-fadeIn">
             <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E]" />

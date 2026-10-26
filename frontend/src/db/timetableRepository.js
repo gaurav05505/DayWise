@@ -28,12 +28,35 @@ export const timetableRepository = {
       startTime: data.startTime,
       endTime: data.endTime,
       room: data.room ? data.room.trim() : '',
-      color: data.color || '#22C55E',
+      color: data.color || '#24D366',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
     await db.put('timetable', item);
     return item;
+  },
+
+  async createMany(itemsList) {
+    const db = await getDB();
+    const tx = db.transaction('timetable', 'readwrite');
+    const created = [];
+    for (const data of itemsList) {
+      const item = {
+        _id: generateId(),
+        subjectName: data.subjectName.trim(),
+        day: data.day,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        room: data.room ? data.room.trim() : '',
+        color: data.color || '#24D366',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      await tx.store.put(item);
+      created.push(item);
+    }
+    await tx.done;
+    return created;
   },
 
   async update(id, data) {
@@ -61,10 +84,21 @@ export const timetableRepository = {
     return { success: true };
   },
 
+  async deleteByDay(day) {
+    const db = await getDB();
+    const index = db.transaction('timetable', 'readwrite').store.index('by-day');
+    const keys = await index.getAllKeys(day);
+    const tx = db.transaction('timetable', 'readwrite');
+    for (const key of keys) {
+      await tx.store.delete(key);
+    }
+    await tx.done;
+    return { success: true, count: keys.length };
+  },
+
   async resetAll() {
     const db = await getDB();
     await db.clear('timetable');
     return { success: true };
   },
 };
-

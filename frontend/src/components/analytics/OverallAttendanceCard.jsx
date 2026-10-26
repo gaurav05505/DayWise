@@ -21,7 +21,7 @@ export const OverallAttendanceCard = ({ summary }) => {
   const canBunk = summary?.canBunk ?? 0;
   const needToAttend = summary?.needToAttend ?? 0;
 
-  const radius = 38;
+  const radius = 34;
   const circumference = 2 * Math.PI * radius;
   const strokeColor = isHealthy ? '#24D366' : '#F04444';
   const strokeDashoffset = totalClasses === 0
@@ -30,59 +30,39 @@ export const OverallAttendanceCard = ({ summary }) => {
 
   if (totalClasses === 0) {
     return (
-      <div className="w-full bg-[#1D1D1D] border border-white/[0.05] rounded-[24px] p-5 shadow-xl text-center select-none">
-        <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-3 text-[#9A9DA8]">
-          <AlertCircle className="w-6 h-6" />
+      <div className="w-full bg-[#1D1D1D] border border-white/[0.05] rounded-[22px] p-5 shadow-xl text-center select-none">
+        <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-2.5 text-[#9A9DA8]">
+          <AlertCircle className="w-5 h-5" />
         </div>
-        <h3 className="text-base font-bold text-white mb-1">
+        <h3 className="text-[15px] font-bold text-white mb-0.5">
           No Attendance Records Yet
         </h3>
-        <p className="text-xs text-[#9A9DA8] max-w-[260px] mx-auto leading-relaxed">
-          Mark attendance for your classes to view live aggregated statistics, trends, and target tracking.
+        <p className="text-xs text-[#9A9DA8] max-w-[240px] mx-auto leading-relaxed">
+          Mark attendance for your classes to view analytics.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="w-full bg-[#1D1D1D] border border-white/[0.05] rounded-[24px] p-4 sm:p-5 shadow-xl select-none space-y-4">
-      <div className="flex items-center justify-between">
-        <span className="text-[13px] font-bold text-[#9A9DA8] uppercase tracking-wider">
-          Overall Status
-        </span>
-        <span
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-tight ${
-            isHealthy
-              ? 'bg-[#24D366]/15 text-[#24D366] border border-[#24D366]/25'
-              : 'bg-[#F04444]/15 text-[#F04444] border border-[#F04444]/25'
-          }`}
-        >
-          {isHealthy ? (
-            <CheckCircle2 className="w-3.5 h-3.5" />
-          ) : (
-            <AlertCircle className="w-3.5 h-3.5" />
-          )}
-          <span>{isHealthy ? 'On Track' : 'Attendance Shortage'}</span>
-        </span>
-      </div>
-
-      <div className="flex items-center gap-4 sm:gap-6">
-        <div className="relative flex items-center justify-center w-[92px] h-[92px] shrink-0">
-          <svg className="w-[92px] h-[92px] -rotate-90" viewBox="0 0 92 92">
+    <div className="w-full bg-[#1D1D1D] border border-white/[0.05] rounded-[22px] p-4 shadow-xl select-none space-y-3.5">
+      <div className="flex items-center gap-4">
+        <div className="relative flex items-center justify-center w-[80px] h-[80px] shrink-0">
+          <svg className="w-[80px] h-[80px] -rotate-90" viewBox="0 0 80 80">
             <circle
-              cx="46"
-              cy="46"
+              cx="40"
+              cy="40"
               r={radius}
               stroke="#262626"
-              strokeWidth="7"
+              strokeWidth="6"
               fill="transparent"
             />
             <motion.circle
-              cx="46"
-              cy="46"
+              cx="40"
+              cy="40"
               r={radius}
               stroke={strokeColor}
-              strokeWidth="7"
+              strokeWidth="6"
               strokeDasharray={circumference}
               initial={{ strokeDashoffset: circumference }}
               animate={{ strokeDashoffset }}
@@ -91,71 +71,72 @@ export const OverallAttendanceCard = ({ summary }) => {
               fill="transparent"
             />
           </svg>
-          <div className="absolute flex flex-col items-center">
-            <span className="text-[21px] font-black text-[#F4F5F7] tracking-tight leading-none">
-              {percentage}%
-            </span>
-            <span className="text-[10px] font-medium text-[#9A9DA8] mt-0.5">
-              Target {target}%
-            </span>
-          </div>
+          <span className="absolute text-[20px] font-black text-[#F4F5F7] tracking-tight">
+            {percentage}%
+          </span>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <p className="text-[13px] text-[#F4F5F7] font-medium leading-snug">
+        <div className="flex-1 min-w-0 space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span
+              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                isHealthy
+                  ? 'bg-[#24D366]/15 text-[#24D366] border border-[#24D366]/25'
+                  : 'bg-[#F04444]/15 text-[#F04444] border border-[#F04444]/25'
+              }`}
+            >
+              {isHealthy ? (
+                <CheckCircle2 className="w-3 h-3" />
+              ) : (
+                <AlertCircle className="w-3 h-3" />
+              )}
+              <span>{isHealthy ? 'On Track' : 'Shortage'}</span>
+            </span>
+
+            <span className="text-[11.5px] text-[#9A9DA8] font-medium">
+              Target: <strong className="text-white">{target}%</strong>
+            </span>
+          </div>
+
+          <p className="text-[12.5px] text-[#F4F5F7] font-medium leading-tight">
             {isHealthy ? (
               canBunk > 0 ? (
-                <>
-                  You can safely miss <strong className="text-white font-bold">{canBunk}</strong> class{canBunk > 1 ? 'es' : ''} while maintaining at least {target}% attendance.
-                </>
+                <span>Can leave <strong className="text-white font-bold">{canBunk}</strong> class{canBunk > 1 ? 'es' : ''}</span>
               ) : (
-                <>
-                  You are exactly on track at <strong className="text-[#24D366] font-bold">{percentage}%</strong>. Keep attending all upcoming sessions.
-                </>
+                <span>On track ({percentage}%). Keep attending.</span>
               )
             ) : (
-              <>
-                You must attend <strong className="text-[#F04444] font-bold">{needToAttend}</strong> consecutive class{needToAttend > 1 ? 'es' : ''} to recover to {target}%.
-              </>
+              <span>Need <strong className="text-[#F04444] font-bold">{needToAttend}</strong> class{needToAttend > 1 ? 'es' : ''} to reach {target}%</span>
             )}
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/[0.05]">
-        <div className="bg-[#141414] rounded-xl p-2.5 text-center">
+      <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-white/[0.05]">
+        <div className="bg-[#141414] rounded-xl py-2 px-2.5 text-center">
           <span className="text-[10px] text-[#9A9DA8] font-medium block uppercase tracking-wider">
             Held
           </span>
-          <span className="text-[15px] font-bold text-[#F4F5F7] block mt-0.5">
+          <span className="text-[14px] font-bold text-[#F4F5F7] block mt-0.5">
             {totalClasses}
           </span>
         </div>
 
-        <div className="bg-[#141414] rounded-xl p-2.5 text-center">
+        <div className="bg-[#141414] rounded-xl py-2 px-2.5 text-center">
           <span className="text-[10px] text-[#9A9DA8] font-medium block uppercase tracking-wider">
             Attended
           </span>
-          <span className="text-[15px] font-bold text-[#24D366] block mt-0.5">
+          <span className="text-[14px] font-bold text-[#24D366] block mt-0.5">
             {attendedClasses}
           </span>
         </div>
 
-        <div className="bg-[#141414] rounded-xl p-2.5 text-center">
+        <div className="bg-[#141414] rounded-xl py-2 px-2.5 text-center">
           <span className="text-[10px] text-[#9A9DA8] font-medium block uppercase tracking-wider">
             Missed
           </span>
-          <span className="text-[15px] font-bold text-[#F04444] block mt-0.5">
+          <span className="text-[14px] font-bold text-[#F04444] block mt-0.5">
             {missedClasses}
-          </span>
-        </div>
-
-        <div className="bg-[#141414] rounded-xl p-2.5 text-center">
-          <span className="text-[10px] text-[#9A9DA8] font-medium block uppercase tracking-wider">
-            Target
-          </span>
-          <span className="text-[15px] font-bold text-[#F59E0B] block mt-0.5">
-            {target}%
           </span>
         </div>
       </div>

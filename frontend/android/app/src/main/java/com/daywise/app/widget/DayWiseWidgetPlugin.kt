@@ -1,5 +1,6 @@
 package com.daywise.app.widget
 
+import com.getcapacitor.JSArray
 import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin
 import com.getcapacitor.PluginCall
@@ -18,6 +19,16 @@ class DayWiseWidgetPlugin : Plugin() {
         val currentContext = context ?: run {
             call.reject("Context is null")
             return
+        }
+
+        val timetableRaw = call.getArray("timetable")?.toString() ?: call.getString("timetableJson")
+        if (!timetableRaw.isNullOrBlank()) {
+            WidgetPrefs.saveTimetableJson(currentContext, timetableRaw)
+        }
+
+        val subjectsRaw = call.getArray("subjects")?.toString() ?: call.getString("subjectsJson")
+        if (!subjectsRaw.isNullOrBlank()) {
+            WidgetPrefs.saveSubjectsJson(currentContext, subjectsRaw)
         }
 
         val percentage = call.getInt("percentage") ?: call.getInt("attendancePercentage") ?: 0
@@ -54,12 +65,45 @@ class DayWiseWidgetPlugin : Plugin() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 AttendanceWidget().updateAll(currentContext)
-            } catch (_: Exception) {
-            }
+            } catch (_: Exception) {}
         }
 
         val ret = JSObject()
         ret.put("success", true)
+        call.resolve(ret)
+    }
+
+    @PluginMethod
+    fun getPendingAttendanceActions(call: PluginCall) {
+        val currentContext = context ?: run {
+            call.reject("Context is null")
+            return
+        }
+
+        val actions = WidgetPrefs.getPendingAttendanceActions(currentContext)
+        val jsArray = try {
+            JSArray(actions.toString())
+        } catch (_: Exception) {
+            JSArray()
+        }
+
+        val ret = JSObject().apply {
+            put("actions", jsArray)
+        }
+        call.resolve(ret)
+    }
+
+    @PluginMethod
+    fun clearPendingAttendanceActions(call: PluginCall) {
+        val currentContext = context ?: run {
+            call.reject("Context is null")
+            return
+        }
+
+        WidgetPrefs.clearPendingAttendanceActions(currentContext)
+        val ret = JSObject().apply {
+            put("success", true)
+        }
         call.resolve(ret)
     }
 
@@ -71,6 +115,8 @@ class DayWiseWidgetPlugin : Plugin() {
         }
 
         val data = WidgetPrefs.getAttendanceData(currentContext)
+        val state = WidgetScheduleResolver.resolveWidgetState(currentContext)
+
         val ret = JSObject().apply {
             put("percentage", data.percentage)
             put("target", data.target)
@@ -83,6 +129,10 @@ class DayWiseWidgetPlugin : Plugin() {
             put("nextClassName", data.nextClassName)
             put("nextClassTime", data.nextClassTime)
             put("lastUpdated", data.lastUpdated)
+            put("isClassOngoing", state.isClassOngoing)
+            put("subjectTitle", state.subjectDisplayTitle)
+            put("isMarked", state.isMarked)
+            put("markedStatus", state.markedStatus)
         }
         call.resolve(ret)
     }

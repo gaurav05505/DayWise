@@ -7,7 +7,7 @@ export const NextClassCard = ({
   hasAnySchedule = true,
   onNavigateToTimetable,
 }) => {
-  let displayContent = 'Exam → 25 nov';
+  let displayContent = 'All done for today';
 
   if (nextClass) {
     let timingText = '';
@@ -22,7 +22,7 @@ export const NextClassCard = ({
     }
     displayContent = `${nextClass.subjectName} → ${timingText}`;
   } else if (!hasAnySchedule) {
-    displayContent = 'Schedule → Set up';
+    displayContent = 'Schedule → Add class';
   }
 
   return (
@@ -36,7 +36,7 @@ export const NextClassCard = ({
             Upcoming
           </h4>
           <p className="text-[12px] font-medium text-[#9A9DA8] leading-tight mt-0.5">
-            event
+            Class
           </p>
         </div>
 

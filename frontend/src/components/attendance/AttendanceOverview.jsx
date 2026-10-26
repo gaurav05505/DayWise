@@ -32,7 +32,7 @@ export const AttendanceOverview = ({
       <div className="grid grid-cols-2 gap-3 items-stretch">
         <div
           onClick={onOpenAnalytics}
-          className="h-full bg-[#1D1D1D] hover:bg-[#222222] rounded-[18px] p-3.5 sm:p-4 flex flex-col justify-center space-y-2 cursor-pointer transition-colors active:scale-[0.99]"
+          className="h-full bg-[#1D1D1D] hover:bg-[#222222] rounded-[18px] p-4 sm:p-4 flex flex-col justify-center space-y-2 cursor-pointer transition-colors active:scale-[0.99]"
         >
           <p className="text-[13.5px] text-[#F4F5F7] font-medium leading-tight">
             Target : <span className="font-bold">{targetPercentage}%</span>
@@ -70,7 +70,7 @@ export const AttendanceOverview = ({
           <button
             type="button"
             onClick={onOpenAddModal}
-            className="w-full flex-1 min-h-[46px] bg-[#16A34A] hover:bg-[#15803D] text-white text-[13px] font-bold rounded-[18px] flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950/20 transition-all cursor-pointer active:scale-95"
+            className="w-full flex-1 min-h-[40px] bg-[#16A34A] hover:bg-[#15803D] text-white text-[13px] font-bold rounded-[12px] flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950/20 transition-all cursor-pointer active:scale-95"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             <span>Add Subject</span>
@@ -79,7 +79,7 @@ export const AttendanceOverview = ({
           <button
             type="button"
             onClick={onOpenBulkModal}
-            className="w-full flex-1 min-h-[46px] bg-[#1B2A1E] hover:bg-[#223526] text-[#E2E8F0] text-[13px] font-bold rounded-[18px] flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer active:scale-95"
+            className="w-full flex-1 min-h-[40px] bg-[#1B2A1E] hover:bg-[#223526] text-[#E2E8F0] text-[13px] font-bold rounded-[12px] flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer active:scale-95"
           >
             <Check className="w-4 h-4 stroke-[3]" />
             <span>All Class</span>

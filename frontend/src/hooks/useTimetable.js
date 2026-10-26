@@ -64,11 +64,35 @@ export const useTimetable = () => {
     return timetableService.getCurrentAndNextClass(allClasses);
   }, [allClasses, timeTick]);
 
+  const weeklySummary = useMemo(() => {
+    return timetableService.getWeeklySummary(allClasses);
+  }, [allClasses]);
+
   const addClass = async (data) => {
     try {
-      await timetableService.addClass(data);
+      const res = await timetableService.addClass(data);
       await fetchClasses();
-      return { success: true };
+      return { success: true, ...res };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  };
+
+  const addWeekSubject = async (data) => {
+    try {
+      const res = await timetableService.addWeekSubject(data);
+      await fetchClasses();
+      return { success: true, ...res };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  };
+
+  const copyDaySchedule = async (sourceDay, targetDays, overwrite = false) => {
+    try {
+      const res = await timetableService.copyDaySchedule(sourceDay, targetDays, overwrite);
+      await fetchClasses();
+      return { success: true, ...res };
     } catch (err) {
       return { success: false, error: err.message };
     }
@@ -100,12 +124,14 @@ export const useTimetable = () => {
     setSelectedDay,
     dayClasses,
     todayStatus,
+    weeklySummary,
     loading,
     error,
     addClass,
+    addWeekSubject,
+    copyDaySchedule,
     updateClass,
     deleteClass,
     refresh: fetchClasses,
   };
 };
-

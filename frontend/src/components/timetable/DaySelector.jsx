@@ -33,8 +33,8 @@ export const DaySelector = ({ selectedDay, onSelectDay, allClasses = [] }) => {
               onClick={() => onSelectDay(full)}
               className={`flex-1 min-w-[48px] py-2 px-1.5 rounded-2xl flex flex-col items-center justify-center gap-1 transition-all cursor-pointer relative ${
                 isSelected
-                  ? 'bg-white text-zinc-950 shadow-md font-bold'
-                  : 'bg-[#1D1D1D] text-[#8E95A5] hover:text-white border border-white/[0.04]'
+                  ? 'bg-[#24D366] text-[#0B0C0F] shadow-sm font-bold'
+                  : 'bg-[#1D1D1D] text-[#9A9DA8] hover:text-white border border-white/[0.04]'
               }`}
             >
               <div className="flex items-center gap-1">
@@ -44,7 +44,7 @@ export const DaySelector = ({ selectedDay, onSelectDay, allClasses = [] }) => {
                 {isToday && (
                   <span
                     className={`w-1.5 h-1.5 rounded-full ${
-                      isSelected ? 'bg-emerald-600' : 'bg-emerald-400'
+                      isSelected ? 'bg-[#0B0C0F]' : 'bg-[#24D366]'
                     }`}
                   />
                 )}
@@ -55,8 +55,8 @@ export const DaySelector = ({ selectedDay, onSelectDay, allClasses = [] }) => {
                   <span
                     className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
                       isSelected
-                        ? 'bg-zinc-200 text-zinc-900'
-                        : 'bg-white/5 text-[#8E95A5]'
+                        ? 'bg-black/20 text-[#0B0C0F]'
+                        : 'bg-white/5 text-[#9A9DA8]'
                     }`}
                   >
                     {count}
@@ -72,4 +72,3 @@ export const DaySelector = ({ selectedDay, onSelectDay, allClasses = [] }) => {
     </div>
   );
 };
-
